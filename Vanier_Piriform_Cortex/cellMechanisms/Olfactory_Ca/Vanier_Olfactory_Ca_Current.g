@@ -1,0 +1,98 @@
+// M. C. Vanier and J. M. Bower
+// A Comparative Survey of Automated Parameter-Searching Methods
+// for Compartmental Neural Models
+
+// Description of the simplified layer 2 pyramidal cell model
+// (model 5).  Active conductances and reversal potentials.
+// Channel descriptions are in the GENESIS neural modeling language;
+// for more information see "The Book of GENESIS, 2nd. Ed." by J. M. 
+// Bower and David Beeman, Springer/Telos.  All voltage- or calcium-
+// dependent ionic channels are very standard Hodgkin-Huxley-type
+// channels.
+
+// genesis
+
+// CONSTANTS:
+
+// channel equilibrium potentials (V)
+float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
+float ENA       =  0.055
+float EK        = -0.075
+float ECA       =  0.080
+
+// ===========================================================================
+//                      Olfactory Ca Current
+// ===========================================================================
+
+/*
+Slow Ca current based on voltage clamp data from:
+     Constanti, Galvan, Franz, and Sim Pfulgers Arch (1985)
+     404:259-265
+Assumptions about the existence of distinct slow current from:
+     Halliwell and Scholfield Neurosci Letters (1984)
+     50:13-18
+Other papers about Ca currents in piriform pyramidal cells:
+     Galvan, Constanti, and Franz Pfulgers Arch (1985)
+     404:252-258
+*/
+
+/*----------- KINETICS ADJUSTED FOR BODY TEMPERATURE -------------*/
+
+function make_%Name%
+	str chanpath = "/library/%Name%"
+	if ({exists {chanpath}})
+	    return
+	end
+
+    float ECa = 0.113
+    int i
+    float x, dx, y
+
+    create tabchannel {chanpath}
+    setfield {chanpath}       \
+        Ek     {ECa}             \
+        Gbar   %Max Conductance Density%                \
+        Ik     0                 \  
+        Gk     0                 \
+        Xpower 1                 \
+        Ypower 1                 \
+        Zpower 0
+
+    call {chanpath} TABCREATE X 49 -0.1 0.1
+    x = -0.1
+    dx = 0.2 / 49.0
+
+    for (i = 0; i <= 49; i = i + 1)
+        y = 1.0e-03 / \
+            ({exp {(x + .0032)/(-.0067)}} + {exp {(x + 0.0168)/0.0182}}) + 0.003
+        setfield {chanpath} X_A->table[{i}] {y}
+        y = 1.0 / (1.0 + {exp {(x + 0.032)/(-0.010)}})
+        setfield {chanpath} X_B->table[{i}] {y}
+        x = x + dx
+    end
+
+    call {chanpath} TABCREATE Y 49 -0.1 0.1
+    x  = -0.1
+    dx = 0.2 / 49.0
+
+    for (i = 0; i <= 49; i = i + 1)
+        y = (0.35 / ({exp {(x + 0.035)/0.012}} + {exp {(-0.025 - x)/0.012}})) + 0.01
+        setfield {chanpath} Y_A->table[{i}] {y}
+        y = 1.0 / (1.0 + {exp {(x + 0.040)/(0.035)}})
+        setfield {chanpath} Y_B->table[{i}] {y}
+        x = x + dx
+    end
+
+    tweaktau {chanpath} X
+    setfield {chanpath} X_A->calc_mode 0 X_B->calc_mode 0
+    call {chanpath} TABFILL X 3000 0
+
+    tweaktau {chanpath} Y
+    setfield {chanpath} Y_A->calc_mode 0 Y_B->calc_mode 0
+    call {chanpath} TABFILL Y 3000 0
+
+//    addfield {chanpath} addmsg1
+//    setfield {chanpath} addmsg1 "../Ca_bufer . CONCEN Ca"
+end
+
+

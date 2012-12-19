@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>This is a summary of the simulation parameters to assist reviewing of saved simulations in neuroConstruct.</comment>
+<entry key="Simulation temp">6.3</entry>
+<entry key="Unit system">GENESIS SI Units</entry>
+<entry key="Duration">250.0</entry>
+<entry key="Script format">GENESIS Script</entry>
+<entry key="neuroConstruct random seed">909243435</entry>
+<entry key="Sim Config">Default Simulation Configuration (CellGroup_2, CellGroup_4, Input_2, Input_1, CellGroup_4_v, CellGroup_2_v, Var_4, Var_3, Var_2, Var_1)</entry>
+<entry key="Net connections"/>
+<entry key="Parallel configuration">Local machine, serial mode with 1 host, 1 processor
+</entry>
+<entry key="Populations">CellGroup_2 (Pyramidal_Neuron_original_soma): 1; CellGroup_4 (Pyramidal_Neuron_ChannelML_soma): 1</entry>
+<entry key="Script generation time">1.403</entry>
+<entry key="Global Cm">1.0E-8</entry>
+<entry key="Symmetric compartments">false</entry>
+<entry key="neuroConstruct version">1.6.1</entry>
+<entry key="dt">0.025</entry>
+<entry key="Stimulation: 2">IClamp: [del: 20, dur: 0.5, amp: 1, repeats: false] on CellGroup_4</entry>
+<entry key="Global Rm">3.33333344E8</entry>
+<entry key="Stimulation: 1">IClamp: [del: 20, dur: 0.5, amp: 1, repeats: false] on CellGroup_2</entry>
+<entry key="Morph summary Pyramidal_Neuron_ChannelML_soma">Segs:1_Secs:1_IntDivs:1</entry>
+<entry key="Compartmentalisation">GENESIS Compartmentalisation</entry>
+<entry key="GUI Mode">ALL_SHOW</entry>
+<entry key="GENESIS random seed">2120221212</entry>
+<entry key="Simulator">GENESIS</entry>
+<entry key="spikegen compatibility mode">NEURON compatible behaviour</entry>
+<entry key="Num integration method">Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0</entry>
+<entry key="Global Ra">300.0</entry>
+<entry key="Cell Mechanisms on Pyramidal_Neuron_ChannelML_soma">[LeakConductance (1.98807E-8) on: [all], Na_Hippo_ChannelML (2.8E-6) on: [soma_group]]</entry>
+<entry key="Cell Mechanisms on Pyramidal_Neuron_original_soma">[LeakConductance (1.98807E-8) on: [all], Na_Hipo_original (2.8E-6) on: [soma_group]]</entry>
+<entry key="Morph summary Pyramidal_Neuron_original_soma">Segs:1_Secs:1_IntDivs:1</entry>
+</properties>

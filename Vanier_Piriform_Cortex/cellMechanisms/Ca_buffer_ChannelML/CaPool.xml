@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<channelml xmlns="http://morphml.org/channelml/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:meta="http://morphml.org/metadata/schema" xsi:schemaLocation="http://morphml.org/channelml/schema   http://www.neuroml.org/NeuroMLValidator/NeuroMLFiles/Schemata/v1.7.2/Level2/ChannelML_v1.7.2.xsd" units="SI Units">
+
+	<meta:notes>A channel from  M. C. Vanier and J. M. Bower (1999) A Comparative Survey of Automated Parameter-Searching Methods for Compartmental Neural Models</meta:notes>
+    
+    <ion name="ca" charge="2" role="SignallingSubstance">  
+        <meta:notes>Signifies that the ion is involved in a process which alters its concentration</meta:notes>
+    </ion>
+    
+    <ion_concentration name="Ca_buffer_ChannelML">
+        
+        <status value="stable">
+            <meta:comment>Ca pool from Vanier and Bower (1999)</meta:comment>
+            <meta:contributor>
+                <meta:name>Simon O'Connor</meta:name>
+            </meta:contributor>
+        </status>
+    
+        <meta:notes>An expontially decaying pool of Ca2+</meta:notes>
+
+        <meta:publication>
+           <meta:fullTitle> M. C. Vanier and J. M. Bower (1999) A Comparative Survey of Automated Parameter-Searching Methods for Compartmental Neural Models. Journal of Computational Neuroscience 7, 149-171</meta:fullTitle>
+           <meta:pubmedRef>http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&amp;db=PubMed&amp;list_uids=10515252&amp;dopt=Abstract</meta:pubmedRef>
+        </meta:publication>
+
+    <!--float ECA       =  0.080
+
+    setfield {chanpath}            \
+        tau     0.025           \  // sec
+        B       7.4e+6          \  // (asymptotic) conc/current
+        Ca_base 50e-09             // M
+
+    addfield {chanpath} addmsg1
+    setfield {chanpath} addmsg1 "../Ca . I_Ca Ik">-->
+
+        
+        <ion_species name="ca"/>
+        
+        <decaying_pool_model resting_conc="7.55e-5" decay_constant="1e-2">
+            
+            <pool_volume_info shell_thickness="8.4e-8"/>
+            
+        </decaying_pool_model>
+        
+        
+    </ion_concentration>
+</channelml>
