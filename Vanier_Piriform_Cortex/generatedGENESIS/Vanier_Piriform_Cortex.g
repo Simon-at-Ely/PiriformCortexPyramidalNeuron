@@ -13,7 +13,7 @@ echo ""
 echo "    Description: "
 
 echo "    Simulation configuration: Default Simulation Configuration"
-echo "    Simulation reference: Sim_32"
+echo "    Simulation reference: Sim_36"
 echo " "
 echo  "*****************************************************"
 
@@ -21,7 +21,7 @@ echo  "*****************************************************"
 
 //   Initializes random-number generator
 
-randseed 653499566
+randseed 1410230611
 
 //   This temperature is needed if any of the channels are temp dependent (Q10 dependence) 
 //   
@@ -60,11 +60,17 @@ env // prints details on some global variables
 //   Including channel mechanisms 
 //   
 
+include Na_Hipo_original
+make_Na_Hipo_original
+
 include LeakConductance
 make_LeakConductance
 
-include Na_Hipo_original
-make_Na_Hipo_original
+include KDR_Hipo_original
+make_KDR_Hipo_original
+
+include KDR_Hippo_ChannelML
+make_KDR_Hippo_ChannelML
 
 include Na_Hippo_ChannelML
 make_Na_Hippo_ChannelML
@@ -92,11 +98,11 @@ create neutral /cells/CellGroup_2
 
 str compName
 
-readcell /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/Sim_32/Pyramidal_Neuron_original_soma.p /cells/CellGroup_2/CellGroup_2_0
+readcell /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/Sim_36/Pyramidal_Neuron_original_soma.p /cells/CellGroup_2/CellGroup_2_0
 addfield /cells/CellGroup_2/CellGroup_2_0 celltype
 setfield /cells/CellGroup_2/CellGroup_2_0 celltype Pyramidal_Neuron_original_soma
 
-position /cells/CellGroup_2/CellGroup_2_0 6.650571E-5 1.60452E-5 8.819902E-5
+position /cells/CellGroup_2/CellGroup_2_0 4.392101E-5 9.751907E-6 3.566549E-5
 
 
 //////////////////////////////////////////////////////////////////////
@@ -114,11 +120,11 @@ create neutral /cells/CellGroup_4
 
 str compName
 
-readcell /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/Sim_32/Pyramidal_Neuron_ChannelML_soma.p /cells/CellGroup_4/CellGroup_4_0
+readcell /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/Sim_36/Pyramidal_Neuron_ChannelML_soma.p /cells/CellGroup_4/CellGroup_4_0
 addfield /cells/CellGroup_4/CellGroup_4_0 celltype
 setfield /cells/CellGroup_4/CellGroup_4_0 celltype Pyramidal_Neuron_ChannelML_soma
 
-position /cells/CellGroup_4/CellGroup_4_0 4.018684E-5 1.89408E-5 7.774165E-6
+position /cells/CellGroup_4/CellGroup_4_0 9.62326E-5 1.460363E-5 3.091654E-5
 
 
 
@@ -131,20 +137,20 @@ create neutral /stim/pulse
 create neutral /stim/rndspike
 create pulsegen /stim/pulse/stim_Input_2_CellGroup_4_0
 
-//   Adding a current pulse of amplitude: 1.0E-9 A, SingleElectricalInput: [Input: IClamp, cellGroup: CellGroup_4, cellNumber: 0, segmentId: 0, fractionAlong: 0.5]
+//   Adding a current pulse of amplitude: 5.0E-9 A, SingleElectricalInput: [Input: IClamp, cellGroup: CellGroup_4, cellNumber: 0, segmentId: 0, fractionAlong: 0.5]
 
 //   Pulses are shifted one dt step, so that pulse will begin at delay1, as in NEURON
 
-setfield ^ level1 1.0E-9 width1 5.0E-4 delay1 0.019975 delay2 10000.0  
+setfield ^ level1 5.0E-9 width1 5.0E-4 delay1 0.019975 delay2 10000.0  
 addmsg /stim/pulse/stim_Input_2_CellGroup_4_0 /cells/CellGroup_4/CellGroup_4_0/Soma INJECT output
 
 create pulsegen /stim/pulse/stim_Input_1_CellGroup_2_0
 
-//   Adding a current pulse of amplitude: 1.0E-9 A, SingleElectricalInput: [Input: IClamp, cellGroup: CellGroup_2, cellNumber: 0, segmentId: 0, fractionAlong: 0.5]
+//   Adding a current pulse of amplitude: 5.0E-9 A, SingleElectricalInput: [Input: IClamp, cellGroup: CellGroup_2, cellNumber: 0, segmentId: 0, fractionAlong: 0.5]
 
 //   Pulses are shifted one dt step, so that pulse will begin at delay1, as in NEURON
 
-setfield ^ level1 1.0E-9 width1 5.0E-4 delay1 0.019975 delay2 10000.0  
+setfield ^ level1 5.0E-9 width1 5.0E-4 delay1 0.019975 delay2 10000.0  
 addmsg /stim/pulse/stim_Input_1_CellGroup_2_0 /cells/CellGroup_2/CellGroup_2_0/Soma INJECT output
 
 
@@ -179,29 +185,35 @@ int steps =  {round {{duration}/{dt}}}
 setclock 0 {dt} // Units[GENESIS_SI_time, symbol: s]
 
 //////////////////////////////////////////////////////////////////////
-//   Adding 6 plot(s)
+//   Adding 8 plot(s)
 //////////////////////////////////////////////////////////////////////
 
 create neutral /plots
 
 
-create xform /plots/CellGroup_2_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_4/CellGroup_4_0: Sim_32"
+create xform /plots/CellGroup_2_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_4/CellGroup_4_0: Sim_36"
 xshow /plots/CellGroup_2_v
 create xgraph /plots/CellGroup_2_v/graph -xmin 0 -xmax {duration} -ymin -0.09 -ymax 0.05
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_4/CellGroup_4_0_Soma:Vm *black
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_2/CellGroup_2_0_Soma:Vm *red
 
-create xform /plots/GraphWin_2 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:h (Y) in /cells/CellGroup_4/CellGroup_4_0: Sim_32"
+create xform /plots/GraphWin_2 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:h (Y) in /cells/CellGroup_4/CellGroup_4_0: Sim_36"
 xshow /plots/GraphWin_2
 create xgraph /plots/GraphWin_2/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /plots/GraphWin_2/graph PLOT Y *...Soma_Na_Hippo_ChannelML:Y *black
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_2/graph PLOT Y *...0/Soma_Na_Hipo_original:Y *red
 
-create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:m (X) in /cells/CellGroup_4/CellGroup_4_0: Sim_32"
+create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:m (X) in /cells/CellGroup_4/CellGroup_4_0: Sim_36"
 xshow /plots/GraphWin_1
 create xgraph /plots/GraphWin_1/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /plots/GraphWin_1/graph PLOT X *...Soma_Na_Hippo_ChannelML:X *black
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_1/graph PLOT X *...0/Soma_Na_Hipo_original:X *red
+
+create xform /plots/GraphWin_3 [500,100,400,400]  -title "Values of KDR_Hipo_original:X (X) in /cells/CellGroup_2/CellGroup_2_0: Sim_36"
+xshow /plots/GraphWin_3
+create xgraph /plots/GraphWin_3/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
+addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/KDR_Hipo_original /plots/GraphWin_3/graph PLOT X *.../Soma_KDR_Hipo_original:X *black
+addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/KDR_Hippo_ChannelML /plots/GraphWin_3/graph PLOT X *...oma_KDR_Hippo_ChannelML:X *red
 
 
 //////////////////////////////////////////////////////////////////////
@@ -211,7 +223,7 @@ addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_1/
 if (!{exists /controls})
     create neutral /controls
 end
-create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_32"
+create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_36"
 xshow /controls/runControl
 
 create xbutton /controls/runControl/RESET -script reset
@@ -228,7 +240,7 @@ echo Checking and resetting...
 maxwarnings 400
 
 //////////////////////////////////////////////////////////////////////
-//   Recording 6 variable(s)
+//   Recording 8 variable(s)
 //////////////////////////////////////////////////////////////////////
 
 
@@ -239,7 +251,7 @@ str simsDir
 simsDir = "/home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/"
 
 str simReference
-simReference = "Sim_32"
+simReference = "Sim_36"
 
 str targetDir
 targetDir =  {strcat {simsDir} {simReference}}
@@ -422,6 +434,60 @@ setfield /fileout{compName}Na_Hipo_original_X filename { strcat  {targetDir} {fi
 call /fileout{compName}Na_Hipo_original_X OUT_OPEN
 call /fileout{compName}Na_Hipo_original_X OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original X}
 
+//   Saving KDR_Hipo_original:X on only one seg, id: 0, in only cell: 0 in CellGroup_2
+
+if (!{exists /fileout/cells/CellGroup_2})
+    create neutral /fileout/cells/CellGroup_2
+end
+
+//   Recording cell: /cells/CellGroup_2/CellGroup_2_0
+
+cellName = "/cells/CellGroup_2/CellGroup_2_0"
+    if (!{exists /fileout{cellName}})
+        create neutral /fileout{cellName}
+    end
+
+ce {cellName}
+
+//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
+
+compName = {strcat {cellName} /Soma}
+str fileNameStr
+fileNameStr = {strcat {getpath {cellName} -tail} {".KDR_Hipo_original_X.dat"} }
+create asc_file /fileout{compName}KDR_Hipo_original_X
+setfield /fileout{compName}KDR_Hipo_original_X    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}KDR_Hipo_original_X filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/KDR_Hipo_original /fileout{compName}KDR_Hipo_original_X SAVE X
+call /fileout{compName}KDR_Hipo_original_X OUT_OPEN
+call /fileout{compName}KDR_Hipo_original_X OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/KDR_Hipo_original X}
+
+//   Saving KDR_Hippo_ChannelML:n on only one seg, id: 0, in only cell: 0 in CellGroup_4
+
+if (!{exists /fileout/cells/CellGroup_4})
+    create neutral /fileout/cells/CellGroup_4
+end
+
+//   Recording cell: /cells/CellGroup_4/CellGroup_4_0
+
+cellName = "/cells/CellGroup_4/CellGroup_4_0"
+    if (!{exists /fileout{cellName}})
+        create neutral /fileout{cellName}
+    end
+
+ce {cellName}
+
+//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
+
+compName = {strcat {cellName} /Soma}
+str fileNameStr
+fileNameStr = {strcat {getpath {cellName} -tail} {".KDR_Hippo_ChannelML_n.dat"} }
+create asc_file /fileout{compName}KDR_Hippo_ChannelML_n
+setfield /fileout{compName}KDR_Hippo_ChannelML_n    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}KDR_Hippo_ChannelML_n filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/KDR_Hippo_ChannelML /fileout{compName}KDR_Hippo_ChannelML_n SAVE X
+call /fileout{compName}KDR_Hippo_ChannelML_n OUT_OPEN
+call /fileout{compName}KDR_Hippo_ChannelML_n OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/KDR_Hippo_ChannelML X}
+
 //////////////////////////////////////////////////////////////////////
 //   This will run a full simulation when the file is executed
 //////////////////////////////////////////////////////////////////////
@@ -433,11 +499,11 @@ startTimeFile = {strcat {targetDir} {"starttime"}}
 stopTimeFile = {strcat {targetDir} {"stoptime"}}
 sh {strcat {"date +%s.%N > "} {startTimeFile}}
 
-echo Starting sim: Sim_32 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
+echo Starting sim: Sim_36 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
 date +%F__%T__%N
 step {steps}
 
-echo Finished simulation reference: Sim_32
+echo Finished simulation reference: Sim_36
 date +%F__%T__%N
 echo Data stored in directory: {targetDir}
 

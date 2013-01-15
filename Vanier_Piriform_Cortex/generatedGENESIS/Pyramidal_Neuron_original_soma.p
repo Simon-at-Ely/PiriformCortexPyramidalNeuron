@@ -26,12 +26,13 @@
 
 
 // Cell mechanism: LeakConductance (density: 1.98807E-8 mS um^-2)
+// Cell mechanism: KDR_Hipo_original (density: 2.7E-7 mS um^-2)
 // Cell mechanism: Na_Hipo_original (density: 2.8E-6 mS um^-2)
 *set_compt_param     ELEAK -0.0594  // using: Units[GENESIS_SI_voltage, symbol: V]
 *set_compt_param     RM 0.05030004  // using: Units[GENESIS_SI_specificMembraneResistance, symbol: ohm m²]
 
 
 *double_endpoint
-Soma none 0 0 0 0 21.3 0 10.4 Na_Hipo_original 2800 
+Soma none 0 0 0 0 21.3 0 10.4 KDR_Hipo_original 270 Na_Hipo_original 2800 
 *double_endpoint_off
 

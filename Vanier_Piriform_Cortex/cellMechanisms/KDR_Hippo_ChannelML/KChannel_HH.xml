@@ -32,7 +32,7 @@
             <meta:uri>http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table3</meta:uri>
         </meta:neuronDBref>
 
-                <!--float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
+                    <!--float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
 float ENA       =  0.055
 float EK        = -0.075
 float ECA       =  0.080
@@ -53,14 +53,15 @@ float ECA       =  0.080
 
 
 
+
         
-        <current_voltage_relation cond_law="ohmic" ion="k" default_gmax="270" default_erev="-0.077.0">
+        <current_voltage_relation cond_law="ohmic" ion="k" default_gmax="270" default_erev="-0.075">
             
             <gate name="n" instances="1">
                 <closed_state id="n0"/>
                 <open_state id="n"/>
                      
-                <transition name="alpha" from="n0" to="n" expr_form="generic" expr="(-1.0 * 627.2) + (-1*16.0e3*v)/(-1.0 + (exp (-1.0 * (v + 0.0392)/ 0.005)))"/>
+               <transition name="alpha" from="n0" to="n" expr_form="generic" expr="((-1.0 * 627.2) + (-1.0 * 16000 * v))/(-1.0 + (exp (-1.0 * (v + 0.0392)/ 0.005)))"/>
                 <transition name="beta" from="n" to="n0" expr_form="generic" expr="250.0 /(exp ((v + 0.0543)/ 0.04))"/>
                     
             </gate>
