@@ -346,7 +346,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="valuePlotted">
-      <string>Na_Hipo_original:x</string>
+      <string>Na_Hipo_original:X</string>
      </void>
     </object>
    </void>
@@ -408,7 +408,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="valuePlotted">
-      <string>Na_Hipo_original:y</string>
+      <string>Na_Hipo_original:Y</string>
      </void>
     </object>
    </void>
@@ -482,7 +482,7 @@ part of NeuroML or any standardised XML specification. -->
    <float>250.0</float>
   </void>
   <void property="reference">
-   <string>Sim_31</string>
+   <string>Sim_32</string>
   </void>
   <void property="saveCopyGenSimFiles">
    <boolean>true</boolean>
