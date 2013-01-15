@@ -8,12 +8,12 @@ echo ""
 echo "*****************************************************"
 echo ""
 echo "    neuroConstruct generated GENESIS simulation"
-echo "    for project: /home/Simon/nC_projects/Vanier_Piriform_Cortex/Vanier_Piriform_Cortex.ncx"
+echo "    for project: /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/Vanier_Piriform_Cortex.ncx"
 echo ""
 echo "    Description: "
 
 echo "    Simulation configuration: Default Simulation Configuration"
-echo "    Simulation reference: Sim_31"
+echo "    Simulation reference: Sim_32"
 echo " "
 echo  "*****************************************************"
 
@@ -21,7 +21,7 @@ echo  "*****************************************************"
 
 //   Initializes random-number generator
 
-randseed 2039311522
+randseed 653499566
 
 //   This temperature is needed if any of the channels are temp dependent (Q10 dependence) 
 //   
@@ -92,11 +92,11 @@ create neutral /cells/CellGroup_2
 
 str compName
 
-readcell /home/Simon/nC_projects/Vanier_Piriform_Cortex/simulations/Sim_31/Pyramidal_Neuron_original_soma.p /cells/CellGroup_2/CellGroup_2_0
+readcell /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/Sim_32/Pyramidal_Neuron_original_soma.p /cells/CellGroup_2/CellGroup_2_0
 addfield /cells/CellGroup_2/CellGroup_2_0 celltype
 setfield /cells/CellGroup_2/CellGroup_2_0 celltype Pyramidal_Neuron_original_soma
 
-position /cells/CellGroup_2/CellGroup_2_0 9.486066E-5 1.597031E-5 7.36001E-5
+position /cells/CellGroup_2/CellGroup_2_0 6.650571E-5 1.60452E-5 8.819902E-5
 
 
 //////////////////////////////////////////////////////////////////////
@@ -114,11 +114,11 @@ create neutral /cells/CellGroup_4
 
 str compName
 
-readcell /home/Simon/nC_projects/Vanier_Piriform_Cortex/simulations/Sim_31/Pyramidal_Neuron_ChannelML_soma.p /cells/CellGroup_4/CellGroup_4_0
+readcell /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/Sim_32/Pyramidal_Neuron_ChannelML_soma.p /cells/CellGroup_4/CellGroup_4_0
 addfield /cells/CellGroup_4/CellGroup_4_0 celltype
 setfield /cells/CellGroup_4/CellGroup_4_0 celltype Pyramidal_Neuron_ChannelML_soma
 
-position /cells/CellGroup_4/CellGroup_4_0 5.631668E-5 9.743094E-6 1.05198E-4
+position /cells/CellGroup_4/CellGroup_4_0 4.018684E-5 1.89408E-5 7.774165E-6
 
 
 
@@ -185,23 +185,23 @@ setclock 0 {dt} // Units[GENESIS_SI_time, symbol: s]
 create neutral /plots
 
 
-create xform /plots/CellGroup_2_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_4/CellGroup_4_0: Sim_31"
+create xform /plots/CellGroup_2_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_4/CellGroup_4_0: Sim_32"
 xshow /plots/CellGroup_2_v
 create xgraph /plots/CellGroup_2_v/graph -xmin 0 -xmax {duration} -ymin -0.09 -ymax 0.05
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_4/CellGroup_4_0_Soma:Vm *black
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_2/CellGroup_2_0_Soma:Vm *red
 
-create xform /plots/GraphWin_2 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:h (Y) in /cells/CellGroup_4/CellGroup_4_0: Sim_31"
+create xform /plots/GraphWin_2 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:h (Y) in /cells/CellGroup_4/CellGroup_4_0: Sim_32"
 xshow /plots/GraphWin_2
 create xgraph /plots/GraphWin_2/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /plots/GraphWin_2/graph PLOT Y *...Soma_Na_Hippo_ChannelML:Y *black
-addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_2/graph PLOT y *...0/Soma_Na_Hipo_original:y *red
+addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_2/graph PLOT Y *...0/Soma_Na_Hipo_original:Y *red
 
-create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:m (X) in /cells/CellGroup_4/CellGroup_4_0: Sim_31"
+create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:m (X) in /cells/CellGroup_4/CellGroup_4_0: Sim_32"
 xshow /plots/GraphWin_1
 create xgraph /plots/GraphWin_1/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /plots/GraphWin_1/graph PLOT X *...Soma_Na_Hippo_ChannelML:X *black
-addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_1/graph PLOT x *...0/Soma_Na_Hipo_original:x *red
+addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_1/graph PLOT X *...0/Soma_Na_Hipo_original:X *red
 
 
 //////////////////////////////////////////////////////////////////////
@@ -211,7 +211,7 @@ addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_1/
 if (!{exists /controls})
     create neutral /controls
 end
-create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_31"
+create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_32"
 xshow /controls/runControl
 
 create xbutton /controls/runControl/RESET -script reset
@@ -236,10 +236,10 @@ maxwarnings 400
 
 reset
 str simsDir
-simsDir = "/home/Simon/nC_projects/Vanier_Piriform_Cortex/simulations/"
+simsDir = "/home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/"
 
 str simReference
-simReference = "Sim_31"
+simReference = "Sim_32"
 
 str targetDir
 targetDir =  {strcat {simsDir} {simReference}}
@@ -341,7 +341,7 @@ setfield /fileout{compName}Na_Hippo_ChannelML_h filename { strcat  {targetDir} {
 call /fileout{compName}Na_Hippo_ChannelML_h OUT_OPEN
 call /fileout{compName}Na_Hippo_ChannelML_h OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML Y}
 
-//   Saving Na_Hipo_original:y on only one seg, id: 0, in only cell: 0 in CellGroup_2
+//   Saving Na_Hipo_original:Y on only one seg, id: 0, in only cell: 0 in CellGroup_2
 
 if (!{exists /fileout/cells/CellGroup_2})
     create neutral /fileout/cells/CellGroup_2
@@ -360,13 +360,13 @@ ce {cellName}
 
 compName = {strcat {cellName} /Soma}
 str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Na_Hipo_original_y.dat"} }
-create asc_file /fileout{compName}Na_Hipo_original_y
-setfield /fileout{compName}Na_Hipo_original_y    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Na_Hipo_original_y filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /fileout{compName}Na_Hipo_original_y SAVE y
-call /fileout{compName}Na_Hipo_original_y OUT_OPEN
-call /fileout{compName}Na_Hipo_original_y OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original y}
+fileNameStr = {strcat {getpath {cellName} -tail} {".Na_Hipo_original_Y.dat"} }
+create asc_file /fileout{compName}Na_Hipo_original_Y
+setfield /fileout{compName}Na_Hipo_original_Y    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}Na_Hipo_original_Y filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /fileout{compName}Na_Hipo_original_Y SAVE Y
+call /fileout{compName}Na_Hipo_original_Y OUT_OPEN
+call /fileout{compName}Na_Hipo_original_Y OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original Y}
 
 //   Saving Na_Hippo_ChannelML:m on only one seg, id: 0, in only cell: 0 in CellGroup_4
 
@@ -395,7 +395,7 @@ setfield /fileout{compName}Na_Hippo_ChannelML_m filename { strcat  {targetDir} {
 call /fileout{compName}Na_Hippo_ChannelML_m OUT_OPEN
 call /fileout{compName}Na_Hippo_ChannelML_m OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML X}
 
-//   Saving Na_Hipo_original:x on only one seg, id: 0, in only cell: 0 in CellGroup_2
+//   Saving Na_Hipo_original:X on only one seg, id: 0, in only cell: 0 in CellGroup_2
 
 if (!{exists /fileout/cells/CellGroup_2})
     create neutral /fileout/cells/CellGroup_2
@@ -414,13 +414,13 @@ ce {cellName}
 
 compName = {strcat {cellName} /Soma}
 str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Na_Hipo_original_x.dat"} }
-create asc_file /fileout{compName}Na_Hipo_original_x
-setfield /fileout{compName}Na_Hipo_original_x    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Na_Hipo_original_x filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /fileout{compName}Na_Hipo_original_x SAVE x
-call /fileout{compName}Na_Hipo_original_x OUT_OPEN
-call /fileout{compName}Na_Hipo_original_x OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original x}
+fileNameStr = {strcat {getpath {cellName} -tail} {".Na_Hipo_original_X.dat"} }
+create asc_file /fileout{compName}Na_Hipo_original_X
+setfield /fileout{compName}Na_Hipo_original_X    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}Na_Hipo_original_X filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /fileout{compName}Na_Hipo_original_X SAVE X
+call /fileout{compName}Na_Hipo_original_X OUT_OPEN
+call /fileout{compName}Na_Hipo_original_X OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original X}
 
 //////////////////////////////////////////////////////////////////////
 //   This will run a full simulation when the file is executed
@@ -433,11 +433,11 @@ startTimeFile = {strcat {targetDir} {"starttime"}}
 stopTimeFile = {strcat {targetDir} {"stoptime"}}
 sh {strcat {"date +%s.%N > "} {startTimeFile}}
 
-echo Starting sim: Sim_31 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
+echo Starting sim: Sim_32 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
 date +%F__%T__%N
 step {steps}
 
-echo Finished simulation reference: Sim_31
+echo Finished simulation reference: Sim_32
 date +%F__%T__%N
 echo Data stored in directory: {targetDir}
 

@@ -32,7 +32,7 @@
             <meta:uri>http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table2</meta:uri>
         </meta:neuronDBref>
 
-                                                                <!-- Na Hippocampal cell (Vanier Piriform Pyramidal Cells)
+                                                                    <!-- Na Hippocampal cell (Vanier Piriform Pyramidal Cells)
 
 Channel equilibrium potentials (V)
 EREST_ACT = -0.0743  ENA = 0.055
@@ -53,21 +53,7 @@ setupalpha Na X  \
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                                <!--Converting to ChannelML:
+                                                                    <!--Converting to ChannelML:
 
 Na X: Alpha 
 
@@ -109,21 +95,7 @@ Generic A * ((v-V1/2)/B) / (-1 + exp((v-V1/2)/B))>-->
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                                <!--A = 1400 V1/2 = -0.0092 B = 0.005
+                                                                   <!--A = 1400 V1/2 = -0.0092 B = 0.005
 setupalpha Na Y   \
        AA 128.0                                               \
        AB 0.0                                                 \
@@ -155,27 +127,15 @@ Na Y:Beta
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         
         <current_voltage_relation cond_law="ohmic" ion="na" default_erev="0.055" default_gmax="2800"> 
             
-            <gate name="m" instances="3">
+            <gate name="m" instances="2">
                 <closed_state id="m0"/>
                 <open_state id="m"/>
 
-                <transition name="alpha" from="m0" to="m" expr_form="generic" expr="(-1.0 * 11584) + (-1 * 320000 * v) / (-1.0 + (exp (-1 * (v + 0.0362)/ 0.004 )))"/>  
-                <transition name="beta" from="m" to="m0" expr_form="generic" expr="2576 + (280000 * v) / (-1.0 + (exp ((v + 0.0092)/ 0.005)))"/>  
+                <transition name="alpha" from="m0" to="m" expr_form="generic" expr="((-1.0 * 11584) + (-1.0 * 320000 * v)) / (-1.0 + (exp (-1.0 * (v + 0.0362)/ 0.004 )))"/>  
+                <transition name="beta" from="m" to="m0" expr_form="generic" expr="(2576 + (280000 * v)) / (-1.0 + (exp ((v + 0.0092)/ 0.005)))"/>  
             </gate>
             
             <gate name="h" instances="1">
@@ -183,7 +143,7 @@ Na Y:Beta
                 <open_state id="h"/>
 
                 <transition name="alpha" from="h0" to="h" expr_form="generic" expr="128.0 /(exp ((v + 0.0323)/0.018))"/>  
-                <transition name="beta" from="h" to="h0" expr_form="generic" expr="4000/(1.0 + (exp (-1 * (v + 0.0093)/ 0.0005)))"/>    
+                <transition name="beta" from="h" to="h0" expr_form="generic" expr="4000/(1.0 + (exp (-1.0 * (v + 0.0093)/ 0.005)))"/>    
             </gate>
             
         </current_voltage_relation>

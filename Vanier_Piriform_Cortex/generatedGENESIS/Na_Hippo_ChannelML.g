@@ -28,19 +28,19 @@
 // /channelml/channel_type/current_voltage_relation/@default_erev = 0.055 
 // /channelml/channel_type/current_voltage_relation/@default_gmax = 2800 
 // /channelml/channel_type/current_voltage_relation/gate[1]/@name = m 
-// /channelml/channel_type/current_voltage_relation/gate[1]/@instances = 3 
+// /channelml/channel_type/current_voltage_relation/gate[1]/@instances = 2 
 // /channelml/channel_type/current_voltage_relation/gate[1]/closed_state/@id = m0 
 // /channelml/channel_type/current_voltage_relation/gate[1]/open_state/@id = m 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[1]/@name = alpha 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[1]/@from = m0 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[1]/@to = m 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[1]/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate[1]/transition[1]/@expr = 320.0e3*-0.0362 + -320.0e3*v/-1.0 + (exp ((v + 0.0362)/-0.004)) 
+// /channelml/channel_type/current_voltage_relation/gate[1]/transition[1]/@expr = ((-1.0 * 11584) + (-1.0 * 320000 * v)) / (-1.0 + (exp (-1.0 * (v + 0.0362)/ 0.004 ))) 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@name = beta 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@from = m 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@to = m0 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@expr = -280.0e3*-0.0092 + 280.0e3*v/-1.0 + (exp ((v + 0.0092)/0.005)) 
+// /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@expr = (2576 + (280000 * v)) / (-1.0 + (exp ((v + 0.0092)/ 0.005))) 
 // /channelml/channel_type/current_voltage_relation/gate[2]/@name = h 
 // /channelml/channel_type/current_voltage_relation/gate[2]/@instances = 1 
 // /channelml/channel_type/current_voltage_relation/gate[2]/closed_state/@id = h0 
@@ -54,14 +54,14 @@
 // /channelml/channel_type/current_voltage_relation/gate[2]/transition[2]/@from = h 
 // /channelml/channel_type/current_voltage_relation/gate[2]/transition[2]/@to = h0 
 // /channelml/channel_type/current_voltage_relation/gate[2]/transition[2]/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate[2]/transition[2]/@expr = 4000/(1.0 + (exp ((v + 0.0093)/-0.0005))) 
+// /channelml/channel_type/current_voltage_relation/gate[2]/transition[2]/@expr = 4000/(1.0 + (exp (-1.0 * (v + 0.0093)/ 0.005))) 
 // /channelml/channel_type/impl_prefs/table_settings/@max_v = 0.1 
 // /channelml/channel_type/impl_prefs/table_settings/@min_v = -0.1 
 // /channelml/channel_type/impl_prefs/table_settings/@table_divisions = 3000 
 
-// File from which this was generated: /home/Simon/nC_projects/Vanier_Piriform_Cortex/cellMechanisms/Na_Hippo_ChannelML/NaChannel_HH.xml
+// File from which this was generated: /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/cellMechanisms/Na_Hippo_ChannelML/NaChannel_HH.xml
 
-// XSL file with mapping to simulator: /home/Simon/nC_projects/Vanier_Piriform_Cortex/cellMechanisms/Na_Hippo_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
+// XSL file with mapping to simulator: /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/cellMechanisms/Na_Hippo_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
 
 
 
@@ -99,7 +99,7 @@ Reference: M.C. Vanier and J.M. Bower A comparative survey of automated paramete
         setfield {chanpath} \ 
             Ek              0.055 \
             Ik              0  \
-            Xpower          3 \
+            Xpower          2 \
             Ypower          1
         
         setfield {chanpath} \
@@ -137,9 +137,9 @@ Reference: M.C. Vanier and J.M. Bower A comparative survey of automated paramete
             float alpha
                 
                         
-            // Found a generic form of rate equation for alpha, using expression: 320.0e3*-0.0362 + -320.0e3*v/-1.0 + (exp ((v + 0.0362)/-0.004))
+            // Found a generic form of rate equation for alpha, using expression: ((-1.0 * 11584) + (-1.0 * 320000 * v)) / (-1.0 + (exp (-1.0 * (v + 0.0362)/ 0.004 )))
             // Will translate this for GENESIS compatibility...
-                    alpha = 320.0e3*-0.0362 + -320.0e3*v/-1.0 + {exp {{v + 0.0362}/-0.004}}
+                    alpha = {{-1.0 * 11584} + {-1.0 * 320000 * v}} / {-1.0 + {exp {-1.0 * {v + 0.0362}/ 0.004 }}}
             
             // Looking at rate: beta
                 
@@ -147,9 +147,9 @@ Reference: M.C. Vanier and J.M. Bower A comparative survey of automated paramete
             float beta
                 
                         
-            // Found a generic form of rate equation for beta, using expression: -280.0e3*-0.0092 + 280.0e3*v/-1.0 + (exp ((v + 0.0092)/0.005))
+            // Found a generic form of rate equation for beta, using expression: (2576 + (280000 * v)) / (-1.0 + (exp ((v + 0.0092)/ 0.005)))
             // Will translate this for GENESIS compatibility...
-                    beta = -280.0e3*-0.0092 + 280.0e3*v/-1.0 + {exp {{v + 0.0092}/0.005}}
+                    beta = {2576 + {280000 * v}} / {-1.0 + {exp {{v + 0.0092}/ 0.005}}}
             
 
             // Using the alpha and beta expressions to populate the tables
@@ -193,9 +193,9 @@ Reference: M.C. Vanier and J.M. Bower A comparative survey of automated paramete
             float beta
                 
                         
-            // Found a generic form of rate equation for beta, using expression: 4000/(1.0 + (exp ((v + 0.0093)/-0.0005)))
+            // Found a generic form of rate equation for beta, using expression: 4000/(1.0 + (exp (-1.0 * (v + 0.0093)/ 0.005)))
             // Will translate this for GENESIS compatibility...
-                    beta = 4000/{1.0 + {exp {{v + 0.0093}/-0.0005}}}
+                    beta = 4000/{1.0 + {exp {-1.0 * {v + 0.0093}/ 0.005}}}
             
 
             // Using the alpha and beta expressions to populate the tables
