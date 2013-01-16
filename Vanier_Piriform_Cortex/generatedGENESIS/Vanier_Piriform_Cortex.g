@@ -13,7 +13,7 @@ echo ""
 echo "    Description: "
 
 echo "    Simulation configuration: Default Simulation Configuration"
-echo "    Simulation reference: Sim_36"
+echo "    Simulation reference: Sim_37"
 echo " "
 echo  "*****************************************************"
 
@@ -21,7 +21,7 @@ echo  "*****************************************************"
 
 //   Initializes random-number generator
 
-randseed 1410230611
+randseed 2127975981
 
 //   This temperature is needed if any of the channels are temp dependent (Q10 dependence) 
 //   
@@ -60,20 +60,26 @@ env // prints details on some global variables
 //   Including channel mechanisms 
 //   
 
-include Na_Hipo_original
-make_Na_Hipo_original
+include KDR_Hipo_original
+make_KDR_Hipo_original
 
 include LeakConductance
 make_LeakConductance
 
-include KDR_Hipo_original
-make_KDR_Hipo_original
+include Piriform_KA_original
+make_Piriform_KA_original
+
+include Na_Hipo_original
+make_Na_Hipo_original
+
+include Na_Hippo_ChannelML
+make_Na_Hippo_ChannelML
 
 include KDR_Hippo_ChannelML
 make_KDR_Hippo_ChannelML
 
-include Na_Hippo_ChannelML
-make_Na_Hippo_ChannelML
+include Piriform_KA_ChannelML
+make_Piriform_KA_ChannelML
 
 
 //   Including synaptic mech 
@@ -98,11 +104,11 @@ create neutral /cells/CellGroup_2
 
 str compName
 
-readcell /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/Sim_36/Pyramidal_Neuron_original_soma.p /cells/CellGroup_2/CellGroup_2_0
+readcell /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/Sim_37/Pyramidal_Neuron_original_soma.p /cells/CellGroup_2/CellGroup_2_0
 addfield /cells/CellGroup_2/CellGroup_2_0 celltype
 setfield /cells/CellGroup_2/CellGroup_2_0 celltype Pyramidal_Neuron_original_soma
 
-position /cells/CellGroup_2/CellGroup_2_0 4.392101E-5 9.751907E-6 3.566549E-5
+position /cells/CellGroup_2/CellGroup_2_0 5.817802E-5 7.903647E-6 4.241349E-5
 
 
 //////////////////////////////////////////////////////////////////////
@@ -120,11 +126,11 @@ create neutral /cells/CellGroup_4
 
 str compName
 
-readcell /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/Sim_36/Pyramidal_Neuron_ChannelML_soma.p /cells/CellGroup_4/CellGroup_4_0
+readcell /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/Sim_37/Pyramidal_Neuron_ChannelML_soma.p /cells/CellGroup_4/CellGroup_4_0
 addfield /cells/CellGroup_4/CellGroup_4_0 celltype
 setfield /cells/CellGroup_4/CellGroup_4_0 celltype Pyramidal_Neuron_ChannelML_soma
 
-position /cells/CellGroup_4/CellGroup_4_0 9.62326E-5 1.460363E-5 3.091654E-5
+position /cells/CellGroup_4/CellGroup_4_0 8.659987E-5 2.326611E-5 1.145927E-4
 
 
 
@@ -185,35 +191,47 @@ int steps =  {round {{duration}/{dt}}}
 setclock 0 {dt} // Units[GENESIS_SI_time, symbol: s]
 
 //////////////////////////////////////////////////////////////////////
-//   Adding 8 plot(s)
+//   Adding 12 plot(s)
 //////////////////////////////////////////////////////////////////////
 
 create neutral /plots
 
 
-create xform /plots/CellGroup_2_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_4/CellGroup_4_0: Sim_36"
+create xform /plots/CellGroup_2_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_4/CellGroup_4_0: Sim_37"
 xshow /plots/CellGroup_2_v
 create xgraph /plots/CellGroup_2_v/graph -xmin 0 -xmax {duration} -ymin -0.09 -ymax 0.05
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_4/CellGroup_4_0_Soma:Vm *black
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_2/CellGroup_2_0_Soma:Vm *red
 
-create xform /plots/GraphWin_2 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:h (Y) in /cells/CellGroup_4/CellGroup_4_0: Sim_36"
+create xform /plots/GraphWin_2 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:h (Y) in /cells/CellGroup_4/CellGroup_4_0: Sim_37"
 xshow /plots/GraphWin_2
 create xgraph /plots/GraphWin_2/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /plots/GraphWin_2/graph PLOT Y *...Soma_Na_Hippo_ChannelML:Y *black
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_2/graph PLOT Y *...0/Soma_Na_Hipo_original:Y *red
 
-create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:m (X) in /cells/CellGroup_4/CellGroup_4_0: Sim_36"
+create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Na_Hippo_ChannelML:m (X) in /cells/CellGroup_4/CellGroup_4_0: Sim_37"
 xshow /plots/GraphWin_1
 create xgraph /plots/GraphWin_1/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /plots/GraphWin_1/graph PLOT X *...Soma_Na_Hippo_ChannelML:X *black
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_1/graph PLOT X *...0/Soma_Na_Hipo_original:X *red
 
-create xform /plots/GraphWin_3 [500,100,400,400]  -title "Values of KDR_Hipo_original:X (X) in /cells/CellGroup_2/CellGroup_2_0: Sim_36"
+create xform /plots/GraphWin_3 [500,100,400,400]  -title "Values of KDR_Hipo_original:X (X) in /cells/CellGroup_2/CellGroup_2_0: Sim_37"
 xshow /plots/GraphWin_3
 create xgraph /plots/GraphWin_3/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/KDR_Hipo_original /plots/GraphWin_3/graph PLOT X *.../Soma_KDR_Hipo_original:X *black
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/KDR_Hippo_ChannelML /plots/GraphWin_3/graph PLOT X *...oma_KDR_Hippo_ChannelML:X *red
+
+create xform /plots/GraphWin_4 [500,100,400,400]  -title "Values of Piriform_KA_original:X (X) in /cells/CellGroup_2/CellGroup_2_0: Sim_37"
+xshow /plots/GraphWin_4
+create xgraph /plots/GraphWin_4/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
+addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original /plots/GraphWin_4/graph PLOT X *...ma_Piriform_KA_original:X *black
+addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML /plots/GraphWin_4/graph PLOT X *...a_Piriform_KA_ChannelML:X *red
+
+create xform /plots/GraphWin_5 [500,100,400,400]  -title "Values of Piriform_KA_original:Y (Y) in /cells/CellGroup_2/CellGroup_2_0: Sim_37"
+xshow /plots/GraphWin_5
+create xgraph /plots/GraphWin_5/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
+addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original /plots/GraphWin_5/graph PLOT Y *...ma_Piriform_KA_original:Y *black
+addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML /plots/GraphWin_5/graph PLOT Y *...a_Piriform_KA_ChannelML:Y *red
 
 
 //////////////////////////////////////////////////////////////////////
@@ -223,7 +241,7 @@ addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/KDR_Hippo_ChannelML /plots/GraphWin
 if (!{exists /controls})
     create neutral /controls
 end
-create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_36"
+create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_37"
 xshow /controls/runControl
 
 create xbutton /controls/runControl/RESET -script reset
@@ -240,7 +258,7 @@ echo Checking and resetting...
 maxwarnings 400
 
 //////////////////////////////////////////////////////////////////////
-//   Recording 8 variable(s)
+//   Recording 12 variable(s)
 //////////////////////////////////////////////////////////////////////
 
 
@@ -251,7 +269,7 @@ str simsDir
 simsDir = "/home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/simulations/"
 
 str simReference
-simReference = "Sim_36"
+simReference = "Sim_37"
 
 str targetDir
 targetDir =  {strcat {simsDir} {simReference}}
@@ -488,6 +506,114 @@ setfield /fileout{compName}KDR_Hippo_ChannelML_n filename { strcat  {targetDir} 
 call /fileout{compName}KDR_Hippo_ChannelML_n OUT_OPEN
 call /fileout{compName}KDR_Hippo_ChannelML_n OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/KDR_Hippo_ChannelML X}
 
+//   Saving Piriform_KA_original:X on only one seg, id: 0, in only cell: 0 in CellGroup_2
+
+if (!{exists /fileout/cells/CellGroup_2})
+    create neutral /fileout/cells/CellGroup_2
+end
+
+//   Recording cell: /cells/CellGroup_2/CellGroup_2_0
+
+cellName = "/cells/CellGroup_2/CellGroup_2_0"
+    if (!{exists /fileout{cellName}})
+        create neutral /fileout{cellName}
+    end
+
+ce {cellName}
+
+//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
+
+compName = {strcat {cellName} /Soma}
+str fileNameStr
+fileNameStr = {strcat {getpath {cellName} -tail} {".Piriform_KA_original_X.dat"} }
+create asc_file /fileout{compName}Piriform_KA_original_X
+setfield /fileout{compName}Piriform_KA_original_X    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}Piriform_KA_original_X filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original /fileout{compName}Piriform_KA_original_X SAVE X
+call /fileout{compName}Piriform_KA_original_X OUT_OPEN
+call /fileout{compName}Piriform_KA_original_X OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original X}
+
+//   Saving Piriform_KA_ChannelML:m on only one seg, id: 0, in only cell: 0 in CellGroup_4
+
+if (!{exists /fileout/cells/CellGroup_4})
+    create neutral /fileout/cells/CellGroup_4
+end
+
+//   Recording cell: /cells/CellGroup_4/CellGroup_4_0
+
+cellName = "/cells/CellGroup_4/CellGroup_4_0"
+    if (!{exists /fileout{cellName}})
+        create neutral /fileout{cellName}
+    end
+
+ce {cellName}
+
+//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
+
+compName = {strcat {cellName} /Soma}
+str fileNameStr
+fileNameStr = {strcat {getpath {cellName} -tail} {".Piriform_KA_ChannelML_m.dat"} }
+create asc_file /fileout{compName}Piriform_KA_ChannelML_m
+setfield /fileout{compName}Piriform_KA_ChannelML_m    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}Piriform_KA_ChannelML_m filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML /fileout{compName}Piriform_KA_ChannelML_m SAVE X
+call /fileout{compName}Piriform_KA_ChannelML_m OUT_OPEN
+call /fileout{compName}Piriform_KA_ChannelML_m OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML X}
+
+//   Saving Piriform_KA_original:Y on only one seg, id: 0, in only cell: 0 in CellGroup_2
+
+if (!{exists /fileout/cells/CellGroup_2})
+    create neutral /fileout/cells/CellGroup_2
+end
+
+//   Recording cell: /cells/CellGroup_2/CellGroup_2_0
+
+cellName = "/cells/CellGroup_2/CellGroup_2_0"
+    if (!{exists /fileout{cellName}})
+        create neutral /fileout{cellName}
+    end
+
+ce {cellName}
+
+//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
+
+compName = {strcat {cellName} /Soma}
+str fileNameStr
+fileNameStr = {strcat {getpath {cellName} -tail} {".Piriform_KA_original_Y.dat"} }
+create asc_file /fileout{compName}Piriform_KA_original_Y
+setfield /fileout{compName}Piriform_KA_original_Y    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}Piriform_KA_original_Y filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original /fileout{compName}Piriform_KA_original_Y SAVE Y
+call /fileout{compName}Piriform_KA_original_Y OUT_OPEN
+call /fileout{compName}Piriform_KA_original_Y OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original Y}
+
+//   Saving Piriform_KA_ChannelML:h on only one seg, id: 0, in only cell: 0 in CellGroup_4
+
+if (!{exists /fileout/cells/CellGroup_4})
+    create neutral /fileout/cells/CellGroup_4
+end
+
+//   Recording cell: /cells/CellGroup_4/CellGroup_4_0
+
+cellName = "/cells/CellGroup_4/CellGroup_4_0"
+    if (!{exists /fileout{cellName}})
+        create neutral /fileout{cellName}
+    end
+
+ce {cellName}
+
+//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
+
+compName = {strcat {cellName} /Soma}
+str fileNameStr
+fileNameStr = {strcat {getpath {cellName} -tail} {".Piriform_KA_ChannelML_h.dat"} }
+create asc_file /fileout{compName}Piriform_KA_ChannelML_h
+setfield /fileout{compName}Piriform_KA_ChannelML_h    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}Piriform_KA_ChannelML_h filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML /fileout{compName}Piriform_KA_ChannelML_h SAVE Y
+call /fileout{compName}Piriform_KA_ChannelML_h OUT_OPEN
+call /fileout{compName}Piriform_KA_ChannelML_h OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML Y}
+
 //////////////////////////////////////////////////////////////////////
 //   This will run a full simulation when the file is executed
 //////////////////////////////////////////////////////////////////////
@@ -499,11 +625,11 @@ startTimeFile = {strcat {targetDir} {"starttime"}}
 stopTimeFile = {strcat {targetDir} {"stoptime"}}
 sh {strcat {"date +%s.%N > "} {startTimeFile}}
 
-echo Starting sim: Sim_36 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
+echo Starting sim: Sim_37 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
 date +%F__%T__%N
 step {steps}
 
-echo Finished simulation reference: Sim_36
+echo Finished simulation reference: Sim_37
 date +%F__%T__%N
 echo Data stored in directory: {targetDir}
 
