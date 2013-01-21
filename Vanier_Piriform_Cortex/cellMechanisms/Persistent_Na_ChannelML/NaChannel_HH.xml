@@ -32,7 +32,7 @@
             <meta:uri>http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table2</meta:uri>
         </meta:neuronDBref>
 
-    <!--float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
+        <!--float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
 float ENA       =  0.055
 float EK        = -0.075
 float ECA       =  0.080
@@ -57,27 +57,25 @@ float ECA       =  0.080
         X_B->calc_mode 0
     call {chanpath} TABFILL X 3000 0>-->
 
+
         
         <current_voltage_relation cond_law="ohmic" ion="na" default_erev="0.055" default_gmax="65"> 
             
-            <gate name="m" instances="3">
+            <gate name="m" instances="1">
                 <closed_state id="m0"/>
                 <open_state id="m"/>
 
-                <transition name="alpha" from="m0" to="m" expr_form="exp_linear" rate="1" scale="10" midpoint="-40"/>  
-                <transition name="beta" from="m" to="m0" expr_form="exponential" rate="4" scale="-18" midpoint="-65"/>  
+                <time_course name="tau" from="m0" to="m" expr_form="generic" expr="1.0 / (91000 * (v + 0.048)/ (1.0 - (exp ((-1.0 * 0.048 - v)/ 0.005))) + (-1.0 * 62000) * (v + 0.048)/ (1.0 - (exp ((v + 0.048)/ 0.005))))"/>
+                <steady_state name="inf" from="m0" to="m" expr_form="generic" expr="1.0 / (1.0 + (exp ((-1.0 * 0.043 - v)/ 0.005)))"/>
+ 
             </gate>
             
-            <gate name="h" instances="1">
-                <closed_state id="h0"/>
-                <open_state id="h"/>
 
-                <transition name="alpha" from="h0" to="h" expr_form="exponential" rate="0.07" scale="-20" midpoint="-65"/>  
-                <transition name="beta" from="h" to="h0" expr_form="sigmoid" rate="1" scale="-10" midpoint="-35"/>    
-            </gate>
-            
         </current_voltage_relation>
         
+	<impl_prefs>
+		<table_settings max_v="0.1" min_v="-0.1" table_divisions="3000"/>
+	</impl_prefs>
         
     </channel_type>
 </channelml>
