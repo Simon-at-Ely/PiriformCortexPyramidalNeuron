@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<channelml xmlns="http://morphml.org/channelml/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:meta="http://morphml.org/metadata/schema" xsi:schemaLocation="http://morphml.org/channelml/schema  http://www.neuroml.org/NeuroMLValidator/NeuroMLFiles/Schemata/v1.8.1/Level2/ChannelML_v1.8.1.xsd" units="SI Units">
+
+    <meta:notes>ChannelML file containing a single Channel description</meta:notes>
+    
+    <channel_type name="Km_ChannelML">
+        
+        <status value="stable">
+            <meta:comment>Equations fromM. C. Vanier and J. M. Bower, A Comparative Survey of Automated Parameter-Searching Methods for Compartmental Neural Models</meta:comment>
+            <meta:contributor>
+                <meta:name>Simon O'Connor</meta:name>
+            </meta:contributor>
+        </status>
+        
+        <meta:notes>Non inactivating Muscarinic type K channel, with rate equations expressed in tau and inf form</meta:notes>
+    
+        <meta:authorList>
+            <meta:modelTranslator>
+                <meta:name>Simon O'Connor</meta:name>
+                <meta:institution>Cardiff University</meta:institution>    
+                <meta:email>simon.oconnor - at - btinternet.com</meta:email>
+            </meta:modelTranslator>
+        </meta:authorList>
+
+        <meta:publication>
+            <meta:fullTitle>M. C. Vanier and J. M. Bower, A Comparative Survey of Automated Parameter-Searching Methods for Compartmental Neural Models, .</meta:fullTitle>
+            <meta:pubmedRef>http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&amp;db=pubmed&amp;dopt=Abstract&amp;list_uids=12991237</meta:pubmedRef>
+        </meta:publication>
+
+        <meta:neuronDBref>
+            <meta:modelName>K channels</meta:modelName>
+            <meta:uri>http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table3</meta:uri>
+        </meta:neuronDBref>
+
+         <!--       Ek     -96.0e-03          \
+        Gbar   %Max Conductance Density%                  \
+        Ik     0                  \
+        Gk     0                  \
+        Xpower 1                  \
+        Ypower 0                  \
+        Zpower 0
+
+    float OFFSET = 0.0
+
+    call {chanpath} TABCREATE X 49 -0.1 0.1
+    x = -0.1
+    dx = 0.2 / 49.0
+
+    for (i = 0; i <= 49; i = i + 1)
+        y = 0.33 * \
+            (0.033 + 1.0 / (11.3*({exp {(x + 0.035 + OFFSET)/0.02}}) + \
+            {exp {-(x + 0.035 + OFFSET)/0.01}}))
+
+        setfield {chanpath} X_A->table[{i}] {y}
+        y = 1.0 / (1.0 + {exp {-(x + 0.035 + OFFSET)/0.01}})
+        setfield {chanpath} X_B->table[{i}] {y}
+        x = x + dx
+    end
+
+    tweaktau {chanpath} X
+    setfield {chanpath} X_A->calc_mode 0 X_B->calc_mode 0
+    call {chanpath} TABFILL X 3000 0 -->
+
+
+        
+        
+        <current_voltage_relation cond_law="ohmic" ion="k" default_gmax="100.0" default_erev="-0.096">
+            
+            
+            <gate name="m" instances="1">
+                <closed_state id="m0"/>
+                <open_state id="m"/>
+                     
+                <time_course name="tau" from="m0" to="m" expr_form="generic" expr="0.33 * (0.033 + 1.0 / (11.3 * (exp ((v + 43.5) /0.02)))) + (exp (-1.0 * (v + 0.035)/ 0.01))"/>
+                <steady_state name="inf" from="m0" to="m" expr_form="generic" expr="1.0 / (1.0 + (exp (-1.0 * (v + 0.035)/ 0.01)))"/>
+                    
+            </gate>
+        
+
+        </current_voltage_relation> 
+
+	<impl_prefs>
+		<table_settings max_v="0.1" min_v="-0.1" table_divisions="3000"/>
+	</impl_prefs>
+        
+        
+    </channel_type>
+</channelml>
