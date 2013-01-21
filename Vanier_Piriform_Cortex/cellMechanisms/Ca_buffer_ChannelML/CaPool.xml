@@ -23,7 +23,7 @@
            <meta:pubmedRef>http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&amp;db=PubMed&amp;list_uids=10515252&amp;dopt=Abstract</meta:pubmedRef>
         </meta:publication>
 
-    <!--float ECA       =  0.080
+        <!--float ECA       =  0.080
 
     setfield {chanpath}            \
         tau     0.025           \  // sec
@@ -33,12 +33,13 @@
     addfield {chanpath} addmsg1
     setfield {chanpath} addmsg1 "../Ca . I_Ca Ik">-->
 
+
         
         <ion_species name="ca"/>
         
-        <decaying_pool_model resting_conc="7.55e-5" decay_constant="1e-2">
+        <decaying_pool_model resting_conc="50e-09" decay_constant="0.025">
             
-            <pool_volume_info shell_thickness="8.4e-8"/>
+            <pool_volume_info shell_thickness="1.0e-6"/>
             
         </decaying_pool_model>
         
