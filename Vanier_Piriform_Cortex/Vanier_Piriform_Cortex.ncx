@@ -740,7 +740,7 @@ part of NeuroML or any standardised XML specification. -->
    <void method="add">
     <object class="ucl.physiol.neuroconstruct.project.SimPlot">
      <void property="cellGroup">
-      <string>CellGroup_5</string>
+      <string>CellGroup_2</string>
      </void>
      <void property="cellNumber">
       <string>0</string>
@@ -771,7 +771,7 @@ part of NeuroML or any standardised XML specification. -->
    <void method="add">
     <object class="ucl.physiol.neuroconstruct.project.SimPlot">
      <void property="cellGroup">
-      <string>CellGroup_6</string>
+      <string>CellGroup_4</string>
      </void>
      <void property="cellNumber">
       <string>0</string>
@@ -802,7 +802,7 @@ part of NeuroML or any standardised XML specification. -->
    <void method="add">
     <object class="ucl.physiol.neuroconstruct.project.SimPlot">
      <void property="cellGroup">
-      <string>CellGroup_5</string>
+      <string>CellGroup_2</string>
      </void>
      <void property="cellNumber">
       <string>0</string>
@@ -833,7 +833,7 @@ part of NeuroML or any standardised XML specification. -->
    <void method="add">
     <object class="ucl.physiol.neuroconstruct.project.SimPlot">
      <void property="cellGroup">
-      <string>CellGroup_6</string>
+      <string>CellGroup_4</string>
      </void>
      <void property="cellNumber">
       <string>0</string>
@@ -1018,7 +1018,7 @@ part of NeuroML or any standardised XML specification. -->
    <float>250.0</float>
   </void>
   <void property="reference">
-   <string>Sim_45</string>
+   <string>Sim_50</string>
   </void>
   <void property="saveCopyGenSimFiles">
    <boolean>true</boolean>
@@ -1320,6 +1320,85 @@ part of NeuroML or any standardised XML specification. -->
      </void>
      <void property="simDuration">
       <float>600.0</float>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="ucl.physiol.neuroconstruct.project.SimConfig">
+     <void property="cellGroups">
+      <void method="add">
+       <string>CellGroup_2</string>
+      </void>
+      <void method="add">
+       <string>CellGroup_4</string>
+      </void>
+     </void>
+     <void property="inputs">
+      <void method="add">
+       <string>Input_1</string>
+      </void>
+      <void method="add">
+       <string>Input_2</string>
+      </void>
+     </void>
+     <void property="name">
+      <string>AllWorkingChannels</string>
+     </void>
+     <void property="plots">
+      <void method="add">
+       <string>CellGroup_2_v</string>
+      </void>
+      <void method="add">
+       <string>CellGroup_4_v</string>
+      </void>
+      <void method="add">
+       <string>CellGroup_5_v</string>
+      </void>
+      <void method="add">
+       <string>Var_1</string>
+      </void>
+      <void method="add">
+       <string>Var_10</string>
+      </void>
+      <void method="add">
+       <string>Var_13</string>
+      </void>
+      <void method="add">
+       <string>Var_14</string>
+      </void>
+      <void method="add">
+       <string>Var_15</string>
+      </void>
+      <void method="add">
+       <string>Var_16</string>
+      </void>
+      <void method="add">
+       <string>Var_2</string>
+      </void>
+      <void method="add">
+       <string>Var_3</string>
+      </void>
+      <void method="add">
+       <string>Var_4</string>
+      </void>
+      <void method="add">
+       <string>Var_5</string>
+      </void>
+      <void method="add">
+       <string>Var_6</string>
+      </void>
+      <void method="add">
+       <string>Var_7</string>
+      </void>
+      <void method="add">
+       <string>Var_8</string>
+      </void>
+      <void method="add">
+       <string>Var_9</string>
+      </void>
+     </void>
+     <void property="simDuration">
+      <float>250.0</float>
      </void>
     </object>
    </void>

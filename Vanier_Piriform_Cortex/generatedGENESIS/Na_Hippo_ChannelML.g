@@ -59,9 +59,9 @@
 // /channelml/channel_type/impl_prefs/table_settings/@min_v = -0.1 
 // /channelml/channel_type/impl_prefs/table_settings/@table_divisions = 3000 
 
-// File from which this was generated: /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/cellMechanisms/Na_Hippo_ChannelML/NaChannel_HH.xml
+// File from which this was generated: /home/padraig/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/cellMechanisms/Na_Hippo_ChannelML/NaChannel_HH.xml
 
-// XSL file with mapping to simulator: /home/Simon/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/cellMechanisms/Na_Hippo_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
+// XSL file with mapping to simulator: /home/padraig/PiriformCortexPyramidalNeuron/Vanier_Piriform_Cortex/cellMechanisms/Na_Hippo_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
 
 
 

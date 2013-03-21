@@ -26,6 +26,7 @@
 
 
 // Cell mechanism: LeakConductance (density: 1.98807E-8 mS um^-2)
+// Cell mechanism: Olfactory_Ca (density: 1.0E-8 mS um^-2)
 // Cell mechanism: KDR_Hipo_original (density: 2.7E-7 mS um^-2)
 // Cell mechanism: Na_Hipo_original (density: 2.8E-6 mS um^-2)
 // Cell mechanism: Piriform_KA_original (density: 2.0E-7 mS um^-2)
@@ -34,6 +35,6 @@
 
 
 *double_endpoint
-Soma none 0 0 0 0 21.3 0 10.4 KDR_Hipo_original 270 Na_Hipo_original 2800 Piriform_KA_original 200 
+Soma none 0 0 0 0 21.3 0 10.4 Olfactory_Ca 10 KDR_Hipo_original 270 Na_Hipo_original 2800 Piriform_KA_original 200 
 *double_endpoint_off
 

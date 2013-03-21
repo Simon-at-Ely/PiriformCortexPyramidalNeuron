@@ -26,6 +26,7 @@
 
 
 // Cell mechanism: LeakConductance (density: 1.98807E-8 mS um^-2)
+// Cell mechanism: Olfactory_Ca_ChannelML (density: 1.0E-8 mS um^-2)
 // Cell mechanism: KDR_Hippo_ChannelML (density: 2.7E-7 mS um^-2)
 // Cell mechanism: Na_Hippo_ChannelML (density: 2.8E-6 mS um^-2)
 // Cell mechanism: Piriform_KA_ChannelML (density: 2.0E-7 mS um^-2)
@@ -34,6 +35,6 @@
 
 
 *double_endpoint
-Soma none 0 0 0 0 21.3 0 10.4 KDR_Hippo_ChannelML 270 Na_Hippo_ChannelML 2800 Piriform_KA_ChannelML 200 
+Soma none 0 0 0 0 21.3 0 10.4 Olfactory_Ca_ChannelML 10 KDR_Hippo_ChannelML 270 Na_Hippo_ChannelML 2800 Piriform_KA_ChannelML 200 
 *double_endpoint_off
 
