@@ -1,5 +1,5 @@
 *.bak
-Vanier_Piriform_Cortex/generatedMOOSE
-Vanier_Piriform_Cortex/generatedNeuroML
-Vanier_Piriform_Cortex/generatedNEURON
-Vanier_Piriform_Cortex/simulations
+neuroConstruct/generatedMOOSE
+neuroConstruct/generatedNeuroML
+neuroConstruct/generatedNEURON
+neuroConstruct/simulations
