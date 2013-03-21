@@ -1018,7 +1018,7 @@ part of NeuroML or any standardised XML specification. -->
    <float>250.0</float>
   </void>
   <void property="reference">
-   <string>Sim_41</string>
+   <string>Sim_42</string>
   </void>
   <void property="saveCopyGenSimFiles">
    <boolean>true</boolean>
