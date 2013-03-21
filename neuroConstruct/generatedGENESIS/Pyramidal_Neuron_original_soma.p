@@ -15,7 +15,7 @@
 
 *set_global	         RM	0.3333333  // using: Units[GENESIS_SI_specificMembraneResistance, symbol: ohm m²]
 
-*set_global	         EREST_ACT	-0.06  // using: Units[GENESIS_SI_voltage, symbol: V]
+*set_global	         EREST_ACT	-0.0594  // using: Units[GENESIS_SI_voltage, symbol: V]
 
 *set_compt_param     ELEAK	-0.0594  // using: Units[GENESIS_SI_voltage, symbol: V]
 

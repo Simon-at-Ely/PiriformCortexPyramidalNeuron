@@ -21,6 +21,7 @@ include model5.channels
 
 make_channel_library
 
+float EREST_ACT = -0.0594
 
 
 create neutral /cells
@@ -31,7 +32,7 @@ create neutral /cells/CellGroup_2
 
 str compName
 
-readcell model5.p /cells/CellGroup_2/CellGroup_2_0
+readcell model5_soma.p /cells/CellGroup_2/CellGroup_2_0
 
 echo "Read in cell!"
 
@@ -78,7 +79,7 @@ echo "-----------Done specifying hsolve "
 
 
 float dt = 1.0E-5
-float duration = 0.25
+float duration = 0.05
 int steps =  {round {{duration}/{dt}}}
 
 setclock 0 {dt} // Units[GENESIS_SI_time, symbol: s]
@@ -104,8 +105,8 @@ addmsg /cells/CellGroup_2/CellGroup_2_0/soma/Na /plots/GraphWin_1/graph PLOT Y *
 addmsg /cells/CellGroup_2/CellGroup_2_0/soma/Ca /plots/GraphWin_1/graph PLOT X *...p_2_0/soma_Ca:X *red
 addmsg /cells/CellGroup_2/CellGroup_2_0/soma/Ca /plots/GraphWin_1/graph PLOT Y *...p_2_0/soma_Ca:Y *orange
 
-addmsg /cells/CellGroup_2/CellGroup_2_0/soma/Na_pers /plots/GraphWin_1/graph PLOT X *...0/soma_Na_pers:X *pink
-addmsg /cells/CellGroup_2/CellGroup_2_0/soma/Na_pers /plots/GraphWin_1/graph PLOT Y *...0/soma_Na_pers:Y *brown
+addmsg /cells/CellGroup_2/CellGroup_2_0/soma/Ka /plots/GraphWin_1/graph PLOT X *...0/soma_Ka:X *pink
+addmsg /cells/CellGroup_2/CellGroup_2_0/soma/Ka /plots/GraphWin_1/graph PLOT Y *...0/soma_Ka:Y *brown
 
 
 

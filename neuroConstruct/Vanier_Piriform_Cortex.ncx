@@ -436,7 +436,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_2</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -467,7 +467,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_2</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -498,7 +498,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_3</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -529,7 +529,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_3</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -560,7 +560,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_4</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -591,7 +591,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_4</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -622,7 +622,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_5</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -653,7 +653,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_5</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -684,7 +684,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_6</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -715,7 +715,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_6</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -746,7 +746,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_7</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -777,7 +777,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_7</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -808,7 +808,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_8</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -839,7 +839,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_8</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -1018,7 +1018,7 @@ part of NeuroML or any standardised XML specification. -->
    <float>250.0</float>
   </void>
   <void property="reference">
-   <string>Sim_53</string>
+   <string>Sim_60</string>
   </void>
   <void property="saveCopyGenSimFiles">
    <boolean>true</boolean>
@@ -1398,7 +1398,7 @@ part of NeuroML or any standardised XML specification. -->
       </void>
      </void>
      <void property="simDuration">
-      <float>250.0</float>
+      <float>50.0</float>
      </void>
     </object>
    </void>
