@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.6.0_27" class="java.beans.XMLDecoder">
+<java version="1.6.0_18" class="java.beans.XMLDecoder">
 
 <!-- This is a neuroConstruct project file. It's best to open this
 file with neuroConstruct, as opposed to editing it directly. 
@@ -9,7 +9,7 @@ part of NeuroML or any standardised XML specification. -->
 
  <object class="ucl.physiol.neuroconstruct.project.BasicProjectInfo">
   <void property="projectFileVersion">
-   <string>neuroConstruct v1.6.1</string>
+   <string>neuroConstruct v1.7.0</string>
   </void>
   <void property="projectName">
    <string>Vanier_Piriform_Cortex</string>
@@ -1018,7 +1018,7 @@ part of NeuroML or any standardised XML specification. -->
    <float>250.0</float>
   </void>
   <void property="reference">
-   <string>Sim_60</string>
+   <string>Sim_69</string>
   </void>
   <void property="saveCopyGenSimFiles">
    <boolean>true</boolean>
@@ -1241,12 +1241,6 @@ part of NeuroML or any standardised XML specification. -->
      </void>
      <void property="inputs">
       <void method="add">
-       <string>Input_1</string>
-      </void>
-      <void method="add">
-       <string>Input_2</string>
-      </void>
-      <void method="add">
        <string>Input_3</string>
       </void>
       <void method="add">
@@ -1264,58 +1258,16 @@ part of NeuroML or any standardised XML specification. -->
      </void>
      <void property="plots">
       <void method="add">
-       <string>CellGroup_2_v</string>
-      </void>
-      <void method="add">
-       <string>CellGroup_4_v</string>
-      </void>
-      <void method="add">
        <string>CellGroup_5_v</string>
       </void>
       <void method="add">
        <string>CellGroup_6_v</string>
       </void>
       <void method="add">
-       <string>Var_1</string>
+       <string>Var_17</string>
       </void>
       <void method="add">
-       <string>Var_10</string>
-      </void>
-      <void method="add">
-       <string>Var_13</string>
-      </void>
-      <void method="add">
-       <string>Var_14</string>
-      </void>
-      <void method="add">
-       <string>Var_15</string>
-      </void>
-      <void method="add">
-       <string>Var_16</string>
-      </void>
-      <void method="add">
-       <string>Var_2</string>
-      </void>
-      <void method="add">
-       <string>Var_3</string>
-      </void>
-      <void method="add">
-       <string>Var_4</string>
-      </void>
-      <void method="add">
-       <string>Var_5</string>
-      </void>
-      <void method="add">
-       <string>Var_6</string>
-      </void>
-      <void method="add">
-       <string>Var_7</string>
-      </void>
-      <void method="add">
-       <string>Var_8</string>
-      </void>
-      <void method="add">
-       <string>Var_9</string>
+       <string>Var_18</string>
       </void>
      </void>
      <void property="simDuration">
@@ -1352,9 +1304,6 @@ part of NeuroML or any standardised XML specification. -->
        <string>CellGroup_4_v</string>
       </void>
       <void method="add">
-       <string>CellGroup_5_v</string>
-      </void>
-      <void method="add">
        <string>Var_1</string>
       </void>
       <void method="add">
@@ -1371,6 +1320,12 @@ part of NeuroML or any standardised XML specification. -->
       </void>
       <void method="add">
        <string>Var_16</string>
+      </void>
+      <void method="add">
+       <string>Var_17</string>
+      </void>
+      <void method="add">
+       <string>Var_18</string>
       </void>
       <void method="add">
        <string>Var_2</string>

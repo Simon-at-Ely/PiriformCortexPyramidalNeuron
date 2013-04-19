@@ -32,7 +32,7 @@
             <meta:uri>http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table3</meta:uri>
         </meta:neuronDBref>
 
-         <!--       Ek     -96.0e-03          \
+                 <!--       Ek     -96.0e-03          \
         Gbar   %Max Conductance Density%                  \
         Ik     0                  \
         Gk     0                  \
@@ -62,6 +62,8 @@
     call {chanpath} TABFILL X 3000 0 -->
 
 
+
+
         
         
         <current_voltage_relation cond_law="ohmic" ion="k" default_gmax="100.0" default_erev="-0.096">
@@ -71,7 +73,7 @@
                 <closed_state id="m0"/>
                 <open_state id="m"/>
                      
-                <time_course name="tau" from="m0" to="m" expr_form="generic" expr="0.33 * (0.033 + 1.0 / (11.3 * (exp ((v + 43.5) /0.02)))) + (exp (-1.0 * (v + 0.035)/ 0.01))"/>
+                <time_course name="tau" from="m0" to="m" expr_form="generic" expr="0.33 * (0.033 + 1.0 / (11.3 * ((exp ((v + 0.035) /0.02))) + (exp (-1.0 * (v + 0.035)/ 0.01))))"/>
                 <steady_state name="inf" from="m0" to="m" expr_form="generic" expr="1.0 / (1.0 + (exp (-1.0 * (v + 0.035)/ 0.01)))"/>
                     
             </gate>

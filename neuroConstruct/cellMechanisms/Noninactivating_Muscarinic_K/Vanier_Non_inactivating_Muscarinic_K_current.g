@@ -15,10 +15,10 @@
 // CONSTANTS:
 
 // channel equilibrium potentials (V)
-float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
-float ENA       =  0.055
-float EK        = -0.075
-float ECA       =  0.080
+// float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
+// float ENA       =  0.055
+// float EK        = -0.075
+// float ECA       =  0.080
 
 //===========================================================================
 //                Non-inactivating Muscarinic K current
@@ -47,11 +47,27 @@ function make_%Name%
 
     float OFFSET = 0.0
 
-    call {chanpath} TABCREATE X 49 -0.1 0.1
-    x = -0.1
-    dx = 0.2 / 49.0
+    float tab_divs = 3000
+    
+    float v_min = -0.1
 
-    for (i = 0; i <= 49; i = i + 1)
+    float v_max = 0.1
+
+    float x, dx, i
+            
+        // Creating table for gate m, using name X for it here
+
+    float dx = ({v_max} - {v_min})/{tab_divs}
+            
+    call {chanpath} TABCREATE X {tab_divs} {v_min} {v_max}
+                
+    x = {v_min}
+
+//    call {chanpath} TABCREATE X 49 -0.1 0.1
+//    x = -0.1
+//    dx = 0.2 / 49.0
+
+    for (i = 0; i <= ({tab_divs}); i = i + 1)
         y = 0.33 * \
             (0.033 + 1.0 / (11.3*({exp {(x + 0.035 + OFFSET)/0.02}}) + \
             {exp {-(x + 0.035 + OFFSET)/0.01}}))
