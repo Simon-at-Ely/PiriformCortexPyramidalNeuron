@@ -12,8 +12,8 @@ echo "    for project: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/
 echo ""
 echo "    Description: "
 
-echo "    Simulation configuration: AllWorkingChannels"
-echo "    Simulation reference: Sim_69"
+echo "    Simulation configuration: Default Simulation Configuration"
+echo "    Simulation reference: Sim_99"
 echo " "
 echo  "*****************************************************"
 
@@ -21,7 +21,7 @@ echo  "*****************************************************"
 
 //   Initializes random-number generator
 
-randseed 1752591805
+randseed 1696886239
 
 //   This temperature is needed if any of the channels are temp dependent (Q10 dependence) 
 //   
@@ -60,35 +60,23 @@ env // prints details on some global variables
 //   Including channel mechanisms 
 //   
 
-include Noninactivating_Muscarinic_K
-make_Noninactivating_Muscarinic_K
-
-include KDR_Hipo_original
-make_KDR_Hipo_original
-
-include Olfactory_Ca
-make_Olfactory_Ca
+include KCa_1
+make_KCa_1
 
 include LeakConductance
 make_LeakConductance
 
-include Piriform_KA_original
-make_Piriform_KA_original
+include Olfactory_Ca
+make_Olfactory_Ca
 
-include Na_Hipo_original
-make_Na_Hipo_original
+include Ca_buffer
+make_Ca_buffer
 
-include Piriform_KA_ChannelML
-make_Piriform_KA_ChannelML
+include Ca_buffer_ChannelML
+make_Ca_buffer_ChannelML
 
-include Na_Hippo_ChannelML
-make_Na_Hippo_ChannelML
-
-include Km_ChannelML
-make_Km_ChannelML
-
-include KDR_Hippo_ChannelML
-make_KDR_Hippo_ChannelML
+include Kahp1_ChannelML
+make_Kahp1_ChannelML
 
 include Olfactory_Ca_ChannelML
 make_Olfactory_Ca_ChannelML
@@ -102,12 +90,12 @@ make_Olfactory_Ca_ChannelML
 create neutral /cells
 
 //////////////////////////////////////////////////////////////////////
-//   Cell group 0: CellGroup_2 has cells of type: Pyramidal_Neuron_original_soma
+//   Cell group 0: CellGroup_5 has cells of type: Pyramidal_Neuron_original_soma_onechannel
 //////////////////////////////////////////////////////////////////////
 
 
-create neutral /cells/CellGroup_2
-//   Adding cells of type Pyramidal_Neuron_original_soma in region Regions_1
+create neutral /cells/CellGroup_5
+//   Adding cells of type Pyramidal_Neuron_original_soma_onechannel in region Regions_1
 
 //   Placing these cells in a region described by: Rectangular Box from point: (0.0, 0.0, 0.0) to (120.0, 50.0, 120.0)
 
@@ -116,20 +104,20 @@ create neutral /cells/CellGroup_2
 
 str compName
 
-readcell /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_69/Pyramidal_Neuron_original_soma.p /cells/CellGroup_2/CellGroup_2_0
-addfield /cells/CellGroup_2/CellGroup_2_0 celltype
-setfield /cells/CellGroup_2/CellGroup_2_0 celltype Pyramidal_Neuron_original_soma
+readcell /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_99/Pyramidal_Neuron_original_soma_onechannel.p /cells/CellGroup_5/CellGroup_5_0
+addfield /cells/CellGroup_5/CellGroup_5_0 celltype
+setfield /cells/CellGroup_5/CellGroup_5_0 celltype Pyramidal_Neuron_original_soma_onechannel
 
-position /cells/CellGroup_2/CellGroup_2_0 7.054162E-5 6.481421E-6 1.011289E-4
+position /cells/CellGroup_5/CellGroup_5_0 1.025164E-4 2.04627E-5 1.037027E-5
 
 
 //////////////////////////////////////////////////////////////////////
-//   Cell group 1: CellGroup_4 has cells of type: Pyramidal_Neuron_ChannelML_soma
+//   Cell group 1: CellGroup_6 has cells of type: Pyramidal_Neuron_ChannelML_soma_onechannel
 //////////////////////////////////////////////////////////////////////
 
 
-create neutral /cells/CellGroup_4
-//   Adding cells of type Pyramidal_Neuron_ChannelML_soma in region Regions_1
+create neutral /cells/CellGroup_6
+//   Adding cells of type Pyramidal_Neuron_ChannelML_soma_onechannel in region Regions_1
 
 //   Placing these cells in a region described by: Rectangular Box from point: (0.0, 0.0, 0.0) to (120.0, 50.0, 120.0)
 
@@ -138,38 +126,82 @@ create neutral /cells/CellGroup_4
 
 str compName
 
-readcell /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_69/Pyramidal_Neuron_ChannelML_soma.p /cells/CellGroup_4/CellGroup_4_0
-addfield /cells/CellGroup_4/CellGroup_4_0 celltype
-setfield /cells/CellGroup_4/CellGroup_4_0 celltype Pyramidal_Neuron_ChannelML_soma
+readcell /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_99/Pyramidal_Neuron_ChannelML_soma_onechannel.p /cells/CellGroup_6/CellGroup_6_0
+addfield /cells/CellGroup_6/CellGroup_6_0 celltype
+setfield /cells/CellGroup_6/CellGroup_6_0 celltype Pyramidal_Neuron_ChannelML_soma_onechannel
 
-position /cells/CellGroup_4/CellGroup_4_0 2.400259E-5 1.602416E-5 2.429137E-5
+position /cells/CellGroup_6/CellGroup_6_0 1.671165E-5 1.704456E-5 9.876669E-5
+
+str tempCompName
+
+str tempCellName
+
+str tempChanName
+
+//   The concentration of: ca has an effect on rate of [Kahp1_ChannelML]
+
+foreach tempCompName ({el /cells/CellGroup_6/#/#})
+    if ({exists  {tempCompName}/Ca_buffer_ChannelML})
+        if ({exists  {tempCompName}/Kahp1_ChannelML})
+            addmsg {tempCompName}/Ca_buffer_ChannelML {tempCompName}/Kahp1_ChannelML CONCEN Ca
+        end
+    end
+end
+
+//   Ion ca is transmitted by [Olfactory_Ca_ChannelML] affecting conc cell mechs: [Ca_buffer_ChannelML]
+
+foreach tempCompName ({el /cells/CellGroup_6/#/#})
+    if ({exists  {tempCompName}/Ca_buffer_ChannelML})
+        if ({exists  {tempCompName}/Olfactory_Ca_ChannelML})
+            addmsg {tempCompName}/Olfactory_Ca_ChannelML {tempCompName}/Ca_buffer_ChannelML I_Ca Ik
+        end
+    end
+end
 
 
 
 //////////////////////////////////////////////////////////////////////
-//   Adding 2 stimulation(s)
+//   Adding 4 stimulation(s)
 //////////////////////////////////////////////////////////////////////
 
 create neutral /stim
 create neutral /stim/pulse
 create neutral /stim/rndspike
-create pulsegen /stim/pulse/stim_Input_2_CellGroup_4_0
+create pulsegen /stim/pulse/stim_Input_6_CellGroup_6_0
 
-//   Adding a current pulse of amplitude: 5.0E-9 A, SingleElectricalInput: [Input: IClamp, cellGroup: CellGroup_4, cellNumber: 0, segmentId: 0, fractionAlong: 0.5]
-
-//   Pulses are shifted one dt step, so that pulse will begin at delay1, as in NEURON
-
-setfield ^ level1 5.0E-9 width1 5.0E-4 delay1 0.01999 delay2 10000.0  
-addmsg /stim/pulse/stim_Input_2_CellGroup_4_0 /cells/CellGroup_4/CellGroup_4_0/Soma INJECT output
-
-create pulsegen /stim/pulse/stim_Input_1_CellGroup_2_0
-
-//   Adding a current pulse of amplitude: 5.0E-9 A, SingleElectricalInput: [Input: IClamp, cellGroup: CellGroup_2, cellNumber: 0, segmentId: 0, fractionAlong: 0.5]
+//   Adding a current pulse of amplitude: 5.0E-10 A, SingleElectricalInput: [Input: IClamp, cellGroup: CellGroup_6, cellNumber: 0, segmentId: 0, fractionAlong: 0.5]
 
 //   Pulses are shifted one dt step, so that pulse will begin at delay1, as in NEURON
 
-setfield ^ level1 5.0E-9 width1 5.0E-4 delay1 0.01999 delay2 10000.0  
-addmsg /stim/pulse/stim_Input_1_CellGroup_2_0 /cells/CellGroup_2/CellGroup_2_0/Soma INJECT output
+setfield ^ level1 5.0E-10 width1 0.1 delay1 0.29999 delay2 10000.0  
+addmsg /stim/pulse/stim_Input_6_CellGroup_6_0 /cells/CellGroup_6/CellGroup_6_0/Soma INJECT output
+
+create pulsegen /stim/pulse/stim_Input_5_CellGroup_5_0
+
+//   Adding a current pulse of amplitude: 5.0E-10 A, SingleElectricalInput: [Input: IClamp, cellGroup: CellGroup_5, cellNumber: 0, segmentId: 0, fractionAlong: 0.5]
+
+//   Pulses are shifted one dt step, so that pulse will begin at delay1, as in NEURON
+
+setfield ^ level1 5.0E-10 width1 0.1 delay1 0.29999 delay2 10000.0  
+addmsg /stim/pulse/stim_Input_5_CellGroup_5_0 /cells/CellGroup_5/CellGroup_5_0/Soma INJECT output
+
+create pulsegen /stim/pulse/stim_Input_4_CellGroup_6_0
+
+//   Adding a current pulse of amplitude: -2.0E-10 A, SingleElectricalInput: [Input: IClamp, cellGroup: CellGroup_6, cellNumber: 0, segmentId: 0, fractionAlong: 0.5]
+
+//   Pulses are shifted one dt step, so that pulse will begin at delay1, as in NEURON
+
+setfield ^ level1 -2.0E-10 width1 0.1 delay1 0.09999 delay2 10000.0  
+addmsg /stim/pulse/stim_Input_4_CellGroup_6_0 /cells/CellGroup_6/CellGroup_6_0/Soma INJECT output
+
+create pulsegen /stim/pulse/stim_Input_3_CellGroup_5_0
+
+//   Adding a current pulse of amplitude: -2.0E-10 A, SingleElectricalInput: [Input: IClamp, cellGroup: CellGroup_5, cellNumber: 0, segmentId: 0, fractionAlong: 0.5]
+
+//   Pulses are shifted one dt step, so that pulse will begin at delay1, as in NEURON
+
+setfield ^ level1 -2.0E-10 width1 0.1 delay1 0.09999 delay2 10000.0  
+addmsg /stim/pulse/stim_Input_3_CellGroup_5_0 /cells/CellGroup_5/CellGroup_5_0/Soma INJECT output
 
 
 //////////////////////////////////////////////////////////////////////
@@ -197,47 +229,43 @@ echo "-----------Done specifying hsolve "
 
 
 float dt = 1.0E-5
-float duration = 0.05
+float duration = 0.6
 int steps =  {round {{duration}/{dt}}}
 
 setclock 0 {dt} // Units[GENESIS_SI_time, symbol: s]
 
 //////////////////////////////////////////////////////////////////////
-//   Adding 18 plot(s)
+//   Adding 10 plot(s)
 //////////////////////////////////////////////////////////////////////
 
 create neutral /plots
 
 
-create xform /plots/CellGroup_2_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_2/CellGroup_2_0: Sim_69"
-xshow /plots/CellGroup_2_v
-create xgraph /plots/CellGroup_2_v/graph -xmin 0 -xmax {duration} -ymin -0.09 -ymax 0.05
-addmsg /cells/CellGroup_2/CellGroup_2_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_2/CellGroup_2_0_Soma:Vm *black
-addmsg /cells/CellGroup_4/CellGroup_4_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_4/CellGroup_4_0_Soma:Vm *red
+create xform /plots/CellGroup_5_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_5/CellGroup_5_0: Sim_99"
+xshow /plots/CellGroup_5_v
+create xgraph /plots/CellGroup_5_v/graph -xmin 0 -xmax {duration} -ymin -0.09 -ymax 0.05
+addmsg /cells/CellGroup_5/CellGroup_5_0/Soma /plots/CellGroup_5_v/graph PLOT Vm *...p_5/CellGroup_5_0_Soma:Vm *black
+addmsg /cells/CellGroup_6/CellGroup_6_0/Soma /plots/CellGroup_5_v/graph PLOT Vm *...p_6/CellGroup_6_0_Soma:Vm *red
 
-create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Na_Hipo_original:X (X) in /cells/CellGroup_2/CellGroup_2_0: Sim_69"
+create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Olfactory_Ca:X (X) in /cells/CellGroup_5/CellGroup_5_0: Sim_99"
 xshow /plots/GraphWin_1
 create xgraph /plots/GraphWin_1/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
-addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_1/graph PLOT X *...0/Soma_Na_Hipo_original:X *black
-addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML /plots/GraphWin_1/graph PLOT Y *...a_Piriform_KA_ChannelML:Y *red
-addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Olfactory_Ca /plots/GraphWin_1/graph PLOT X *...p_2_0/Soma_Olfactory_Ca:X *blue
-addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Olfactory_Ca_ChannelML /plots/GraphWin_1/graph PLOT X *..._Olfactory_Ca_ChannelML:X *green
-addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Olfactory_Ca /plots/GraphWin_1/graph PLOT Y *...p_2_0/Soma_Olfactory_Ca:Y *orange
-addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Olfactory_Ca_ChannelML /plots/GraphWin_1/graph PLOT Y *..._Olfactory_Ca_ChannelML:Y *brown
+addmsg /cells/CellGroup_5/CellGroup_5_0/Soma/Olfactory_Ca /plots/GraphWin_1/graph PLOT X *...p_5_0/Soma_Olfactory_Ca:X *black
+addmsg /cells/CellGroup_6/CellGroup_6_0/Soma/Olfactory_Ca_ChannelML /plots/GraphWin_1/graph PLOT X *..._Olfactory_Ca_ChannelML:X *red
+addmsg /cells/CellGroup_5/CellGroup_5_0/Soma/Olfactory_Ca /plots/GraphWin_1/graph PLOT Y *...p_5_0/Soma_Olfactory_Ca:Y *blue
+addmsg /cells/CellGroup_6/CellGroup_6_0/Soma/Olfactory_Ca_ChannelML /plots/GraphWin_1/graph PLOT Y *..._Olfactory_Ca_ChannelML:Y *green
 
-create xform /plots/GraphWin_9 [500,100,400,400]  -title "Values of Noninactivating_Muscarinic_K:X (X) in /cells/CellGroup_2/CellGroup_2_0: Sim_69"
-xshow /plots/GraphWin_9
-create xgraph /plots/GraphWin_9/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
-addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Noninactivating_Muscarinic_K /plots/GraphWin_9/graph PLOT X *...activating_Muscarinic_K:X *black
-addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Km_ChannelML /plots/GraphWin_9/graph PLOT X *...p_4_0/Soma_Km_ChannelML:X *red
-addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /plots/GraphWin_1/graph PLOT X *...Soma_Na_Hippo_ChannelML:X *magenta
-addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_1/graph PLOT Y *...0/Soma_Na_Hipo_original:Y *yellow
-addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /plots/GraphWin_1/graph PLOT Y *...Soma_Na_Hippo_ChannelML:Y *grey
-addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/KDR_Hipo_original /plots/GraphWin_1/graph PLOT X *.../Soma_KDR_Hipo_original:X *black
-addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/KDR_Hippo_ChannelML /plots/GraphWin_1/graph PLOT X *...oma_KDR_Hippo_ChannelML:X *red
-addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original /plots/GraphWin_1/graph PLOT X *...ma_Piriform_KA_original:X *blue
-addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML /plots/GraphWin_1/graph PLOT X *...a_Piriform_KA_ChannelML:X *green
-addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original /plots/GraphWin_1/graph PLOT Y *...ma_Piriform_KA_original:Y *orange
+create xform /plots/GraphWin_2 [500,100,400,400]  -title "Values of KCa_1:Z (Z) in /cells/CellGroup_5/CellGroup_5_0: Sim_99"
+xshow /plots/GraphWin_2
+create xgraph /plots/GraphWin_2/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
+addmsg /cells/CellGroup_5/CellGroup_5_0/Soma/KCa_1 /plots/GraphWin_2/graph PLOT Z *...ellGroup_5_0/Soma_KCa_1:Z *black
+addmsg /cells/CellGroup_6/CellGroup_6_0/Soma/Kahp1_ChannelML /plots/GraphWin_2/graph PLOT Z *..._0/Soma_Kahp1_ChannelML:Z *red
+
+create xform /plots/GraphWin_3 [500,100,400,400]  -title "Values of Ca_buffer:CONC:ca (Ca) in /cells/CellGroup_5/CellGroup_5_0: Sim_99"
+xshow /plots/GraphWin_3
+create xgraph /plots/GraphWin_3/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 9.9999998E17
+addmsg /cells/CellGroup_5/CellGroup_5_0/Soma/Ca_buffer /plots/GraphWin_3/graph PLOT Ca *...oup_5_0/Soma_Ca_buffer:Ca *black
+addmsg /cells/CellGroup_6/CellGroup_6_0/Soma/Ca_buffer_ChannelML /plots/GraphWin_3/graph PLOT Ca *...ma_Ca_buffer_ChannelML:Ca *red
 
 
 //////////////////////////////////////////////////////////////////////
@@ -247,7 +275,7 @@ addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original /plots/GraphWi
 if (!{exists /controls})
     create neutral /controls
 end
-create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_69"
+create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_99"
 xshow /controls/runControl
 
 create xbutton /controls/runControl/RESET -script reset
@@ -264,7 +292,7 @@ echo Checking and resetting...
 maxwarnings 400
 
 //////////////////////////////////////////////////////////////////////
-//   Recording 18 variable(s)
+//   Recording 10 variable(s)
 //////////////////////////////////////////////////////////////////////
 
 
@@ -275,7 +303,7 @@ str simsDir
 simsDir = "/home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/"
 
 str simReference
-simReference = "Sim_69"
+simReference = "Sim_99"
 
 str targetDir
 targetDir =  {strcat {simsDir} {simReference}}
@@ -294,13 +322,13 @@ create neutral /fileout/cells
 echo Created: /fileout/cells
 
 
-//   Saving VOLTAGE on only one seg, id: 0, in the only cell in CellGroup_2
+//   Saving VOLTAGE on only one seg, id: 0, in the only cell in CellGroup_5
 
-if (!{exists /fileout/cells/CellGroup_2})
-    create neutral /fileout/cells/CellGroup_2
+if (!{exists /fileout/cells/CellGroup_5})
+    create neutral /fileout/cells/CellGroup_5
 end
 
-foreach cellName ({el /cells/CellGroup_2/#})
+foreach cellName ({el /cells/CellGroup_5/#})
     if (!{exists /fileout{cellName}})
         create neutral /fileout{cellName}
     end
@@ -322,13 +350,13 @@ foreach cellName ({el /cells/CellGroup_2/#})
 
 end
 
-//   Saving VOLTAGE on only one seg, id: 0, in the only cell in CellGroup_4
+//   Saving VOLTAGE on only one seg, id: 0, in the only cell in CellGroup_6
 
-if (!{exists /fileout/cells/CellGroup_4})
-    create neutral /fileout/cells/CellGroup_4
+if (!{exists /fileout/cells/CellGroup_6})
+    create neutral /fileout/cells/CellGroup_6
 end
 
-foreach cellName ({el /cells/CellGroup_4/#})
+foreach cellName ({el /cells/CellGroup_6/#})
     if (!{exists /fileout{cellName}})
         create neutral /fileout{cellName}
     end
@@ -350,69 +378,15 @@ foreach cellName ({el /cells/CellGroup_4/#})
 
 end
 
-//   Saving Na_Hipo_original:X on only one seg, id: 0, in only cell: 0 in CellGroup_2
+//   Saving Olfactory_Ca:X on only one seg, id: 0, in only cell: 0 in CellGroup_5
 
-if (!{exists /fileout/cells/CellGroup_2})
-    create neutral /fileout/cells/CellGroup_2
+if (!{exists /fileout/cells/CellGroup_5})
+    create neutral /fileout/cells/CellGroup_5
 end
 
-//   Recording cell: /cells/CellGroup_2/CellGroup_2_0
+//   Recording cell: /cells/CellGroup_5/CellGroup_5_0
 
-cellName = "/cells/CellGroup_2/CellGroup_2_0"
-    if (!{exists /fileout{cellName}})
-        create neutral /fileout{cellName}
-    end
-
-ce {cellName}
-
-//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
-
-compName = {strcat {cellName} /Soma}
-str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Na_Hipo_original_X.dat"} }
-create asc_file /fileout{compName}Na_Hipo_original_X
-setfield /fileout{compName}Na_Hipo_original_X    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Na_Hipo_original_X filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /fileout{compName}Na_Hipo_original_X SAVE X
-call /fileout{compName}Na_Hipo_original_X OUT_OPEN
-call /fileout{compName}Na_Hipo_original_X OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original X}
-
-//   Saving Piriform_KA_ChannelML:h on only one seg, id: 0, in only cell: 0 in CellGroup_4
-
-if (!{exists /fileout/cells/CellGroup_4})
-    create neutral /fileout/cells/CellGroup_4
-end
-
-//   Recording cell: /cells/CellGroup_4/CellGroup_4_0
-
-cellName = "/cells/CellGroup_4/CellGroup_4_0"
-    if (!{exists /fileout{cellName}})
-        create neutral /fileout{cellName}
-    end
-
-ce {cellName}
-
-//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
-
-compName = {strcat {cellName} /Soma}
-str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Piriform_KA_ChannelML_h.dat"} }
-create asc_file /fileout{compName}Piriform_KA_ChannelML_h
-setfield /fileout{compName}Piriform_KA_ChannelML_h    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Piriform_KA_ChannelML_h filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML /fileout{compName}Piriform_KA_ChannelML_h SAVE Y
-call /fileout{compName}Piriform_KA_ChannelML_h OUT_OPEN
-call /fileout{compName}Piriform_KA_ChannelML_h OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML Y}
-
-//   Saving Olfactory_Ca:X on only one seg, id: 0, in only cell: 0 in CellGroup_2
-
-if (!{exists /fileout/cells/CellGroup_2})
-    create neutral /fileout/cells/CellGroup_2
-end
-
-//   Recording cell: /cells/CellGroup_2/CellGroup_2_0
-
-cellName = "/cells/CellGroup_2/CellGroup_2_0"
+cellName = "/cells/CellGroup_5/CellGroup_5_0"
     if (!{exists /fileout{cellName}})
         create neutral /fileout{cellName}
     end
@@ -427,19 +401,19 @@ fileNameStr = {strcat {getpath {cellName} -tail} {".Olfactory_Ca_X.dat"} }
 create asc_file /fileout{compName}Olfactory_Ca_X
 setfield /fileout{compName}Olfactory_Ca_X    flush 1    leave_open 1    append 1 notime 1
 setfield /fileout{compName}Olfactory_Ca_X filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Olfactory_Ca /fileout{compName}Olfactory_Ca_X SAVE X
+    addmsg /cells/CellGroup_5/CellGroup_5_0/Soma/Olfactory_Ca /fileout{compName}Olfactory_Ca_X SAVE X
 call /fileout{compName}Olfactory_Ca_X OUT_OPEN
-call /fileout{compName}Olfactory_Ca_X OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Olfactory_Ca X}
+call /fileout{compName}Olfactory_Ca_X OUT_WRITE {getfield /cells/CellGroup_5/CellGroup_5_0/Soma/Olfactory_Ca X}
 
-//   Saving Olfactory_Ca_ChannelML:m on only one seg, id: 0, in only cell: 0 in CellGroup_4
+//   Saving Olfactory_Ca_ChannelML:m on only one seg, id: 0, in only cell: 0 in CellGroup_6
 
-if (!{exists /fileout/cells/CellGroup_4})
-    create neutral /fileout/cells/CellGroup_4
+if (!{exists /fileout/cells/CellGroup_6})
+    create neutral /fileout/cells/CellGroup_6
 end
 
-//   Recording cell: /cells/CellGroup_4/CellGroup_4_0
+//   Recording cell: /cells/CellGroup_6/CellGroup_6_0
 
-cellName = "/cells/CellGroup_4/CellGroup_4_0"
+cellName = "/cells/CellGroup_6/CellGroup_6_0"
     if (!{exists /fileout{cellName}})
         create neutral /fileout{cellName}
     end
@@ -454,19 +428,19 @@ fileNameStr = {strcat {getpath {cellName} -tail} {".Olfactory_Ca_ChannelML_m.dat
 create asc_file /fileout{compName}Olfactory_Ca_ChannelML_m
 setfield /fileout{compName}Olfactory_Ca_ChannelML_m    flush 1    leave_open 1    append 1 notime 1
 setfield /fileout{compName}Olfactory_Ca_ChannelML_m filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Olfactory_Ca_ChannelML /fileout{compName}Olfactory_Ca_ChannelML_m SAVE X
+    addmsg /cells/CellGroup_6/CellGroup_6_0/Soma/Olfactory_Ca_ChannelML /fileout{compName}Olfactory_Ca_ChannelML_m SAVE X
 call /fileout{compName}Olfactory_Ca_ChannelML_m OUT_OPEN
-call /fileout{compName}Olfactory_Ca_ChannelML_m OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/Olfactory_Ca_ChannelML X}
+call /fileout{compName}Olfactory_Ca_ChannelML_m OUT_WRITE {getfield /cells/CellGroup_6/CellGroup_6_0/Soma/Olfactory_Ca_ChannelML X}
 
-//   Saving Olfactory_Ca:Y on only one seg, id: 0, in only cell: 0 in CellGroup_2
+//   Saving Olfactory_Ca:Y on only one seg, id: 0, in only cell: 0 in CellGroup_5
 
-if (!{exists /fileout/cells/CellGroup_2})
-    create neutral /fileout/cells/CellGroup_2
+if (!{exists /fileout/cells/CellGroup_5})
+    create neutral /fileout/cells/CellGroup_5
 end
 
-//   Recording cell: /cells/CellGroup_2/CellGroup_2_0
+//   Recording cell: /cells/CellGroup_5/CellGroup_5_0
 
-cellName = "/cells/CellGroup_2/CellGroup_2_0"
+cellName = "/cells/CellGroup_5/CellGroup_5_0"
     if (!{exists /fileout{cellName}})
         create neutral /fileout{cellName}
     end
@@ -481,19 +455,19 @@ fileNameStr = {strcat {getpath {cellName} -tail} {".Olfactory_Ca_Y.dat"} }
 create asc_file /fileout{compName}Olfactory_Ca_Y
 setfield /fileout{compName}Olfactory_Ca_Y    flush 1    leave_open 1    append 1 notime 1
 setfield /fileout{compName}Olfactory_Ca_Y filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Olfactory_Ca /fileout{compName}Olfactory_Ca_Y SAVE Y
+    addmsg /cells/CellGroup_5/CellGroup_5_0/Soma/Olfactory_Ca /fileout{compName}Olfactory_Ca_Y SAVE Y
 call /fileout{compName}Olfactory_Ca_Y OUT_OPEN
-call /fileout{compName}Olfactory_Ca_Y OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Olfactory_Ca Y}
+call /fileout{compName}Olfactory_Ca_Y OUT_WRITE {getfield /cells/CellGroup_5/CellGroup_5_0/Soma/Olfactory_Ca Y}
 
-//   Saving Olfactory_Ca_ChannelML:h on only one seg, id: 0, in only cell: 0 in CellGroup_4
+//   Saving Olfactory_Ca_ChannelML:h on only one seg, id: 0, in only cell: 0 in CellGroup_6
 
-if (!{exists /fileout/cells/CellGroup_4})
-    create neutral /fileout/cells/CellGroup_4
+if (!{exists /fileout/cells/CellGroup_6})
+    create neutral /fileout/cells/CellGroup_6
 end
 
-//   Recording cell: /cells/CellGroup_4/CellGroup_4_0
+//   Recording cell: /cells/CellGroup_6/CellGroup_6_0
 
-cellName = "/cells/CellGroup_4/CellGroup_4_0"
+cellName = "/cells/CellGroup_6/CellGroup_6_0"
     if (!{exists /fileout{cellName}})
         create neutral /fileout{cellName}
     end
@@ -508,19 +482,19 @@ fileNameStr = {strcat {getpath {cellName} -tail} {".Olfactory_Ca_ChannelML_h.dat
 create asc_file /fileout{compName}Olfactory_Ca_ChannelML_h
 setfield /fileout{compName}Olfactory_Ca_ChannelML_h    flush 1    leave_open 1    append 1 notime 1
 setfield /fileout{compName}Olfactory_Ca_ChannelML_h filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Olfactory_Ca_ChannelML /fileout{compName}Olfactory_Ca_ChannelML_h SAVE Y
+    addmsg /cells/CellGroup_6/CellGroup_6_0/Soma/Olfactory_Ca_ChannelML /fileout{compName}Olfactory_Ca_ChannelML_h SAVE Y
 call /fileout{compName}Olfactory_Ca_ChannelML_h OUT_OPEN
-call /fileout{compName}Olfactory_Ca_ChannelML_h OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/Olfactory_Ca_ChannelML Y}
+call /fileout{compName}Olfactory_Ca_ChannelML_h OUT_WRITE {getfield /cells/CellGroup_6/CellGroup_6_0/Soma/Olfactory_Ca_ChannelML Y}
 
-//   Saving Noninactivating_Muscarinic_K:X on only one seg, id: 0, in only cell: 0 in CellGroup_2
+//   Saving KCa_1:Z on only one seg, id: 0, in only cell: 0 in CellGroup_5
 
-if (!{exists /fileout/cells/CellGroup_2})
-    create neutral /fileout/cells/CellGroup_2
+if (!{exists /fileout/cells/CellGroup_5})
+    create neutral /fileout/cells/CellGroup_5
 end
 
-//   Recording cell: /cells/CellGroup_2/CellGroup_2_0
+//   Recording cell: /cells/CellGroup_5/CellGroup_5_0
 
-cellName = "/cells/CellGroup_2/CellGroup_2_0"
+cellName = "/cells/CellGroup_5/CellGroup_5_0"
     if (!{exists /fileout{cellName}})
         create neutral /fileout{cellName}
     end
@@ -531,23 +505,23 @@ ce {cellName}
 
 compName = {strcat {cellName} /Soma}
 str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Noninactivating_Muscarinic_K_X.dat"} }
-create asc_file /fileout{compName}Noninactivating_Muscarinic_K_X
-setfield /fileout{compName}Noninactivating_Muscarinic_K_X    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Noninactivating_Muscarinic_K_X filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Noninactivating_Muscarinic_K /fileout{compName}Noninactivating_Muscarinic_K_X SAVE X
-call /fileout{compName}Noninactivating_Muscarinic_K_X OUT_OPEN
-call /fileout{compName}Noninactivating_Muscarinic_K_X OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Noninactivating_Muscarinic_K X}
+fileNameStr = {strcat {getpath {cellName} -tail} {".KCa_1_Z.dat"} }
+create asc_file /fileout{compName}KCa_1_Z
+setfield /fileout{compName}KCa_1_Z    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}KCa_1_Z filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_5/CellGroup_5_0/Soma/KCa_1 /fileout{compName}KCa_1_Z SAVE Z
+call /fileout{compName}KCa_1_Z OUT_OPEN
+call /fileout{compName}KCa_1_Z OUT_WRITE {getfield /cells/CellGroup_5/CellGroup_5_0/Soma/KCa_1 Z}
 
-//   Saving Km_ChannelML:m on only one seg, id: 0, in only cell: 0 in CellGroup_4
+//   Saving Kahp1_ChannelML:Z on only one seg, id: 0, in only cell: 0 in CellGroup_6
 
-if (!{exists /fileout/cells/CellGroup_4})
-    create neutral /fileout/cells/CellGroup_4
+if (!{exists /fileout/cells/CellGroup_6})
+    create neutral /fileout/cells/CellGroup_6
 end
 
-//   Recording cell: /cells/CellGroup_4/CellGroup_4_0
+//   Recording cell: /cells/CellGroup_6/CellGroup_6_0
 
-cellName = "/cells/CellGroup_4/CellGroup_4_0"
+cellName = "/cells/CellGroup_6/CellGroup_6_0"
     if (!{exists /fileout{cellName}})
         create neutral /fileout{cellName}
     end
@@ -558,23 +532,23 @@ ce {cellName}
 
 compName = {strcat {cellName} /Soma}
 str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Km_ChannelML_m.dat"} }
-create asc_file /fileout{compName}Km_ChannelML_m
-setfield /fileout{compName}Km_ChannelML_m    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Km_ChannelML_m filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Km_ChannelML /fileout{compName}Km_ChannelML_m SAVE X
-call /fileout{compName}Km_ChannelML_m OUT_OPEN
-call /fileout{compName}Km_ChannelML_m OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/Km_ChannelML X}
+fileNameStr = {strcat {getpath {cellName} -tail} {".Kahp1_ChannelML_Z.dat"} }
+create asc_file /fileout{compName}Kahp1_ChannelML_Z
+setfield /fileout{compName}Kahp1_ChannelML_Z    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}Kahp1_ChannelML_Z filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_6/CellGroup_6_0/Soma/Kahp1_ChannelML /fileout{compName}Kahp1_ChannelML_Z SAVE Z
+call /fileout{compName}Kahp1_ChannelML_Z OUT_OPEN
+call /fileout{compName}Kahp1_ChannelML_Z OUT_WRITE {getfield /cells/CellGroup_6/CellGroup_6_0/Soma/Kahp1_ChannelML Z}
 
-//   Saving Na_Hippo_ChannelML:m on only one seg, id: 0, in only cell: 0 in CellGroup_4
+//   Saving Ca_buffer:CONC:ca on only one seg, id: 0, in only cell: 0 in CellGroup_5
 
-if (!{exists /fileout/cells/CellGroup_4})
-    create neutral /fileout/cells/CellGroup_4
+if (!{exists /fileout/cells/CellGroup_5})
+    create neutral /fileout/cells/CellGroup_5
 end
 
-//   Recording cell: /cells/CellGroup_4/CellGroup_4_0
+//   Recording cell: /cells/CellGroup_5/CellGroup_5_0
 
-cellName = "/cells/CellGroup_4/CellGroup_4_0"
+cellName = "/cells/CellGroup_5/CellGroup_5_0"
     if (!{exists /fileout{cellName}})
         create neutral /fileout{cellName}
     end
@@ -585,23 +559,23 @@ ce {cellName}
 
 compName = {strcat {cellName} /Soma}
 str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Na_Hippo_ChannelML_m.dat"} }
-create asc_file /fileout{compName}Na_Hippo_ChannelML_m
-setfield /fileout{compName}Na_Hippo_ChannelML_m    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Na_Hippo_ChannelML_m filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /fileout{compName}Na_Hippo_ChannelML_m SAVE X
-call /fileout{compName}Na_Hippo_ChannelML_m OUT_OPEN
-call /fileout{compName}Na_Hippo_ChannelML_m OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML X}
+fileNameStr = {strcat {getpath {cellName} -tail} {".Ca_buffer_CONC_ca.dat"} }
+create asc_file /fileout{compName}Ca_buffer_CONC_ca
+setfield /fileout{compName}Ca_buffer_CONC_ca    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}Ca_buffer_CONC_ca filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_5/CellGroup_5_0/Soma/Ca_buffer /fileout{compName}Ca_buffer_CONC_ca SAVE Ca
+call /fileout{compName}Ca_buffer_CONC_ca OUT_OPEN
+call /fileout{compName}Ca_buffer_CONC_ca OUT_WRITE {getfield /cells/CellGroup_5/CellGroup_5_0/Soma/Ca_buffer Ca}
 
-//   Saving Na_Hipo_original:Y on only one seg, id: 0, in only cell: 0 in CellGroup_2
+//   Saving Ca_buffer_ChannelML:CONC:ca on only one seg, id: 0, in only cell: 0 in CellGroup_6
 
-if (!{exists /fileout/cells/CellGroup_2})
-    create neutral /fileout/cells/CellGroup_2
+if (!{exists /fileout/cells/CellGroup_6})
+    create neutral /fileout/cells/CellGroup_6
 end
 
-//   Recording cell: /cells/CellGroup_2/CellGroup_2_0
+//   Recording cell: /cells/CellGroup_6/CellGroup_6_0
 
-cellName = "/cells/CellGroup_2/CellGroup_2_0"
+cellName = "/cells/CellGroup_6/CellGroup_6_0"
     if (!{exists /fileout{cellName}})
         create neutral /fileout{cellName}
     end
@@ -612,175 +586,13 @@ ce {cellName}
 
 compName = {strcat {cellName} /Soma}
 str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Na_Hipo_original_Y.dat"} }
-create asc_file /fileout{compName}Na_Hipo_original_Y
-setfield /fileout{compName}Na_Hipo_original_Y    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Na_Hipo_original_Y filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /fileout{compName}Na_Hipo_original_Y SAVE Y
-call /fileout{compName}Na_Hipo_original_Y OUT_OPEN
-call /fileout{compName}Na_Hipo_original_Y OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original Y}
-
-//   Saving Na_Hippo_ChannelML:h on only one seg, id: 0, in only cell: 0 in CellGroup_4
-
-if (!{exists /fileout/cells/CellGroup_4})
-    create neutral /fileout/cells/CellGroup_4
-end
-
-//   Recording cell: /cells/CellGroup_4/CellGroup_4_0
-
-cellName = "/cells/CellGroup_4/CellGroup_4_0"
-    if (!{exists /fileout{cellName}})
-        create neutral /fileout{cellName}
-    end
-
-ce {cellName}
-
-//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
-
-compName = {strcat {cellName} /Soma}
-str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Na_Hippo_ChannelML_h.dat"} }
-create asc_file /fileout{compName}Na_Hippo_ChannelML_h
-setfield /fileout{compName}Na_Hippo_ChannelML_h    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Na_Hippo_ChannelML_h filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /fileout{compName}Na_Hippo_ChannelML_h SAVE Y
-call /fileout{compName}Na_Hippo_ChannelML_h OUT_OPEN
-call /fileout{compName}Na_Hippo_ChannelML_h OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML Y}
-
-//   Saving KDR_Hipo_original:X on only one seg, id: 0, in only cell: 0 in CellGroup_2
-
-if (!{exists /fileout/cells/CellGroup_2})
-    create neutral /fileout/cells/CellGroup_2
-end
-
-//   Recording cell: /cells/CellGroup_2/CellGroup_2_0
-
-cellName = "/cells/CellGroup_2/CellGroup_2_0"
-    if (!{exists /fileout{cellName}})
-        create neutral /fileout{cellName}
-    end
-
-ce {cellName}
-
-//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
-
-compName = {strcat {cellName} /Soma}
-str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".KDR_Hipo_original_X.dat"} }
-create asc_file /fileout{compName}KDR_Hipo_original_X
-setfield /fileout{compName}KDR_Hipo_original_X    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}KDR_Hipo_original_X filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/KDR_Hipo_original /fileout{compName}KDR_Hipo_original_X SAVE X
-call /fileout{compName}KDR_Hipo_original_X OUT_OPEN
-call /fileout{compName}KDR_Hipo_original_X OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/KDR_Hipo_original X}
-
-//   Saving KDR_Hippo_ChannelML:n on only one seg, id: 0, in only cell: 0 in CellGroup_4
-
-if (!{exists /fileout/cells/CellGroup_4})
-    create neutral /fileout/cells/CellGroup_4
-end
-
-//   Recording cell: /cells/CellGroup_4/CellGroup_4_0
-
-cellName = "/cells/CellGroup_4/CellGroup_4_0"
-    if (!{exists /fileout{cellName}})
-        create neutral /fileout{cellName}
-    end
-
-ce {cellName}
-
-//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
-
-compName = {strcat {cellName} /Soma}
-str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".KDR_Hippo_ChannelML_n.dat"} }
-create asc_file /fileout{compName}KDR_Hippo_ChannelML_n
-setfield /fileout{compName}KDR_Hippo_ChannelML_n    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}KDR_Hippo_ChannelML_n filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/KDR_Hippo_ChannelML /fileout{compName}KDR_Hippo_ChannelML_n SAVE X
-call /fileout{compName}KDR_Hippo_ChannelML_n OUT_OPEN
-call /fileout{compName}KDR_Hippo_ChannelML_n OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/KDR_Hippo_ChannelML X}
-
-//   Saving Piriform_KA_original:X on only one seg, id: 0, in only cell: 0 in CellGroup_2
-
-if (!{exists /fileout/cells/CellGroup_2})
-    create neutral /fileout/cells/CellGroup_2
-end
-
-//   Recording cell: /cells/CellGroup_2/CellGroup_2_0
-
-cellName = "/cells/CellGroup_2/CellGroup_2_0"
-    if (!{exists /fileout{cellName}})
-        create neutral /fileout{cellName}
-    end
-
-ce {cellName}
-
-//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
-
-compName = {strcat {cellName} /Soma}
-str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Piriform_KA_original_X.dat"} }
-create asc_file /fileout{compName}Piriform_KA_original_X
-setfield /fileout{compName}Piriform_KA_original_X    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Piriform_KA_original_X filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original /fileout{compName}Piriform_KA_original_X SAVE X
-call /fileout{compName}Piriform_KA_original_X OUT_OPEN
-call /fileout{compName}Piriform_KA_original_X OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original X}
-
-//   Saving Piriform_KA_ChannelML:m on only one seg, id: 0, in only cell: 0 in CellGroup_4
-
-if (!{exists /fileout/cells/CellGroup_4})
-    create neutral /fileout/cells/CellGroup_4
-end
-
-//   Recording cell: /cells/CellGroup_4/CellGroup_4_0
-
-cellName = "/cells/CellGroup_4/CellGroup_4_0"
-    if (!{exists /fileout{cellName}})
-        create neutral /fileout{cellName}
-    end
-
-ce {cellName}
-
-//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
-
-compName = {strcat {cellName} /Soma}
-str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Piriform_KA_ChannelML_m.dat"} }
-create asc_file /fileout{compName}Piriform_KA_ChannelML_m
-setfield /fileout{compName}Piriform_KA_ChannelML_m    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Piriform_KA_ChannelML_m filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML /fileout{compName}Piriform_KA_ChannelML_m SAVE X
-call /fileout{compName}Piriform_KA_ChannelML_m OUT_OPEN
-call /fileout{compName}Piriform_KA_ChannelML_m OUT_WRITE {getfield /cells/CellGroup_4/CellGroup_4_0/Soma/Piriform_KA_ChannelML X}
-
-//   Saving Piriform_KA_original:Y on only one seg, id: 0, in only cell: 0 in CellGroup_2
-
-if (!{exists /fileout/cells/CellGroup_2})
-    create neutral /fileout/cells/CellGroup_2
-end
-
-//   Recording cell: /cells/CellGroup_2/CellGroup_2_0
-
-cellName = "/cells/CellGroup_2/CellGroup_2_0"
-    if (!{exists /fileout{cellName}})
-        create neutral /fileout{cellName}
-    end
-
-ce {cellName}
-
-//   Recording at segInOrigCell: Soma (Id: 0), segInMappedCell: Soma, section: Soma, ID: 0, ROOT SEGMENT, rad: 5.2, (0.0, 0.0, 0.0) -> (0.0, 21.3, 0.0), len: 21.3 (FINITE VOLUME)
-
-compName = {strcat {cellName} /Soma}
-str fileNameStr
-fileNameStr = {strcat {getpath {cellName} -tail} {".Piriform_KA_original_Y.dat"} }
-create asc_file /fileout{compName}Piriform_KA_original_Y
-setfield /fileout{compName}Piriform_KA_original_Y    flush 1    leave_open 1    append 1 notime 1
-setfield /fileout{compName}Piriform_KA_original_Y filename { strcat  {targetDir} {fileNameStr}}
-    addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original /fileout{compName}Piriform_KA_original_Y SAVE Y
-call /fileout{compName}Piriform_KA_original_Y OUT_OPEN
-call /fileout{compName}Piriform_KA_original_Y OUT_WRITE {getfield /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original Y}
+fileNameStr = {strcat {getpath {cellName} -tail} {".Ca_buffer_ChannelML_CONC_ca.dat"} }
+create asc_file /fileout{compName}Ca_buffer_ChannelML_CONC_ca
+setfield /fileout{compName}Ca_buffer_ChannelML_CONC_ca    flush 1    leave_open 1    append 1 notime 1
+setfield /fileout{compName}Ca_buffer_ChannelML_CONC_ca filename { strcat  {targetDir} {fileNameStr}}
+    addmsg /cells/CellGroup_6/CellGroup_6_0/Soma/Ca_buffer_ChannelML /fileout{compName}Ca_buffer_ChannelML_CONC_ca SAVE Ca
+call /fileout{compName}Ca_buffer_ChannelML_CONC_ca OUT_OPEN
+call /fileout{compName}Ca_buffer_ChannelML_CONC_ca OUT_WRITE {getfield /cells/CellGroup_6/CellGroup_6_0/Soma/Ca_buffer_ChannelML Ca}
 
 //////////////////////////////////////////////////////////////////////
 //   This will run a full simulation when the file is executed
@@ -793,11 +605,11 @@ startTimeFile = {strcat {targetDir} {"starttime"}}
 stopTimeFile = {strcat {targetDir} {"stoptime"}}
 sh {strcat {"date +%s.%N > "} {startTimeFile}}
 
-echo Starting sim: Sim_69 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
+echo Starting sim: Sim_99 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
 date +%F__%T__%N
 step {steps}
 
-echo Finished simulation reference: Sim_69
+echo Finished simulation reference: Sim_99
 date +%F__%T__%N
 echo Data stored in directory: {targetDir}
 

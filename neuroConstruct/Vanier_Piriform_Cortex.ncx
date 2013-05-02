@@ -702,7 +702,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="valuePlotted">
-      <string>Persistent_Na_Original:X</string>
+      <string>Persistent_Na_original:X</string>
      </void>
     </object>
    </void>
@@ -740,7 +740,7 @@ part of NeuroML or any standardised XML specification. -->
    <void method="add">
     <object class="ucl.physiol.neuroconstruct.project.SimPlot">
      <void property="cellGroup">
-      <string>CellGroup_2</string>
+      <string>CellGroup_5</string>
      </void>
      <void property="cellNumber">
       <string>0</string>
@@ -771,7 +771,7 @@ part of NeuroML or any standardised XML specification. -->
    <void method="add">
     <object class="ucl.physiol.neuroconstruct.project.SimPlot">
      <void property="cellGroup">
-      <string>CellGroup_4</string>
+      <string>CellGroup_6</string>
      </void>
      <void property="cellNumber">
       <string>0</string>
@@ -802,7 +802,7 @@ part of NeuroML or any standardised XML specification. -->
    <void method="add">
     <object class="ucl.physiol.neuroconstruct.project.SimPlot">
      <void property="cellGroup">
-      <string>CellGroup_2</string>
+      <string>CellGroup_5</string>
      </void>
      <void property="cellNumber">
       <string>0</string>
@@ -833,7 +833,7 @@ part of NeuroML or any standardised XML specification. -->
    <void method="add">
     <object class="ucl.physiol.neuroconstruct.project.SimPlot">
      <void property="cellGroup">
-      <string>CellGroup_4</string>
+      <string>CellGroup_6</string>
      </void>
      <void property="cellNumber">
       <string>0</string>
@@ -870,7 +870,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_9</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -901,7 +901,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>0</string>
      </void>
      <void property="graphWindow">
-      <string>GraphWin_9</string>
+      <string>GraphWin_1</string>
      </void>
      <void property="maxValue">
       <float>1.0</float>
@@ -979,6 +979,130 @@ part of NeuroML or any standardised XML specification. -->
      </void>
     </object>
    </void>
+   <void method="add">
+    <object class="ucl.physiol.neuroconstruct.project.SimPlot">
+     <void property="cellGroup">
+      <string>CellGroup_5</string>
+     </void>
+     <void property="cellNumber">
+      <string>0</string>
+     </void>
+     <void property="graphWindow">
+      <string>GraphWin_2</string>
+     </void>
+     <void property="maxValue">
+      <float>1.0</float>
+     </void>
+     <void property="minValue">
+      <float>0.0</float>
+     </void>
+     <void property="plotAndOrSave">
+      <string>Plot and save</string>
+     </void>
+     <void property="plotReference">
+      <string>Var_19</string>
+     </void>
+     <void property="segmentId">
+      <string>0</string>
+     </void>
+     <void property="valuePlotted">
+      <string>KCa_1:Z</string>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="ucl.physiol.neuroconstruct.project.SimPlot">
+     <void property="cellGroup">
+      <string>CellGroup_6</string>
+     </void>
+     <void property="cellNumber">
+      <string>0</string>
+     </void>
+     <void property="graphWindow">
+      <string>GraphWin_2</string>
+     </void>
+     <void property="maxValue">
+      <float>1.0</float>
+     </void>
+     <void property="minValue">
+      <float>0.0</float>
+     </void>
+     <void property="plotAndOrSave">
+      <string>Plot and save</string>
+     </void>
+     <void property="plotReference">
+      <string>Var_20</string>
+     </void>
+     <void property="segmentId">
+      <string>0</string>
+     </void>
+     <void property="valuePlotted">
+      <string>Kahp1_ChannelML:Z</string>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="ucl.physiol.neuroconstruct.project.SimPlot">
+     <void property="cellGroup">
+      <string>CellGroup_5</string>
+     </void>
+     <void property="cellNumber">
+      <string>0</string>
+     </void>
+     <void property="graphWindow">
+      <string>GraphWin_3</string>
+     </void>
+     <void property="maxValue">
+      <float>1.0</float>
+     </void>
+     <void property="minValue">
+      <float>0.0</float>
+     </void>
+     <void property="plotAndOrSave">
+      <string>Plot and save</string>
+     </void>
+     <void property="plotReference">
+      <string>Var_21</string>
+     </void>
+     <void property="segmentId">
+      <string>0</string>
+     </void>
+     <void property="valuePlotted">
+      <string>Ca_buffer:CONC:ca</string>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="ucl.physiol.neuroconstruct.project.SimPlot">
+     <void property="cellGroup">
+      <string>CellGroup_6</string>
+     </void>
+     <void property="cellNumber">
+      <string>0</string>
+     </void>
+     <void property="graphWindow">
+      <string>GraphWin_3</string>
+     </void>
+     <void property="maxValue">
+      <float>1.0</float>
+     </void>
+     <void property="minValue">
+      <float>0.0</float>
+     </void>
+     <void property="plotAndOrSave">
+      <string>Plot and save</string>
+     </void>
+     <void property="plotReference">
+      <string>Var_22</string>
+     </void>
+     <void property="segmentId">
+      <string>0</string>
+     </void>
+     <void property="valuePlotted">
+      <string>Ca_buffer_ChannelML:CONC:ca</string>
+     </void>
+    </object>
+   </void>
   </void>
  </object>
  <object class="ucl.physiol.neuroconstruct.project.ProjectProperties">
@@ -1018,7 +1142,7 @@ part of NeuroML or any standardised XML specification. -->
    <float>250.0</float>
   </void>
   <void property="reference">
-   <string>Sim_69</string>
+   <string>Sim_90</string>
   </void>
   <void property="saveCopyGenSimFiles">
    <boolean>true</boolean>
@@ -1264,10 +1388,28 @@ part of NeuroML or any standardised XML specification. -->
        <string>CellGroup_6_v</string>
       </void>
       <void method="add">
-       <string>Var_17</string>
+       <string>Var_13</string>
       </void>
       <void method="add">
-       <string>Var_18</string>
+       <string>Var_14</string>
+      </void>
+      <void method="add">
+       <string>Var_15</string>
+      </void>
+      <void method="add">
+       <string>Var_16</string>
+      </void>
+      <void method="add">
+       <string>Var_19</string>
+      </void>
+      <void method="add">
+       <string>Var_20</string>
+      </void>
+      <void method="add">
+       <string>Var_21</string>
+      </void>
+      <void method="add">
+       <string>Var_22</string>
       </void>
      </void>
      <void property="simDuration">
@@ -1308,6 +1450,12 @@ part of NeuroML or any standardised XML specification. -->
       </void>
       <void method="add">
        <string>Var_10</string>
+      </void>
+      <void method="add">
+       <string>Var_11</string>
+      </void>
+      <void method="add">
+       <string>Var_12</string>
       </void>
       <void method="add">
        <string>Var_13</string>

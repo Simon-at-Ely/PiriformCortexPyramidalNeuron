@@ -15,10 +15,10 @@
 // CONSTANTS:
 
 // channel equilibrium potentials (V)
-float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
+// float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
 float ENA       =  0.055
-float EK        = -0.075
-float ECA       =  0.080
+// float EK        = -0.075
+// float ECA       =  0.080
 
 // ===========================================================================
 //                        Persistent Na Current
@@ -49,7 +49,7 @@ function make_%Name%
 
     create tabchannel {chanpath}
     setfield {chanpath}  \
-        Ek     {ENA}  \
+        ENA     {ENA}  \
 	Gbar           	%Max Conductance Density%                  \ 
         Ik     0      \
         Gk     0      \
@@ -57,11 +57,27 @@ function make_%Name%
         Ypower 0      \
         Zpower 0
 
-    call {chanpath} TABCREATE X 49 -0.1 0.1
-    x  = -0.1
-    dx = 0.2/49.0
+    float tab_divs = 3000
+    
+    float v_min = -0.1
 
-    for (i = 0; i <= 49; i = i + 1)
+    float v_max = 0.1
+
+    float x, dx, i
+            
+        // Creating table for gate m, using name X for it here
+
+    float dx = ({v_max} - {v_min})/{tab_divs}
+            
+    call {chanpath} TABCREATE X {tab_divs} {v_min} {v_max}
+                
+    x = {v_min}
+
+//    call {chanpath} TABCREATE X 49 -0.1 0.1
+//    x  = -0.1
+//    dx = 0.2/49.0
+
+    for (i = 0; i <= ({tab_divs}); i = i + 1)
         y = 1.0 / (91e3*(x + 0.048)/(1.0 - {exp {(-0.048 - x)/0.005}}) + \
             -62e3 * (x + 0.048)/(1.0 - {exp {(x + 0.048)/0.005}}))
         setfield {chanpath} X_A->table[{i}] {y}

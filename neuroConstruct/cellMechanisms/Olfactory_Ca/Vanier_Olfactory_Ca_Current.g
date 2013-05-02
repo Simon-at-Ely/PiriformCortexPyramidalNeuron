@@ -15,10 +15,10 @@
 // CONSTANTS:
 
 // channel equilibrium potentials (V)
-float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
-float ENA       =  0.055
-float EK        = -0.075
-float ECA       =  0.080
+// float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
+// float ENA       =  0.055
+// float EK        = -0.075
+// float ECA       =  0.080
 
 // ===========================================================================
 //                      Olfactory Ca Current

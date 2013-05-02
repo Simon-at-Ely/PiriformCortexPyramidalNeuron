@@ -71,6 +71,6 @@ function make_%Name%
         addfield {chanpath} addmsg1
     end
 
-    setfield  {chanpath} addmsg1 "../Ca_buffer . CONCEN1 Ca"
+    setfield  {chanpath} addmsg1 "../Ca_buffer . CONCEN Ca"
 end
 

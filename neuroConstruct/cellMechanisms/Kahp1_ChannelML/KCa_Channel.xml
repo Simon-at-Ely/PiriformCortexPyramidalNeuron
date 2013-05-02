@@ -89,12 +89,12 @@
 
 
                   
-                <transition name="alpha" from="m0" to="m" expr_form="generic" expr="10.0 * ca_conc/ 8.2e-06"/>
+                <transition name="alpha" from="m0" to="m" expr_form="generic" expr="ca_conc &lt; 4.2e-06 ? 10.0 * ca_conc/ 8.2e-06 : 10.0"/>
     						            <!-- if (ca_conc < 4.2e-06) (10.0 * ca_conc/ 8.2e-06) = 0.5 else 10.5-->
 
 
 
-                <transition name="beta" from="m" to="m0" expr_form="generic" expr="(10.0 * ca_conc/ 8.2e-06) + 0.5"/>
+                <transition name="beta" from="m" to="m0" expr_form="generic" expr="ca_conc &lt; 4.2e-06 ? (10.0 * ca_conc/ 8.2e-06) + 0.5 : 10.5"/>
                     
             </gate>
         </current_voltage_relation>        
