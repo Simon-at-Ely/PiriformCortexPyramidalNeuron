@@ -15,10 +15,10 @@
 // CONSTANTS:
 
 // channel equilibrium potentials (V)
-float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
-float ENA       =  0.055
-float EK        = -0.075
-float ECA       =  0.080
+// float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
+// float ENA       =  0.055
+// float EK        = -0.075
+// float ECA       =  0.080
 
 //===========================================================================
 //                Non-inactivating Muscarinic K current
@@ -79,6 +79,7 @@ function make_%Name%
     end
 
     tweaktau {chanpath} X
-    setfield {chanpath} X_A->calc_mode 0 X_B->calc_mode 0
+//    setfield {chanpath} X_A->calc_mode 0 X_B->calc_mode 0
+    setfield {chanpath} X_A->calc_mode 1 X_B->calc_mode 1
     call {chanpath} TABFILL X 3000 0
 end

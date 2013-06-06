@@ -66,7 +66,8 @@ function make_%Name%
         x = x + dx
     end
 
-    setfield {chanpath} Z_A->calc_mode 0 Z_B->calc_mode 0
+//    setfield {chanpath} Z_A->calc_mode 0 Z_B->calc_mode 0
+    setfield {chanpath} Z_A->calc_mode 1 Z_B->calc_mode 1
     call {chanpath} TABFILL Z 3000 0
 
     // Scale the time constants down by a factor of 10.

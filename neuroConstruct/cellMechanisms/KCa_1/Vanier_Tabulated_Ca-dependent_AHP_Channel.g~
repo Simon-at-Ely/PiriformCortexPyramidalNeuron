@@ -15,10 +15,10 @@
 // CONSTANTS:
 
 // channel equilibrium potentials (V)
-float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
-float ENA       =  0.055
-float EK        = -0.075
-float ECA       =  0.080
+// float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
+// float ENA       =  0.055
+// float EK        = -0.075
+// float ECA       =  0.080
 
 //========================================================================
 //             Tabulated Ca-dependent K AHP Channel
@@ -42,7 +42,7 @@ function make_%Name%
 
     float xmin  = 0.0
     float xmax  = 5.2e-06
-    int   xdivs = 50
+    int   xdivs = 3000
 
     call {chanpath} TABCREATE Z {xdivs} {xmin} {xmax}
 
@@ -65,6 +65,7 @@ function make_%Name%
     end
 
     setfield {chanpath} Z_A->calc_mode 0 Z_B->calc_mode 0
+//    setfield {chanpath} Z_A->calc_mode 1 Z_B->calc_mode 1
     call {chanpath} TABFILL Z 3000 0
 
     if (!{exists {chanpath} addmsg1})

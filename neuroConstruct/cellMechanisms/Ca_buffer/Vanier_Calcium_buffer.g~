@@ -38,5 +38,5 @@ function make_%Name%
         Ca_base 50e-09             // M
 
     addfield {chanpath} addmsg1
-    setfield {chanpath} addmsg1 "../Ca . I_Ca Ik"
+    setfield {chanpath} addmsg1 "../Olfactory_Ca . I_Ca Ik"
 end

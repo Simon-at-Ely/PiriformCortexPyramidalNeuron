@@ -42,7 +42,7 @@ function make_%Name%
 
     float xmin  = 0.0
     float xmax  = 5.2e-06
-    int   xdivs = 50
+    int   xdivs = 3000
 
     call {chanpath} TABCREATE Z {xdivs} {xmin} {xmax}
 
@@ -64,7 +64,8 @@ function make_%Name%
         x = x + dx
     end
 
-    setfield {chanpath} Z_A->calc_mode 0 Z_B->calc_mode 0
+//    setfield {chanpath} Z_A->calc_mode 0 Z_B->calc_mode 0
+    setfield {chanpath} Z_A->calc_mode 1 Z_B->calc_mode 1
     call {chanpath} TABFILL Z 3000 0
 
     if (!{exists {chanpath} addmsg1})

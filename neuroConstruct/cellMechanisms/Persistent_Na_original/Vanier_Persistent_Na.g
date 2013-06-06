@@ -49,7 +49,7 @@ function make_%Name%
 
     create tabchannel {chanpath}
     setfield {chanpath}  \
-        ENA     {ENA}  \
+        Ek     {ENA}  \
 	Gbar           	%Max Conductance Density%                  \ 
         Ik     0      \
         Gk     0      \
@@ -89,7 +89,7 @@ function make_%Name%
     end
 
     tweaktau {chanpath} X
-    setfield {chanpath} X_A->calc_mode 0  \
-        X_B->calc_mode 0
+//    setfield {chanpath} X_A->calc_mode 0  X_B->calc_mode 0
+    setfield {chanpath} X_A->calc_mode 1  X_B->calc_mode 1 
     call {chanpath} TABFILL X 3000 0
 end

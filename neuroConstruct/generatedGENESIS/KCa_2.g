@@ -5,7 +5,7 @@
 // **************************************************
 
 // This file holds the implementation in GENESIS of the Cell Mechanism:
-// KCa_1 (Type: Channel mechanism, Model: File Based Membrane Mechanism)
+// KCa_2 (Type: Channel mechanism, Model: File Based Membrane Mechanism)
 
 // with parameters: 
 // Max Conductance Density = 1.0E-6 mS um^-2 
@@ -29,17 +29,19 @@
 // CONSTANTS:
 
 // channel equilibrium potentials (V)
-// float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
-// float ENA       =  0.055
-// float EK        = -0.075
-// float ECA       =  0.080
+float EREST_ACT = -0.0743 // superficial pyramidal cell resting potential
+float ENA       =  0.055
+float EK        = -0.075
+float ECA       =  0.080
 
 //========================================================================
-//             Tabulated Ca-dependent K AHP Channel
+//             Tabulated Ca-dependent K AHP Channel #2
 //========================================================================
 
-function make_KCa_1
-	str chanpath = "/library/KCa_1"
+// This channel is 10x faster than Kahp #1.
+
+function make_KCa_2
+	str chanpath = "/library/KCa_2"
 	if ({exists {chanpath}})
 	    return
 	end
@@ -56,7 +58,7 @@ function make_KCa_1
 
     float xmin  = 0.0
     float xmax  = 5.2e-06
-    int   xdivs = 3000
+    int   xdivs = 50
 
     call {chanpath} TABCREATE Z {xdivs} {xmin} {xmax}
 
@@ -81,6 +83,10 @@ function make_KCa_1
 //    setfield {chanpath} Z_A->calc_mode 0 Z_B->calc_mode 0
     setfield {chanpath} Z_A->calc_mode 1 Z_B->calc_mode 1
     call {chanpath} TABFILL Z 3000 0
+
+    // Scale the time constants down by a factor of 10.
+
+    scaletabchan {chanpath} Z tau 1.0 0.1 0.0 0.0 
 
     if (!{exists {chanpath} addmsg1})
         addfield {chanpath} addmsg1

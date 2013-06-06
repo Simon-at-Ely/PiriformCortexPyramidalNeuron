@@ -79,8 +79,7 @@ function make_Olfactory_Ca
     dx = 0.2 / {tab_divs}
 
     for (i = 0; i <= ({tab_divs}); i = i + 1)
-        y = 1.0e-03 / \
-            ({exp {(x + .0032)/(-.0067)}} + {exp {(x + 0.0168)/0.0182}}) + 0.003
+        y = 1.0e-03 / ({exp {(x + 0.0032)/(-0.0067)}} + {exp {(x + 0.0168)/0.0182}}) + 0.003
         setfield {chanpath} X_A->table[{i}] {y}
         y = 1.0 / (1.0 + {exp {(x + 0.032)/(-0.010)}})
         setfield {chanpath} X_B->table[{i}] {y}
@@ -100,11 +99,13 @@ function make_Olfactory_Ca
     end
 
     tweaktau {chanpath} X
-    setfield {chanpath} X_A->calc_mode 0 X_B->calc_mode 0
+//    setfield {chanpath} X_A->calc_mode 0 X_B->calc_mode 0
+    setfield {chanpath} X_A->calc_mode 1 X_B->calc_mode 1
     call {chanpath} TABFILL X 3000 0
 
     tweaktau {chanpath} Y
-    setfield {chanpath} Y_A->calc_mode 0 Y_B->calc_mode 0
+//    setfield {chanpath} Y_A->calc_mode 0 Y_B->calc_mode 0
+    setfield {chanpath} Y_A->calc_mode 1 Y_B->calc_mode 1
     call {chanpath} TABFILL Y 3000 0
 
 //    addfield {chanpath} addmsg1

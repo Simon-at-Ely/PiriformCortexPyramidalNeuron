@@ -28,12 +28,18 @@
 // Cell mechanism: LeakConductance (density: 1.98807E-8 mS um^-2)
 // Cell mechanism: Ca_buffer_ChannelML (density: 1.0E-9 mS um^-2)
 // Cell mechanism: Kahp1_ChannelML (density: 4.0E-9 mS um^-2)
+// Cell mechanism: Kahp2_ChannelML (density: 2.0E-8 mS um^-2)
+// Cell mechanism: KDR_Hippo_ChannelML (density: 2.7E-7 mS um^-2)
+// Cell mechanism: Km_ChannelML (density: 1.0E-7 mS um^-2)
+// Cell mechanism: Na_Hippo_ChannelML (density: 2.8E-6 mS um^-2)
 // Cell mechanism: Olfactory_Ca_ChannelML (density: 1.0E-8 mS um^-2)
+// Cell mechanism: Persistent_Na_ChannelML (density: 6.5E-8 mS um^-2)
+// Cell mechanism: Piriform_KA_ChannelML (density: 2.0E-7 mS um^-2)
 *set_compt_param     ELEAK -0.0743  // using: Units[GENESIS_SI_voltage, symbol: V]
 *set_compt_param     RM 0.05030004  // using: Units[GENESIS_SI_specificMembraneResistance, symbol: ohm m²]
 
 
 *double_endpoint
-Soma none 0 0 0 0 21.3 0 10.4 Ca_buffer_ChannelML 1 Kahp1_ChannelML 4 Olfactory_Ca_ChannelML 10 
+Soma none 0 0 0 0 21.3 0 10.4 Ca_buffer_ChannelML 1 Kahp1_ChannelML 4 Kahp2_ChannelML 20 KDR_Hippo_ChannelML 270 Km_ChannelML 100 Na_Hippo_ChannelML 2800 Olfactory_Ca_ChannelML 10 Persistent_Na_ChannelML 65 Piriform_KA_ChannelML 200 
 *double_endpoint_off
 

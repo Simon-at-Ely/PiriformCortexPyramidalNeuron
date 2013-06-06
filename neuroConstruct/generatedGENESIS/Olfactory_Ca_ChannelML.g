@@ -36,12 +36,12 @@
 // /channelml/channel_type/current_voltage_relation/gate[1]/time_course/@from = m0 
 // /channelml/channel_type/current_voltage_relation/gate[1]/time_course/@to = m 
 // /channelml/channel_type/current_voltage_relation/gate[1]/time_course/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate[1]/time_course/@expr = 0.001/ ((exp (-1.0 * (v + 0.0032)/ 0.0067)) + (exp ((v + 0.0168)/ 0.0182))) + 0.003 
+// /channelml/channel_type/current_voltage_relation/gate[1]/time_course/@expr = 0.001/ ((exp (-1.0 * (v + 0.0032)/ (0.0067))) + (exp ((v + 0.0168)/ 0.0182))) + 0.003 
 // /channelml/channel_type/current_voltage_relation/gate[1]/steady_state/@name = inf 
 // /channelml/channel_type/current_voltage_relation/gate[1]/steady_state/@from = m0 
 // /channelml/channel_type/current_voltage_relation/gate[1]/steady_state/@to = m 
 // /channelml/channel_type/current_voltage_relation/gate[1]/steady_state/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate[1]/steady_state/@expr = 1.0 / (1.0 + (exp (-1.0 * (v + 0.032)/ 0.010))) 
+// /channelml/channel_type/current_voltage_relation/gate[1]/steady_state/@expr = 1.0 / (1.0 + (exp (-1.0 * (v + 0.032)/ (0.010)))) 
 // /channelml/channel_type/current_voltage_relation/gate[2]/@name = h 
 // /channelml/channel_type/current_voltage_relation/gate[2]/@instances = 1 
 // /channelml/channel_type/current_voltage_relation/gate[2]/closed_state/@id = h0 
@@ -55,7 +55,7 @@
 // /channelml/channel_type/current_voltage_relation/gate[2]/steady_state/@from = h0 
 // /channelml/channel_type/current_voltage_relation/gate[2]/steady_state/@to = h 
 // /channelml/channel_type/current_voltage_relation/gate[2]/steady_state/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate[2]/steady_state/@expr = 1.0 / (1.0 + (exp ((v + 0.040)/ 0.035))) 
+// /channelml/channel_type/current_voltage_relation/gate[2]/steady_state/@expr = 1.0 / (1.0 + (exp ((v + 0.040)/ (0.035)))) 
 // /channelml/channel_type/impl_prefs/table_settings/@max_v = 0.1 
 // /channelml/channel_type/impl_prefs/table_settings/@min_v = -0.1 
 // /channelml/channel_type/impl_prefs/table_settings/@table_divisions = 3000 
@@ -146,9 +146,9 @@ Reference: M. C. Vanier and J. M. Bower (1999) A Comparative Survey of Automated
             float tau
                 
                         
-            // Found a generic form of rate equation for tau, using expression: 0.001/ ((exp (-1.0 * (v + 0.0032)/ 0.0067)) + (exp ((v + 0.0168)/ 0.0182))) + 0.003
+            // Found a generic form of rate equation for tau, using expression: 0.001/ ((exp (-1.0 * (v + 0.0032)/ (0.0067))) + (exp ((v + 0.0168)/ 0.0182))) + 0.003
             // Will translate this for GENESIS compatibility...
-                    tau = 0.001/ {{exp {-1.0 * {v + 0.0032}/ 0.0067}} + {exp {{v + 0.0168}/ 0.0182}}} + 0.003
+                    tau = 0.001/ {{exp {-1.0 * {v + 0.0032}/ {0.0067}}} + {exp {{v + 0.0168}/ 0.0182}}} + 0.003
             
             // Looking at rate: inf
                 
@@ -156,9 +156,9 @@ Reference: M. C. Vanier and J. M. Bower (1999) A Comparative Survey of Automated
             float inf
                 
                         
-            // Found a generic form of rate equation for inf, using expression: 1.0 / (1.0 + (exp (-1.0 * (v + 0.032)/ 0.010)))
+            // Found a generic form of rate equation for inf, using expression: 1.0 / (1.0 + (exp (-1.0 * (v + 0.032)/ (0.010))))
             // Will translate this for GENESIS compatibility...
-                    inf = 1.0 / {1.0 + {exp {-1.0 * {v + 0.032}/ 0.010}}}
+                    inf = 1.0 / {1.0 + {exp {-1.0 * {v + 0.032}/ {0.010}}}}
             
 
             // Evaluating the tau and inf expressions
@@ -214,9 +214,9 @@ Reference: M. C. Vanier and J. M. Bower (1999) A Comparative Survey of Automated
             float inf
                 
                         
-            // Found a generic form of rate equation for inf, using expression: 1.0 / (1.0 + (exp ((v + 0.040)/ 0.035)))
+            // Found a generic form of rate equation for inf, using expression: 1.0 / (1.0 + (exp ((v + 0.040)/ (0.035))))
             // Will translate this for GENESIS compatibility...
-                    inf = 1.0 / {1.0 + {exp {{v + 0.040}/ 0.035}}}
+                    inf = 1.0 / {1.0 + {exp {{v + 0.040}/ {0.035}}}}
             
 
             // Evaluating the tau and inf expressions

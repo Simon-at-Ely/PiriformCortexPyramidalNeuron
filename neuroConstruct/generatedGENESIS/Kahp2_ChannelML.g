@@ -5,12 +5,12 @@
 // **************************************************
 
 // This file holds the implementation in GENESIS of the Cell Mechanism:
-// Kahp1_ChannelML (Type: Channel mechanism, Model: ChannelML based process)
+// Kahp2_ChannelML (Type: Channel mechanism, Model: ChannelML based process)
 
 // with parameters: 
 // /channelml/@units = SI Units 
 // /channelml/notes = A channel from Maex, R and De Schutter, E. Synchronization of Golgi and Granule Cell Firing in a      Detailed Network Model of the Cerebellar Granule ... 
-// /channelml/channel_type/@name = Kahp1_ChannelML 
+// /channelml/channel_type/@name = Kahp2_ChannelML 
 // /channelml/channel_type/status/@value = stable 
 // /channelml/channel_type/status/comment = Equations fromM. C. Vanier and J. M. Bower, A Comparative Survey of Automated Parameter-Searching Methods for Compartmental Neural Models 
 // /channelml/channel_type/status/contributor/name = Simon O'Connor 
@@ -24,8 +24,10 @@
 // /channelml/channel_type/neuronDBref/uri = http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table3 
 // /channelml/channel_type/current_voltage_relation/@cond_law = ohmic 
 // /channelml/channel_type/current_voltage_relation/@ion = k 
-// /channelml/channel_type/current_voltage_relation/@default_gmax = 4.0 
+// /channelml/channel_type/current_voltage_relation/@default_gmax = 20.0 
 // /channelml/channel_type/current_voltage_relation/@default_erev = -0.096 
+// /channelml/channel_type/current_voltage_relation/q10_settings/@q10_factor = 10.0 
+// /channelml/channel_type/current_voltage_relation/q10_settings/@experimental_temp = 1.0 
 // /channelml/channel_type/current_voltage_relation/conc_dependence/@name = Calcium 
 // /channelml/channel_type/current_voltage_relation/conc_dependence/@ion = ca 
 // /channelml/channel_type/current_voltage_relation/conc_dependence/@charge = 2 
@@ -48,9 +50,9 @@
 // /channelml/channel_type/current_voltage_relation/gate/transition[2]/@expr = 0.5 
 // /channelml/channel_type/impl_prefs/table_settings/@table_divisions = 3000 
 
-// File from which this was generated: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Kahp1_ChannelML/KCa_Channel.xml
+// File from which this was generated: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Kahp2_ChannelML/KCa_Channel.xml
 
-// XSL file with mapping to simulator: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Kahp1_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
+// XSL file with mapping to simulator: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Kahp2_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
 
 
 
@@ -65,7 +67,7 @@
     Detailed Network Model of the Cerebellar Granule Cell Layer
 */
 
-function make_Kahp1_ChannelML
+function make_Kahp2_ChannelML
 
         /*
             Calcium concentration dependent K+ channel
@@ -77,7 +79,7 @@ Reference: M. C. Vanier and J. M. Bower, A Comparative Survey of Automated Param
         */
         
 
-        str chanpath = "/library/Kahp1_ChannelML"
+        str chanpath = "/library/Kahp2_ChannelML"
 
         if ({exists {chanpath}})
             return
@@ -92,13 +94,14 @@ Reference: M. C. Vanier and J. M. Bower, A Comparative Survey of Automated Param
             Zpower          1
         
         setfield {chanpath} \
-            Gbar 4.0 \
+            Gbar 20.0 \
             Gk              0 
 
         
-        // No Q10 temperature adjustment found
-        float temp_adj_m = 1
-    
+        // There is a Q10 factor which will alter the tau of the gates
+                         
+
+        float temp_adj_m = {pow 10.0 {(celsius - 1.0)/10}}
 
         float tab_divs = 3000
 

@@ -24,7 +24,7 @@
 // /channelml/ion_concentration/ion_species/@name = ca 
 // /channelml/ion_concentration/decaying_pool_model/@resting_conc = 50e-09 
 // /channelml/ion_concentration/decaying_pool_model/@decay_constant = 0.025 
-// /channelml/ion_concentration/decaying_pool_model/pool_volume_info/@shell_thickness = 1.0e-6 
+// /channelml/ion_concentration/decaying_pool_model/pool_volume_info/@shell_thickness = 1.0e-5 
 
 // File from which this was generated: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Ca_buffer_ChannelML/CaPool.xml
 
@@ -75,7 +75,7 @@ function make_Ca_buffer_ChannelML
             
 
         setfield {chanpath} \
-            thick               1.0e-6 
+            thick               1.0e-5 
 end
 
 function init_Ca_buffer_ChannelML(chanpath)

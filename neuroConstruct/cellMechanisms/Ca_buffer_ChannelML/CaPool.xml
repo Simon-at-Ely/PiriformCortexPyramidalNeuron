@@ -39,7 +39,7 @@
         
         <decaying_pool_model resting_conc="50e-09" decay_constant="0.025">
             
-            <pool_volume_info shell_thickness="1.0e-6"/>
+            <pool_volume_info shell_thickness="1.0e-5"/>
             
         </decaying_pool_model>
         
