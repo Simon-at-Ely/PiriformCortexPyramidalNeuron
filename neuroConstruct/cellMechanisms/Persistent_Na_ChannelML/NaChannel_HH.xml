@@ -57,7 +57,7 @@ float ECA       =  0.080
         X_B->calc_mode 0
     call {chanpath} TABFILL X 3000 0>-->
 
-
+ 
         
         <current_voltage_relation cond_law="ohmic" ion="na" default_erev="0.055" default_gmax="65"> 
             
@@ -65,7 +65,7 @@ float ECA       =  0.080
                 <closed_state id="m0"/>
                 <open_state id="m"/>
 
-                <time_course name="tau" from="m0" to="m" expr_form="generic" expr="1.0 / (91000 * (v + 0.048)/ (1.0 - (exp ((-1.0 * 0.048 - v)/ 0.005))) + (-1.0 * 62000) * (v + 0.048)/ (1.0 - (exp ((v + 0.048)/ 0.005))))"/>
+                <time_course name="tau" from="m0" to="m" expr_form="generic" expr="v == -0.048 ? 1.0 / (91000 * (v + 0.04801)/ (1.0 - (exp ((-1.0 * 0.04801 - v)/ 0.005))) + (-1.0 * 62000) * (v + 0.04801)/ (1.0 - (exp ((v + 0.04801)/ 0.005)))) : 1.0 / (91000 * (v + 0.048)/ (1.0 - (exp ((-1.0 * 0.048 - v)/ 0.005))) + (-1.0 * 62000) * (v + 0.048)/ (1.0 - (exp ((v + 0.048)/ 0.005))))"/>
                 <steady_state name="inf" from="m0" to="m" expr_form="generic" expr="1.0 / (1.0 + (exp ((-1.0 * 0.043 - v)/ 0.005)))"/>
  
             </gate>

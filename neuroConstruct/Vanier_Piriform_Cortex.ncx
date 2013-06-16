@@ -1203,8 +1203,14 @@ part of NeuroML or any standardised XML specification. -->
   <void property="duration">
    <float>250.0</float>
   </void>
+  <void property="globalVLeak">
+   <float>-74.3</float>
+  </void>
+  <void property="initVm">
+   <float>-74.3</float>
+  </void>
   <void property="reference">
-   <string>Sim_139</string>
+   <string>Sim_176</string>
   </void>
   <void property="saveCopyGenSimFiles">
    <boolean>true</boolean>

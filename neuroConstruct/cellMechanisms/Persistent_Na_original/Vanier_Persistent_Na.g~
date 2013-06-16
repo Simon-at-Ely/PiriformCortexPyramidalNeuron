@@ -49,7 +49,7 @@ function make_%Name%
 
     create tabchannel {chanpath}
     setfield {chanpath}  \
-        ENA     {ENA}  \
+        Ek     {ENA}  \
 	Gbar           	%Max Conductance Density%                  \ 
         Ik     0      \
         Gk     0      \
@@ -78,8 +78,14 @@ function make_%Name%
 //    dx = 0.2/49.0
 
     for (i = 0; i <= ({tab_divs}); i = i + 1)
-        y = 1.0 / (91e3*(x + 0.048)/(1.0 - {exp {(-0.048 - x)/0.005}}) + \
+	if (x == -0.048)	  
+	   y = 1.0 / (91e3*(x + 0.0481)/(1.0 - {exp {(-0.0481 - x)/0.005}}) + \
+            -62e3 * (x + 0.0481)/(1.0 - {exp {(x + 0.0481)/0.005}}))
+	else
+	  y = 1.0 / (91e3*(x + 0.048)/(1.0 - {exp {(-0.048 - x)/0.005}}) + \
             -62e3 * (x + 0.048)/(1.0 - {exp {(x + 0.048)/0.005}}))
+	end
+
         setfield {chanpath} X_A->table[{i}] {y}
 
         y = 1.0 / (1.0 + {exp {(-0.043 - x)/0.005}})

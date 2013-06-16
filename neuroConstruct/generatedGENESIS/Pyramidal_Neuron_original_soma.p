@@ -17,7 +17,7 @@
 
 *set_global	         EREST_ACT	-0.0743  // using: Units[GENESIS_SI_voltage, symbol: V]
 
-*set_compt_param     ELEAK	-0.0594  // using: Units[GENESIS_SI_voltage, symbol: V]
+*set_compt_param     ELEAK	-0.0743  // using: Units[GENESIS_SI_voltage, symbol: V]
 
 *compt /library/compartment
 
