@@ -7,3 +7,5 @@ neuroConstruct/generatedMOOSE
 neuroConstruct/generatedNeuroML
 neuroConstruct/generatedNEURON
 neuroConstruct/simulations
+*.*~
+neuroConstruct/backup*

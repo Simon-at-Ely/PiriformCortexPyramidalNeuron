@@ -65,7 +65,7 @@ float ECA       =  0.080
                 <closed_state id="m0"/>
                 <open_state id="m"/>
 
-                <time_course name="tau" from="m0" to="m" expr_form="generic" expr="v == -0.048 ? 1.0 / (91000 * (v + 0.04801)/ (1.0 - (exp ((-1.0 * 0.04801 - v)/ 0.005))) + (-1.0 * 62000) * (v + 0.04801)/ (1.0 - (exp ((v + 0.04801)/ 0.005)))) : 1.0 / (91000 * (v + 0.048)/ (1.0 - (exp ((-1.0 * 0.048 - v)/ 0.005))) + (-1.0 * 62000) * (v + 0.048)/ (1.0 - (exp ((v + 0.048)/ 0.005))))"/>
+                <time_course name="tau" from="m0" to="m" expr_form="generic" expr="(v + 0.048) &lt; 1e-6 &amp;&amp; (-v-0.048) &lt; 1e-6 ? 0.0013072 : 1.0 / (91000 * (v + 0.048)/ (1.0 - (exp ((-1.0 * 0.048 - v)/ 0.005))) + (-1.0 * 62000) * (v + 0.048)/ (1.0 - (exp ((v + 0.048)/ 0.005))))"/>
                 <steady_state name="inf" from="m0" to="m" expr_form="generic" expr="1.0 / (1.0 + (exp ((-1.0 * 0.043 - v)/ 0.005)))"/>
  
             </gate>
