@@ -13,7 +13,7 @@ echo ""
 echo "    Description: "
 
 echo "    Simulation configuration: AllWorkingChannels"
-echo "    Simulation reference: Sim_180"
+echo "    Simulation reference: Sim_197"
 echo " "
 echo  "*****************************************************"
 
@@ -21,12 +21,12 @@ echo  "*****************************************************"
 
 //   Initializes random-number generator
 
-randseed 1462616039
+randseed 1567316782
 
 //   This temperature is needed if any of the channels are temp dependent (Q10 dependence) 
 //   
 
-float celsius = 11.0
+float celsius = 25.0
 
 str units = "GENESIS SI Units"
 
@@ -60,26 +60,11 @@ env // prints details on some global variables
 //   Including channel mechanisms 
 //   
 
-include KDR_Hipo_original
-make_KDR_Hipo_original
-
-include LeakConductance
-make_LeakConductance
-
 include Noninactivating_Muscarinic_K
 make_Noninactivating_Muscarinic_K
 
-include Ca_buffer
-make_Ca_buffer
-
-include Persistent_Na_original
-make_Persistent_Na_original
-
 include Na_Hipo_original
 make_Na_Hipo_original
-
-include KCa_2
-make_KCa_2
 
 include Olfactory_Ca
 make_Olfactory_Ca
@@ -87,26 +72,26 @@ make_Olfactory_Ca
 include KCa_1
 make_KCa_1
 
+include Persistent_Na_original
+make_Persistent_Na_original
+
 include Piriform_KA_original
 make_Piriform_KA_original
 
+include LeakConductance
+make_LeakConductance
+
+include Ca_buffer
+make_Ca_buffer
+
+include KDR_Hipo_original
+make_KDR_Hipo_original
+
+include KCa_2
+make_KCa_2
+
 include Persistent_Na_ChannelML
 make_Persistent_Na_ChannelML
-
-include Ca_buffer_ChannelML
-make_Ca_buffer_ChannelML
-
-include Kahp2_ChannelML
-make_Kahp2_ChannelML
-
-include Na_Hippo_ChannelML
-make_Na_Hippo_ChannelML
-
-include Piriform_KA_ChannelML
-make_Piriform_KA_ChannelML
-
-include Olfactory_Ca_ChannelML
-make_Olfactory_Ca_ChannelML
 
 include Kahp1_ChannelML
 make_Kahp1_ChannelML
@@ -116,6 +101,21 @@ make_Km_ChannelML
 
 include KDR_Hippo_ChannelML
 make_KDR_Hippo_ChannelML
+
+include Kahp2_ChannelML
+make_Kahp2_ChannelML
+
+include Olfactory_Ca_ChannelML
+make_Olfactory_Ca_ChannelML
+
+include Piriform_KA_ChannelML
+make_Piriform_KA_ChannelML
+
+include Na_Hippo_ChannelML
+make_Na_Hippo_ChannelML
+
+include Ca_buffer_ChannelML
+make_Ca_buffer_ChannelML
 
 
 //   Including synaptic mech 
@@ -140,11 +140,11 @@ create neutral /cells/CellGroup_2
 
 str compName
 
-readcell /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_180/Pyramidal_Neuron_original_soma.p /cells/CellGroup_2/CellGroup_2_0
+readcell /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_197/Pyramidal_Neuron_original_soma.p /cells/CellGroup_2/CellGroup_2_0
 addfield /cells/CellGroup_2/CellGroup_2_0 celltype
 setfield /cells/CellGroup_2/CellGroup_2_0 celltype Pyramidal_Neuron_original_soma
 
-position /cells/CellGroup_2/CellGroup_2_0 5.900898E-5 1.673176E-5 2.771524E-5
+position /cells/CellGroup_2/CellGroup_2_0 1.091229E-4 1.994469E-5 1.456181E-5
 
 
 //////////////////////////////////////////////////////////////////////
@@ -162,11 +162,11 @@ create neutral /cells/CellGroup_4
 
 str compName
 
-readcell /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_180/Pyramidal_Neuron_ChannelML_soma.p /cells/CellGroup_4/CellGroup_4_0
+readcell /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_197/Pyramidal_Neuron_ChannelML_soma.p /cells/CellGroup_4/CellGroup_4_0
 addfield /cells/CellGroup_4/CellGroup_4_0 celltype
 setfield /cells/CellGroup_4/CellGroup_4_0 celltype Pyramidal_Neuron_ChannelML_soma
 
-position /cells/CellGroup_4/CellGroup_4_0 1.083827E-4 8.374503E-6 8.858552E-5
+position /cells/CellGroup_4/CellGroup_4_0 6.158402E-6 1.719089E-5 7.290899E-5
 
 str tempCompName
 
@@ -174,15 +174,15 @@ str tempCellName
 
 str tempChanName
 
-//   The concentration of: ca has an effect on rate of [Kahp2_ChannelML, Kahp1_ChannelML]
+//   The concentration of: ca has an effect on rate of [Kahp1_ChannelML, Kahp2_ChannelML]
 
 foreach tempCompName ({el /cells/CellGroup_4/#/#})
     if ({exists  {tempCompName}/Ca_buffer_ChannelML})
-        if ({exists  {tempCompName}/Kahp2_ChannelML})
-            addmsg {tempCompName}/Ca_buffer_ChannelML {tempCompName}/Kahp2_ChannelML CONCEN Ca
-        end
         if ({exists  {tempCompName}/Kahp1_ChannelML})
             addmsg {tempCompName}/Ca_buffer_ChannelML {tempCompName}/Kahp1_ChannelML CONCEN Ca
+        end
+        if ({exists  {tempCompName}/Kahp2_ChannelML})
+            addmsg {tempCompName}/Ca_buffer_ChannelML {tempCompName}/Kahp2_ChannelML CONCEN Ca
         end
     end
 end
@@ -262,13 +262,13 @@ setclock 0 {dt} // Units[GENESIS_SI_time, symbol: s]
 create neutral /plots
 
 
-create xform /plots/CellGroup_2_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_2/CellGroup_2_0: Sim_180"
+create xform /plots/CellGroup_2_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_2/CellGroup_2_0: Sim_197"
 xshow /plots/CellGroup_2_v
 create xgraph /plots/CellGroup_2_v/graph -xmin 0 -xmax {duration} -ymin -0.09 -ymax 0.05
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_2/CellGroup_2_0_Soma:Vm *black
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_4/CellGroup_4_0_Soma:Vm *red
 
-create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Na_Hipo_original:X (X) in /cells/CellGroup_2/CellGroup_2_0: Sim_180"
+create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Na_Hipo_original:X (X) in /cells/CellGroup_2/CellGroup_2_0: Sim_197"
 xshow /plots/GraphWin_1
 create xgraph /plots/GraphWin_1/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_1/graph PLOT X *...0/Soma_Na_Hipo_original:X *black
@@ -285,7 +285,7 @@ addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/KCa_1 /plots/GraphWin_1/graph PLOT 
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /plots/GraphWin_1/graph PLOT X *...Soma_Na_Hippo_ChannelML:X *blue
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Kahp1_ChannelML /plots/GraphWin_1/graph PLOT Z *..._0/Soma_Kahp1_ChannelML:Z *green
 
-create xform /plots/GraphWin_3 [500,100,400,400]  -title "Values of Ca_buffer:CONC:ca (Ca) in /cells/CellGroup_2/CellGroup_2_0: Sim_180"
+create xform /plots/GraphWin_3 [500,100,400,400]  -title "Values of Ca_buffer:CONC:ca (Ca) in /cells/CellGroup_2/CellGroup_2_0: Sim_197"
 xshow /plots/GraphWin_3
 create xgraph /plots/GraphWin_3/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1000.0
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Ca_buffer /plots/GraphWin_3/graph PLOT Ca *...oup_2_0/Soma_Ca_buffer:Ca *black
@@ -308,7 +308,7 @@ addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original /plots/GraphWi
 if (!{exists /controls})
     create neutral /controls
 end
-create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_180"
+create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_197"
 xshow /controls/runControl
 
 create xbutton /controls/runControl/RESET -script reset
@@ -336,7 +336,7 @@ str simsDir
 simsDir = "/home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/"
 
 str simReference
-simReference = "Sim_180"
+simReference = "Sim_197"
 
 str targetDir
 targetDir =  {strcat {simsDir} {simReference}}
@@ -1070,11 +1070,11 @@ startTimeFile = {strcat {targetDir} {"starttime"}}
 stopTimeFile = {strcat {targetDir} {"stoptime"}}
 sh {strcat {"date +%s.%N > "} {startTimeFile}}
 
-echo Starting sim: Sim_180 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
+echo Starting sim: Sim_197 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
 date +%F__%T__%N
 step {steps}
 
-echo Finished simulation reference: Sim_180
+echo Finished simulation reference: Sim_197
 date +%F__%T__%N
 echo Data stored in directory: {targetDir}
 

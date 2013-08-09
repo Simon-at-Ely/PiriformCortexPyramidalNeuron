@@ -35,12 +35,12 @@
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[1]/@from = m0 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[1]/@to = m 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[1]/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate[1]/transition[1]/@expr = ((-1.0 * 11584) + (-1.0 * 320000 * v)) / (-1.0 + (exp (-1.0 * (v + 0.0362)/ 0.004 ))) 
+// /channelml/channel_type/current_voltage_relation/gate[1]/transition[1]/@expr = (v + 0.0362) &lt; 1e-6 &amp;&amp; (-v-0.0362) &lt; 1e-6? 1269.36 : ((-1.0 * 11584) + (-1.0 * 320000 * v)) / (-1.0 + (exp (-1.0 * (v + 0.0362)/ 0.004 ) ... 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@name = beta 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@from = m 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@to = m0 
 // /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@expr = (2576 + (280000 * v)) / (-1.0 + (exp ((v + 0.0092)/ 0.005))) 
+// /channelml/channel_type/current_voltage_relation/gate[1]/transition[2]/@expr = (v + 0.0092) &lt; 1e-6 &amp;&amp; (-v-0.0092) &lt; 1e-6? 18688.4 :(2576 + (280000 * v)) / (-1.0 + (exp ((v + 0.0092)/ 0.005))) 
 // /channelml/channel_type/current_voltage_relation/gate[2]/@name = h 
 // /channelml/channel_type/current_voltage_relation/gate[2]/@instances = 1 
 // /channelml/channel_type/current_voltage_relation/gate[2]/closed_state/@id = h0 
@@ -137,9 +137,16 @@ Reference: M.C. Vanier and J.M. Bower A comparative survey of automated paramete
             float alpha
                 
                         
-            // Found a generic form of rate equation for alpha, using expression: ((-1.0 * 11584) + (-1.0 * 320000 * v)) / (-1.0 + (exp (-1.0 * (v + 0.0362)/ 0.004 )))
+            // Found a generic form of rate equation for alpha, using expression: (v + 0.0362) < 1e-6 && (-v-0.0362) < 1e-6? 1269.36 : ((-1.0 * 11584) + (-1.0 * 320000 * v)) / (-1.0 + (exp (-1.0 * (v + 0.0362)/ 0.004 )))
             // Will translate this for GENESIS compatibility...
-                    alpha = {{-1.0 * 11584} + {-1.0 * 320000 * v}} / {-1.0 + {exp {-1.0 * {v + 0.0362}/ 0.004 }}}
+                    
+
+            if ({v + 0.0362} < 1e-6 && {-v-0.0362} < 1e-6)
+                alpha =  1269.36 
+            else
+                alpha =  {{-1.0 * 11584} + {-1.0 * 320000 * v}} / {-1.0 + {exp {-1.0 * {v + 0.0362}/ 0.004 }}}
+            end
+        
             
             // Looking at rate: beta
                 
@@ -147,9 +154,16 @@ Reference: M.C. Vanier and J.M. Bower A comparative survey of automated paramete
             float beta
                 
                         
-            // Found a generic form of rate equation for beta, using expression: (2576 + (280000 * v)) / (-1.0 + (exp ((v + 0.0092)/ 0.005)))
+            // Found a generic form of rate equation for beta, using expression: (v + 0.0092) < 1e-6 && (-v-0.0092) < 1e-6? 18688.4 :(2576 + (280000 * v)) / (-1.0 + (exp ((v + 0.0092)/ 0.005)))
             // Will translate this for GENESIS compatibility...
-                    beta = {2576 + {280000 * v}} / {-1.0 + {exp {{v + 0.0092}/ 0.005}}}
+                    
+
+            if ({v + 0.0092} < 1e-6 && {-v-0.0092} < 1e-6)
+                beta =  18688.4 
+            else
+                beta = {2576 + {280000 * v}} / {-1.0 + {exp {{v + 0.0092}/ 0.005}}}
+            end
+        
             
 
             // Using the alpha and beta expressions to populate the tables

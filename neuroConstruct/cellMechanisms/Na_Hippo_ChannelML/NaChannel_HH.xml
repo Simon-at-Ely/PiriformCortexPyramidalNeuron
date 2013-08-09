@@ -134,8 +134,8 @@ Na Y:Beta
                 <closed_state id="m0"/>
                 <open_state id="m"/>
 
-                <transition name="alpha" from="m0" to="m" expr_form="generic" expr="((-1.0 * 11584) + (-1.0 * 320000 * v)) / (-1.0 + (exp (-1.0 * (v + 0.0362)/ 0.004 )))"/>  
-                <transition name="beta" from="m" to="m0" expr_form="generic" expr="(2576 + (280000 * v)) / (-1.0 + (exp ((v + 0.0092)/ 0.005)))"/>  
+                <transition name="alpha" from="m0" to="m" expr_form="generic" expr="(v + 0.0362) &lt; 1e-6 &amp;&amp; (-v-0.0362) &lt; 1e-6? 1269.36 : ((-1.0 * 11584) + (-1.0 * 320000 * v)) / (-1.0 + (exp (-1.0 * (v + 0.0362)/ 0.004 )))"/>  
+                <transition name="beta" from="m" to="m0" expr_form="generic" expr="(v + 0.0092) &lt; 1e-6 &amp;&amp; (-v-0.0092) &lt; 1e-6? 18688.4 :(2576 + (280000 * v)) / (-1.0 + (exp ((v + 0.0092)/ 0.005)))"/>  
             </gate>
             
             <gate name="h" instances="1">

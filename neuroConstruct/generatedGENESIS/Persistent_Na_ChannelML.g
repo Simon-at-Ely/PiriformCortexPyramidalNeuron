@@ -35,7 +35,7 @@
 // /channelml/channel_type/current_voltage_relation/gate/time_course/@from = m0 
 // /channelml/channel_type/current_voltage_relation/gate/time_course/@to = m 
 // /channelml/channel_type/current_voltage_relation/gate/time_course/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate/time_course/@expr = v == -0.048 ? 1.0 / (91000 * (v + 0.04801)/ (1.0 - (exp ((-1.0 * 0.04801 - v)/ 0.005))) + (-1.0 * 62000) * (v + 0.04801)/ (1.0 - (exp ((v + 0.04801)/  ... 
+// /channelml/channel_type/current_voltage_relation/gate/time_course/@expr = (v + 0.048) &lt; 1e-6 &amp;&amp; (-v-0.048) &lt; 1e-6 ? 0.0013072 : 1.0 / (91000 * (v + 0.048)/ (1.0 - (exp ((-1.0 * 0.048 - v)/ 0.005))) + (-1.0 * 62 ... 
 // /channelml/channel_type/current_voltage_relation/gate/steady_state/@name = inf 
 // /channelml/channel_type/current_voltage_relation/gate/steady_state/@from = m0 
 // /channelml/channel_type/current_voltage_relation/gate/steady_state/@to = m 
@@ -121,12 +121,12 @@ Reference: D.A. McCormick and J.R. Huguenard. A model of the electrophysiologica
             float tau
                 
                         
-            // Found a generic form of rate equation for tau, using expression: v == -0.048 ? 1.0 / (91000 * (v + 0.04801)/ (1.0 - (exp ((-1.0 * 0.04801 - v)/ 0.005))) + (-1.0 * 62000) * (v + 0.04801)/ (1.0 - (exp ((v + 0.04801)/ 0.005)))) : 1.0 / (91000 * (v + 0.048)/ (1.0 - (exp ((-1.0 * 0.048 - v)/ 0.005))) + (-1.0 * 62000) * (v + 0.048)/ (1.0 - (exp ((v + 0.048)/ 0.005))))
+            // Found a generic form of rate equation for tau, using expression: (v + 0.048) < 1e-6 && (-v-0.048) < 1e-6 ? 0.0013072 : 1.0 / (91000 * (v + 0.048)/ (1.0 - (exp ((-1.0 * 0.048 - v)/ 0.005))) + (-1.0 * 62000) * (v + 0.048)/ (1.0 - (exp ((v + 0.048)/ 0.005))))
             // Will translate this for GENESIS compatibility...
                     
 
-            if (v == -0.048 )
-                tau =  1.0 / {91000 * {v + 0.04801}/ {1.0 - {exp {{-1.0 * 0.04801 - v}/ 0.005}}} + {-1.0 * 62000} * {v + 0.04801}/ {1.0 - {exp {{v + 0.04801}/ 0.005}}}} 
+            if ({v + 0.048} < 1e-6 && {-v-0.048} < 1e-6 )
+                tau =  0.0013072 
             else
                 tau =  1.0 / {91000 * {v + 0.048}/ {1.0 - {exp {{-1.0 * 0.048 - v}/ 0.005}}} + {-1.0 * 62000} * {v + 0.048}/ {1.0 - {exp {{v + 0.048}/ 0.005}}}}
             end

@@ -34,7 +34,7 @@
 // /channelml/channel_type/current_voltage_relation/gate/transition[1]/@from = n0 
 // /channelml/channel_type/current_voltage_relation/gate/transition[1]/@to = n 
 // /channelml/channel_type/current_voltage_relation/gate/transition[1]/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate/transition[1]/@expr = ((-1.0 * 627.2) + (-1.0 * 16000 * v))/(-1.0 + (exp (-1.0 * (v + 0.0392)/ 0.005))) 
+// /channelml/channel_type/current_voltage_relation/gate/transition[1]/@expr = (v + 0.0392) &lt; 1e-6 &amp;&amp; (-v-0.0392) &lt; 1e-6? 79.4679 : ((-1.0 * 627.2) + (-1.0 * 16000 * v))/(-1.0 + (exp (-1.0 * (v + 0.0392)/ 0.005))) 
 // /channelml/channel_type/current_voltage_relation/gate/transition[2]/@name = beta 
 // /channelml/channel_type/current_voltage_relation/gate/transition[2]/@from = n 
 // /channelml/channel_type/current_voltage_relation/gate/transition[2]/@to = n0 
@@ -120,9 +120,16 @@ Reference: M. C. Vanier and J. M. Bower, A Comparative Survey of Automated Param
             float alpha
                 
                         
-            // Found a generic form of rate equation for alpha, using expression: ((-1.0 * 627.2) + (-1.0 * 16000 * v))/(-1.0 + (exp (-1.0 * (v + 0.0392)/ 0.005)))
+            // Found a generic form of rate equation for alpha, using expression: (v + 0.0392) < 1e-6 && (-v-0.0392) < 1e-6? 79.4679 : ((-1.0 * 627.2) + (-1.0 * 16000 * v))/(-1.0 + (exp (-1.0 * (v + 0.0392)/ 0.005)))
             // Will translate this for GENESIS compatibility...
-                    alpha = {{-1.0 * 627.2} + {-1.0 * 16000 * v}}/{-1.0 + {exp {-1.0 * {v + 0.0392}/ 0.005}}}
+                    
+
+            if ({v + 0.0392} < 1e-6 && {-v-0.0392} < 1e-6)
+                alpha =  79.4679 
+            else
+                alpha =  {{-1.0 * 627.2} + {-1.0 * 16000 * v}}/{-1.0 + {exp {-1.0 * {v + 0.0392}/ 0.005}}}
+            end
+        
             
             // Looking at rate: beta
                 

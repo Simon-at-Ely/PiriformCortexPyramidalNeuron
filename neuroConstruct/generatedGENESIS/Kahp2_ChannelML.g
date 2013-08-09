@@ -26,8 +26,6 @@
 // /channelml/channel_type/current_voltage_relation/@ion = k 
 // /channelml/channel_type/current_voltage_relation/@default_gmax = 20.0 
 // /channelml/channel_type/current_voltage_relation/@default_erev = -0.096 
-// /channelml/channel_type/current_voltage_relation/q10_settings/@q10_factor = 10.0 
-// /channelml/channel_type/current_voltage_relation/q10_settings/@experimental_temp = 1.0 
 // /channelml/channel_type/current_voltage_relation/conc_dependence/@name = Calcium 
 // /channelml/channel_type/current_voltage_relation/conc_dependence/@ion = ca 
 // /channelml/channel_type/current_voltage_relation/conc_dependence/@charge = 2 
@@ -42,12 +40,12 @@
 // /channelml/channel_type/current_voltage_relation/gate/transition[1]/@from = m0 
 // /channelml/channel_type/current_voltage_relation/gate/transition[1]/@to = m 
 // /channelml/channel_type/current_voltage_relation/gate/transition[1]/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate/transition[1]/@expr = ca_conc &lt; 4.2e-06 ? 10.0 * ca_conc/ 8.2e-06 : 10.0 
+// /channelml/channel_type/current_voltage_relation/gate/transition[1]/@expr = ca_conc &lt; 4.2e-06 ? 100.0 * ca_conc/ 8.2e-06 : 100.0 
 // /channelml/channel_type/current_voltage_relation/gate/transition[2]/@name = beta 
 // /channelml/channel_type/current_voltage_relation/gate/transition[2]/@from = m 
 // /channelml/channel_type/current_voltage_relation/gate/transition[2]/@to = m0 
 // /channelml/channel_type/current_voltage_relation/gate/transition[2]/@expr_form = generic 
-// /channelml/channel_type/current_voltage_relation/gate/transition[2]/@expr = 0.5 
+// /channelml/channel_type/current_voltage_relation/gate/transition[2]/@expr = 5.0 
 // /channelml/channel_type/impl_prefs/table_settings/@table_divisions = 3000 
 
 // File from which this was generated: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Kahp2_ChannelML/KCa_Channel.xml
@@ -98,10 +96,9 @@ Reference: M. C. Vanier and J. M. Bower, A Comparative Survey of Automated Param
             Gk              0 
 
         
-        // There is a Q10 factor which will alter the tau of the gates
-                         
-
-        float temp_adj_m = {pow 10.0 {(celsius - 1.0)/10}}
+        // No Q10 temperature adjustment found
+        float temp_adj_m = 1
+    
 
         float tab_divs = 3000
 
@@ -129,14 +126,14 @@ Reference: M. C. Vanier and J. M. Bower, A Comparative Survey of Automated Param
             float alpha
                 
                         
-            // Found a generic form of rate equation for alpha, using expression: ca_conc < 4.2e-06 ? 10.0 * ca_conc/ 8.2e-06 : 10.0
+            // Found a generic form of rate equation for alpha, using expression: ca_conc < 4.2e-06 ? 100.0 * ca_conc/ 8.2e-06 : 100.0
             // Will translate this for GENESIS compatibility...
                     
 
             if (ca_conc < 4.2e-06 )
-                alpha =  10.0 * ca_conc/ 8.2e-06 
+                alpha =  100.0 * ca_conc/ 8.2e-06 
             else
-                alpha =  10.0
+                alpha =  100.0
             end
         
             
@@ -146,9 +143,9 @@ Reference: M. C. Vanier and J. M. Bower, A Comparative Survey of Automated Param
             float beta
                 
                         
-            // Found a generic form of rate equation for beta, using expression: 0.5
+            // Found a generic form of rate equation for beta, using expression: 5.0
             // Will translate this for GENESIS compatibility...
-                    beta = 0.5
+                    beta = 5.0
             
 
             // Using the alpha and beta expressions to populate the tables

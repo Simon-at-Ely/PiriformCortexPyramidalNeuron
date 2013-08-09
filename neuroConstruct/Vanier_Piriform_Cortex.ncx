@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.6.0_27" class="java.beans.XMLDecoder">
+<java version="1.6.0_18" class="java.beans.XMLDecoder">
 
 <!-- This is a neuroConstruct project file. It's best to open this
 file with neuroConstruct, as opposed to editing it directly. 
@@ -1210,13 +1210,13 @@ part of NeuroML or any standardised XML specification. -->
    <float>-74.3</float>
   </void>
   <void property="reference">
-   <string>Sim_179</string>
+   <string>Sim_197</string>
   </void>
   <void property="saveCopyGenSimFiles">
    <boolean>true</boolean>
   </void>
   <void property="temperature">
-   <float>11.0</float>
+   <float>25.0</float>
   </void>
   <void property="whatToRecord">
    <int>2</int>
@@ -1459,10 +1459,22 @@ part of NeuroML or any standardised XML specification. -->
        <string>CellGroup_6_v</string>
       </void>
       <void method="add">
-       <string>Var_11</string>
+       <string>Var_1</string>
       </void>
       <void method="add">
-       <string>Var_12</string>
+       <string>Var_2</string>
+      </void>
+      <void method="add">
+       <string>Var_3</string>
+      </void>
+      <void method="add">
+       <string>Var_4</string>
+      </void>
+      <void method="add">
+       <string>Var_5</string>
+      </void>
+      <void method="add">
+       <string>Var_6</string>
       </void>
      </void>
      <void property="simDuration">
