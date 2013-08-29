@@ -19,9 +19,9 @@
 // /channelml/channel_type/current_voltage_relation/@default_erev = -74.3 
 // /channelml/channel_type/current_voltage_relation/@default_gmax = 3.33333e-10 
 
-// File from which this was generated: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/LeakConductance/LeakConductance.xml
+// File from which this was generated: /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/LeakConductance/LeakConductance.xml
 
-// XSL file with mapping to simulator: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/LeakConductance/ChannelML_v1.8.1_GENESIStab.xsl
+// XSL file with mapping to simulator: /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/LeakConductance/ChannelML_v1.8.1_GENESIStab.xsl
 
 
 

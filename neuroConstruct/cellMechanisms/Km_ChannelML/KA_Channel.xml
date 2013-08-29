@@ -66,7 +66,7 @@
 
         
         
-        <current_voltage_relation cond_law="ohmic" ion="k" default_gmax="100.0" default_erev="-0.096">
+        <current_voltage_relation cond_law="ohmic" ion="km" default_gmax="100.0" default_erev="-0.096">
             
             
             <gate name="m" instances="1">

@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_197
-genesis Vanier_Piriform_Cortex.g
+cd /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_244
+/usr/local/genesis-2.3/genesis/genesis Vanier_Piriform_Cortex.g

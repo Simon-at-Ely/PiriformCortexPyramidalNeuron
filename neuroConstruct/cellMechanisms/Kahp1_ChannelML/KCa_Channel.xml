@@ -78,7 +78,7 @@
 
 
 
-        <current_voltage_relation cond_law="ohmic" ion="k" default_gmax="4.0" default_erev="-0.096">
+        <current_voltage_relation cond_law="ohmic" ion="kahp" default_gmax="4.0" default_erev="-0.096">
             
             <conc_dependence name="Calcium" ion="ca" charge="2" variable_name="ca_conc" min_conc="0.0" max_conc="5.2e-06"/>
             

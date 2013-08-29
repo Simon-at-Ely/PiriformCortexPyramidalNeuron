@@ -5,6 +5,15 @@
 // 
 //  ******************************************************
 
+
+//////////////////////////////////////////////////////////////////////
+//             ****  NOTE  ****
+//   Some of the channel mechanisms in this cell have some of their internal
+//   parameters changed after initialisation. This is not possible to specify
+//   in a *.p file, and so this file should not be used on its own for this cell,
+//   but in conjunction with the parameter changes in the main file after the readcell command.
+//////////////////////////////////////////////////////////////////////
+
 *absolute
 *cartesian
 *asymmetric
@@ -25,8 +34,8 @@
 // in micrometers. If we use physiological units above, the lengths below will appear quite high
 
 
-// Cell mechanism: LeakConductance (density: 1.98807E-8 mS um^-2)
-// Cell mechanism: Ca_buffer (density: 1.0E-9 mS um^-2)
+// Cell mechanism: LeakConductance (density: 1.98807E-8 mS um^-2, e = -74.3)
+// Cell mechanism: Ca_buffer (density: 1.3604E-13 mS um^-2)
 // Cell mechanism: KCa_1 (density: 4.0E-9 mS um^-2)
 // Cell mechanism: KCa_2 (density: 2.0E-8 mS um^-2)
 // Cell mechanism: KDR_Hipo_original (density: 2.7E-7 mS um^-2)
@@ -40,6 +49,6 @@
 
 
 *double_endpoint
-Soma none 0 0 0 0 21.3 0 10.4 Ca_buffer 1 KCa_1 4 KCa_2 20 KDR_Hipo_original 270 Na_Hipo_original 2800 Noninactivating_Muscarinic_K 100 Olfactory_Ca 10 Persistent_Na_original 65 Piriform_KA_original 200 
+Soma none 0 0 0 0 21.3 0 10.4 Ca_buffer 1.3604E-4 KCa_1 4 KCa_2 20 KDR_Hipo_original 270 Na_Hipo_original 2800 Noninactivating_Muscarinic_K 100 Olfactory_Ca 10 Persistent_Na_original 65 Piriform_KA_original 200 
 *double_endpoint_off
 

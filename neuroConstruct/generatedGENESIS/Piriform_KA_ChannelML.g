@@ -58,9 +58,9 @@
 // /channelml/channel_type/impl_prefs/table_settings/@min_v = -0.1 
 // /channelml/channel_type/impl_prefs/table_settings/@table_divisions = 3000 
 
-// File from which this was generated: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Piriform_KA_ChannelML/KA_Channel.xml
+// File from which this was generated: /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Piriform_KA_ChannelML/KA_Channel.xml
 
-// XSL file with mapping to simulator: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Piriform_KA_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
+// XSL file with mapping to simulator: /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Piriform_KA_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
 
 
 

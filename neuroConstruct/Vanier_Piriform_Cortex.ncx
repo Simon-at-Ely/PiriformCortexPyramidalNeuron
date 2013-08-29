@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.6.0_18" class="java.beans.XMLDecoder">
+<java version="1.6.0_27" class="java.beans.XMLDecoder">
 
 <!-- This is a neuroConstruct project file. It's best to open this
 file with neuroConstruct, as opposed to editing it directly. 
@@ -79,9 +79,6 @@ part of NeuroML or any standardised XML specification. -->
     <void method="add">
      <object class="ucl.physiol.neuroconstruct.project.packing.RandomCellPackingAdapter"/>
     </void>
-    <void method="add">
-     <object class="ucl.physiol.neuroconstruct.project.packing.RandomCellPackingAdapter"/>
-    </void>
    </void>
    <void method="get">
     <string>Cell Type</string>
@@ -90,9 +87,6 @@ part of NeuroML or any standardised XML specification. -->
     </void>
     <void method="add">
      <string>Pyramidal_Neuron_original_soma</string>
-    </void>
-    <void method="add">
-     <string>Pyramidal_Neuron_original_test</string>
     </void>
     <void method="add">
      <string>Pyramidal_Neuron_ChannelML_soma</string>
@@ -111,9 +105,6 @@ part of NeuroML or any standardised XML specification. -->
     </void>
     <void method="add">
      <int>9</int>
-    </void>
-    <void method="add">
-     <int>8</int>
     </void>
     <void method="add">
      <int>7</int>
@@ -140,14 +131,6 @@ part of NeuroML or any standardised XML specification. -->
       <int>141</int>
       <int>87</int>
       <int>239</int>
-      <int>255</int>
-     </object>
-    </void>
-    <void method="add">
-     <object class="java.awt.Color">
-      <int>87</int>
-      <int>121</int>
-      <int>74</int>
       <int>255</int>
      </object>
     </void>
@@ -193,9 +176,6 @@ part of NeuroML or any standardised XML specification. -->
     <void method="add">
      <string>Regions_1</string>
     </void>
-    <void method="add">
-     <string>Regions_1</string>
-    </void>
    </void>
    <void method="get">
     <string>Cell Group Name</string>
@@ -204,9 +184,6 @@ part of NeuroML or any standardised XML specification. -->
     </void>
     <void method="add">
      <string>CellGroup_2</string>
-    </void>
-    <void method="add">
-     <string>CellGroup_3</string>
     </void>
     <void method="add">
      <string>CellGroup_4</string>
@@ -1053,7 +1030,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>GraphWin_3</string>
      </void>
      <void property="maxValue">
-      <float>1.0E-15</float>
+      <float>1.0E-19</float>
      </void>
      <void property="minValue">
       <float>0.0</float>
@@ -1084,7 +1061,7 @@ part of NeuroML or any standardised XML specification. -->
       <string>GraphWin_3</string>
      </void>
      <void property="maxValue">
-      <float>1.0E-15</float>
+      <float>1.0E-12</float>
      </void>
      <void property="minValue">
       <float>0.0</float>
@@ -1165,11 +1142,42 @@ part of NeuroML or any standardised XML specification. -->
      </void>
     </object>
    </void>
+   <void method="add">
+    <object class="ucl.physiol.neuroconstruct.project.SimPlot">
+     <void property="cellGroup">
+      <string>CellGroup_4</string>
+     </void>
+     <void property="cellNumber">
+      <string>0</string>
+     </void>
+     <void property="graphWindow">
+      <string>GraphWin_1</string>
+     </void>
+     <void property="maxValue">
+      <float>1.0</float>
+     </void>
+     <void property="minValue">
+      <float>0.0</float>
+     </void>
+     <void property="plotAndOrSave">
+      <string>Plot and save</string>
+     </void>
+     <void property="plotReference">
+      <string>Var_25</string>
+     </void>
+     <void property="segmentId">
+      <string>0</string>
+     </void>
+     <void property="valuePlotted">
+      <string>Kahp1_ChannelML:Z</string>
+     </void>
+    </object>
+   </void>
   </void>
  </object>
  <object class="ucl.physiol.neuroconstruct.project.ProjectProperties">
   <void property="preferredSaveFormat">
-   <string>Java Serialized Object Format</string>
+   <string>NeuroML v1.8.1 Format</string>
   </void>
  </object>
  <object class="ucl.physiol.neuroconstruct.utils.Display3DProperties">
@@ -1210,7 +1218,7 @@ part of NeuroML or any standardised XML specification. -->
    <float>-74.3</float>
   </void>
   <void property="reference">
-   <string>Sim_197</string>
+   <string>Sim_243</string>
   </void>
   <void property="saveCopyGenSimFiles">
    <boolean>true</boolean>
@@ -1585,6 +1593,155 @@ part of NeuroML or any standardised XML specification. -->
      </void>
      <void property="simDuration">
       <float>50.0</float>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="ucl.physiol.neuroconstruct.project.SimConfig">
+     <void property="cellGroups">
+      <void method="add">
+       <string>CellGroup_4</string>
+      </void>
+     </void>
+     <void property="description">
+      <string>Test just ChannelML</string>
+     </void>
+     <void property="inputs">
+      <void method="add">
+       <string>Input_2</string>
+      </void>
+     </void>
+     <void property="name">
+      <string>TestBothSims</string>
+     </void>
+     <void property="plots">
+      <void method="add">
+       <string>CellGroup_4_v</string>
+      </void>
+      <void method="add">
+       <string>Var_1</string>
+      </void>
+      <void method="add">
+       <string>Var_10</string>
+      </void>
+      <void method="add">
+       <string>Var_11</string>
+      </void>
+      <void method="add">
+       <string>Var_12</string>
+      </void>
+      <void method="add">
+       <string>Var_13</string>
+      </void>
+      <void method="add">
+       <string>Var_14</string>
+      </void>
+      <void method="add">
+       <string>Var_15</string>
+      </void>
+      <void method="add">
+       <string>Var_16</string>
+      </void>
+      <void method="add">
+       <string>Var_17</string>
+      </void>
+      <void method="add">
+       <string>Var_18</string>
+      </void>
+      <void method="add">
+       <string>Var_19</string>
+      </void>
+      <void method="add">
+       <string>Var_2</string>
+      </void>
+      <void method="add">
+       <string>Var_21</string>
+      </void>
+      <void method="add">
+       <string>Var_22</string>
+      </void>
+      <void method="add">
+       <string>Var_23</string>
+      </void>
+      <void method="add">
+       <string>Var_3</string>
+      </void>
+      <void method="add">
+       <string>Var_4</string>
+      </void>
+      <void method="add">
+       <string>Var_5</string>
+      </void>
+      <void method="add">
+       <string>Var_6</string>
+      </void>
+      <void method="add">
+       <string>Var_7</string>
+      </void>
+      <void method="add">
+       <string>Var_8</string>
+      </void>
+      <void method="add">
+       <string>Var_9</string>
+      </void>
+     </void>
+     <void property="simDuration">
+      <float>50.0</float>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="ucl.physiol.neuroconstruct.project.SimConfig">
+     <void property="cellGroups">
+      <void method="add">
+       <string>CellGroup_6</string>
+      </void>
+     </void>
+     <void property="inputs">
+      <void method="add">
+       <string>Input_3</string>
+      </void>
+      <void method="add">
+       <string>Input_4</string>
+      </void>
+      <void method="add">
+       <string>Input_5</string>
+      </void>
+      <void method="add">
+       <string>Input_6</string>
+      </void>
+     </void>
+     <void property="name">
+      <string>TestChanelMLOneChan</string>
+     </void>
+     <void property="plots">
+      <void method="add">
+       <string>CellGroup_5_v</string>
+      </void>
+      <void method="add">
+       <string>CellGroup_6_v</string>
+      </void>
+      <void method="add">
+       <string>Var_1</string>
+      </void>
+      <void method="add">
+       <string>Var_2</string>
+      </void>
+      <void method="add">
+       <string>Var_3</string>
+      </void>
+      <void method="add">
+       <string>Var_4</string>
+      </void>
+      <void method="add">
+       <string>Var_5</string>
+      </void>
+      <void method="add">
+       <string>Var_6</string>
+      </void>
+     </void>
+     <void property="simDuration">
+      <float>600.0</float>
      </void>
     </object>
    </void>

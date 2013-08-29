@@ -23,7 +23,7 @@
 // /channelml/channel_type/neuronDBref/modelName = K+ channels 
 // /channelml/channel_type/neuronDBref/uri = http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table3 
 // /channelml/channel_type/current_voltage_relation/@cond_law = ohmic 
-// /channelml/channel_type/current_voltage_relation/@ion = k 
+// /channelml/channel_type/current_voltage_relation/@ion = kahp 
 // /channelml/channel_type/current_voltage_relation/@default_gmax = 4.0 
 // /channelml/channel_type/current_voltage_relation/@default_erev = -0.096 
 // /channelml/channel_type/current_voltage_relation/conc_dependence/@name = Calcium 
@@ -48,9 +48,9 @@
 // /channelml/channel_type/current_voltage_relation/gate/transition[2]/@expr = 0.5 
 // /channelml/channel_type/impl_prefs/table_settings/@table_divisions = 3000 
 
-// File from which this was generated: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Kahp1_ChannelML/KCa_Channel.xml
+// File from which this was generated: /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Kahp1_ChannelML/KCa_Channel.xml
 
-// XSL file with mapping to simulator: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Kahp1_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
+// XSL file with mapping to simulator: /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Kahp1_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
 
 
 

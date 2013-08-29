@@ -8,12 +8,12 @@ echo ""
 echo "*****************************************************"
 echo ""
 echo "    neuroConstruct generated GENESIS simulation"
-echo "    for project: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/Vanier_Piriform_Cortex.ncx"
+echo "    for project: /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/Vanier_Piriform_Cortex.ncx"
 echo ""
 echo "    Description: "
 
 echo "    Simulation configuration: AllWorkingChannels"
-echo "    Simulation reference: Sim_197"
+echo "    Simulation reference: Sim_244"
 echo " "
 echo  "*****************************************************"
 
@@ -21,7 +21,7 @@ echo  "*****************************************************"
 
 //   Initializes random-number generator
 
-randseed 1567316782
+randseed 1662628986
 
 //   This temperature is needed if any of the channels are temp dependent (Q10 dependence) 
 //   
@@ -63,11 +63,23 @@ env // prints details on some global variables
 include Noninactivating_Muscarinic_K
 make_Noninactivating_Muscarinic_K
 
+include Piriform_KA_original
+make_Piriform_KA_original
+
+include Ca_buffer
+make_Ca_buffer
+
+include LeakConductance
+make_LeakConductance
+
 include Na_Hipo_original
 make_Na_Hipo_original
 
 include Olfactory_Ca
 make_Olfactory_Ca
+
+include KCa_2
+make_KCa_2
 
 include KCa_1
 make_KCa_1
@@ -75,20 +87,35 @@ make_KCa_1
 include Persistent_Na_original
 make_Persistent_Na_original
 
-include Piriform_KA_original
-make_Piriform_KA_original
-
-include LeakConductance
-make_LeakConductance
-
-include Ca_buffer
-make_Ca_buffer
-
 include KDR_Hipo_original
 make_KDR_Hipo_original
 
-include KCa_2
-make_KCa_2
+//   Adding unique channel: LeakConductance__e_-74p3 for: LeakConductance (density: 1.98807E-8 mS um^-2, e = -74.3)
+
+copy /library/LeakConductance /library/LeakConductance__e_-74p3
+//   Mechanism LeakConductance has parameter e = -74.3
+setfield /library/LeakConductance__e_-74p3 Ek -0.0743 
+
+include Olfactory_Ca_ChannelML
+make_Olfactory_Ca_ChannelML
+
+include Kahp2_ChannelML
+make_Kahp2_ChannelML
+
+include KDR_Hippo_ChannelML
+make_KDR_Hippo_ChannelML
+
+include Piriform_KA_ChannelML
+make_Piriform_KA_ChannelML
+
+include Km_ChannelML
+make_Km_ChannelML
+
+include Ca_buffer_ChannelML
+make_Ca_buffer_ChannelML
+
+include Na_Hippo_ChannelML
+make_Na_Hippo_ChannelML
 
 include Persistent_Na_ChannelML
 make_Persistent_Na_ChannelML
@@ -96,26 +123,11 @@ make_Persistent_Na_ChannelML
 include Kahp1_ChannelML
 make_Kahp1_ChannelML
 
-include Km_ChannelML
-make_Km_ChannelML
+//   Adding unique channel: LeakConductance__e_-74p3 for: LeakConductance (density: 1.98807E-8 mS um^-2, e = -74.3)
 
-include KDR_Hippo_ChannelML
-make_KDR_Hippo_ChannelML
-
-include Kahp2_ChannelML
-make_Kahp2_ChannelML
-
-include Olfactory_Ca_ChannelML
-make_Olfactory_Ca_ChannelML
-
-include Piriform_KA_ChannelML
-make_Piriform_KA_ChannelML
-
-include Na_Hippo_ChannelML
-make_Na_Hippo_ChannelML
-
-include Ca_buffer_ChannelML
-make_Ca_buffer_ChannelML
+copy /library/LeakConductance /library/LeakConductance__e_-74p3
+//   Mechanism LeakConductance has parameter e = -74.3
+setfield /library/LeakConductance__e_-74p3 Ek -0.0743 
 
 
 //   Including synaptic mech 
@@ -140,11 +152,23 @@ create neutral /cells/CellGroup_2
 
 str compName
 
-readcell /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_197/Pyramidal_Neuron_original_soma.p /cells/CellGroup_2/CellGroup_2_0
+readcell /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_244/Pyramidal_Neuron_original_soma.p /cells/CellGroup_2/CellGroup_2_0
 addfield /cells/CellGroup_2/CellGroup_2_0 celltype
 setfield /cells/CellGroup_2/CellGroup_2_0 celltype Pyramidal_Neuron_original_soma
 
-position /cells/CellGroup_2/CellGroup_2_0 1.091229E-4 1.994469E-5 1.456181E-5
+//   Some of the channel mechanisms in this cell have some of their internal params changed after initialisation
+
+str tempChanName
+
+//   Mechanism LeakConductance has parameter e = -74.3 on group: all
+//   That is the passive channel reversal potential
+foreach tempChanName ({el /cells/CellGroup_2/CellGroup_2_0/#})
+    //echo Resetting param Em to -0.0743 on {tempChanName} 
+    setfield {tempChanName} Em -0.0743
+end
+
+
+position /cells/CellGroup_2/CellGroup_2_0 1.135944E-4 2.049539E-5 1.770416E-5
 
 
 //////////////////////////////////////////////////////////////////////
@@ -162,11 +186,23 @@ create neutral /cells/CellGroup_4
 
 str compName
 
-readcell /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_197/Pyramidal_Neuron_ChannelML_soma.p /cells/CellGroup_4/CellGroup_4_0
+readcell /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/Sim_244/Pyramidal_Neuron_ChannelML_soma.p /cells/CellGroup_4/CellGroup_4_0
 addfield /cells/CellGroup_4/CellGroup_4_0 celltype
 setfield /cells/CellGroup_4/CellGroup_4_0 celltype Pyramidal_Neuron_ChannelML_soma
 
-position /cells/CellGroup_4/CellGroup_4_0 6.158402E-6 1.719089E-5 7.290899E-5
+//   Some of the channel mechanisms in this cell have some of their internal params changed after initialisation
+
+str tempChanName
+
+//   Mechanism LeakConductance has parameter e = -74.3 on group: all
+//   That is the passive channel reversal potential
+foreach tempChanName ({el /cells/CellGroup_4/CellGroup_4_0/#})
+    //echo Resetting param Em to -0.0743 on {tempChanName} 
+    setfield {tempChanName} Em -0.0743
+end
+
+
+position /cells/CellGroup_4/CellGroup_4_0 8.989893E-5 1.92494E-5 9.560236E-5
 
 str tempCompName
 
@@ -174,15 +210,15 @@ str tempCellName
 
 str tempChanName
 
-//   The concentration of: ca has an effect on rate of [Kahp1_ChannelML, Kahp2_ChannelML]
+//   The concentration of: ca has an effect on rate of [Kahp2_ChannelML, Kahp1_ChannelML]
 
 foreach tempCompName ({el /cells/CellGroup_4/#/#})
     if ({exists  {tempCompName}/Ca_buffer_ChannelML})
-        if ({exists  {tempCompName}/Kahp1_ChannelML})
-            addmsg {tempCompName}/Ca_buffer_ChannelML {tempCompName}/Kahp1_ChannelML CONCEN Ca
-        end
         if ({exists  {tempCompName}/Kahp2_ChannelML})
             addmsg {tempCompName}/Ca_buffer_ChannelML {tempCompName}/Kahp2_ChannelML CONCEN Ca
+        end
+        if ({exists  {tempCompName}/Kahp1_ChannelML})
+            addmsg {tempCompName}/Ca_buffer_ChannelML {tempCompName}/Kahp1_ChannelML CONCEN Ca
         end
     end
 end
@@ -196,6 +232,78 @@ foreach tempCompName ({el /cells/CellGroup_4/#/#})
         end
     end
 end
+
+//       Ion: k, rev pot: -75.0 mV is present on [all]
+
+foreach tempCellName ({el /cells/CellGroup_4/#})
+//       k is present on [all] and reversal potential of this through KDR_Hippo_ChannelML is: -75.0 mV
+//   
+
+    foreach tempChanName ({el  {tempCellName}/#/KDR_Hippo_ChannelML})
+        setfield {tempChanName} Ek -0.075
+    end
+
+//       k is present on [all] and reversal potential of this through Piriform_KA_ChannelML is: -75.0 mV
+//   
+
+    foreach tempChanName ({el  {tempCellName}/#/Piriform_KA_ChannelML})
+        setfield {tempChanName} Ek -0.075
+    end
+
+end
+
+//       Ion: km, rev pot: -96.0 mV is present on [all]
+
+foreach tempCellName ({el /cells/CellGroup_4/#})
+//       km is present on [all] and reversal potential of this through Km_ChannelML is: -96.0 mV
+//   
+
+    foreach tempChanName ({el  {tempCellName}/#/Km_ChannelML})
+        setfield {tempChanName} Ek -0.096
+    end
+
+end
+
+//       Ion: na, rev pot: 55.0 mV is present on [all]
+
+foreach tempCellName ({el /cells/CellGroup_4/#})
+//       na is present on [all] and reversal potential of this through Na_Hippo_ChannelML is: 55.0 mV
+//   
+
+    foreach tempChanName ({el  {tempCellName}/#/Na_Hippo_ChannelML})
+        setfield {tempChanName} Ek 0.055
+    end
+
+//       na is present on [all] and reversal potential of this through Persistent_Na_ChannelML is: 55.0 mV
+//   
+
+    foreach tempChanName ({el  {tempCellName}/#/Persistent_Na_ChannelML})
+        setfield {tempChanName} Ek 0.055
+    end
+
+end
+
+//       Ion: kahp, rev pot: -96.0 mV is present on [all]
+
+foreach tempCellName ({el /cells/CellGroup_4/#})
+//       kahp is present on [all] and reversal potential of this through Kahp2_ChannelML is: -96.0 mV
+//   
+
+    foreach tempChanName ({el  {tempCellName}/#/Kahp2_ChannelML})
+        setfield {tempChanName} Ek -0.096
+    end
+
+//       kahp is present on [all] and reversal potential of this through Kahp1_ChannelML is: -96.0 mV
+//   
+
+    foreach tempChanName ({el  {tempCellName}/#/Kahp1_ChannelML})
+        setfield {tempChanName} Ek -0.096
+    end
+
+end
+
+//       Ion: ca, int conc: 5.0E-26 mol um^-3, ext conc: 2.0E-18 mol um^-3 is present on [all] and flows through Olfactory_Ca_ChannelML but that channel has a fixed rev pot (see the ChannelML file!)
+//   
 
 
 
@@ -262,13 +370,13 @@ setclock 0 {dt} // Units[GENESIS_SI_time, symbol: s]
 create neutral /plots
 
 
-create xform /plots/CellGroup_2_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_2/CellGroup_2_0: Sim_197"
+create xform /plots/CellGroup_2_v [500,100,400,400]  -title "Values of VOLTAGE (Vm) in /cells/CellGroup_2/CellGroup_2_0: Sim_244"
 xshow /plots/CellGroup_2_v
 create xgraph /plots/CellGroup_2_v/graph -xmin 0 -xmax {duration} -ymin -0.09 -ymax 0.05
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_2/CellGroup_2_0_Soma:Vm *black
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma /plots/CellGroup_2_v/graph PLOT Vm *...p_4/CellGroup_4_0_Soma:Vm *red
 
-create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Na_Hipo_original:X (X) in /cells/CellGroup_2/CellGroup_2_0: Sim_197"
+create xform /plots/GraphWin_1 [500,100,400,400]  -title "Values of Na_Hipo_original:X (X) in /cells/CellGroup_2/CellGroup_2_0: Sim_244"
 xshow /plots/GraphWin_1
 create xgraph /plots/GraphWin_1/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1.0
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Na_Hipo_original /plots/GraphWin_1/graph PLOT X *...0/Soma_Na_Hipo_original:X *black
@@ -285,9 +393,9 @@ addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/KCa_1 /plots/GraphWin_1/graph PLOT 
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Na_Hippo_ChannelML /plots/GraphWin_1/graph PLOT X *...Soma_Na_Hippo_ChannelML:X *blue
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Kahp1_ChannelML /plots/GraphWin_1/graph PLOT Z *..._0/Soma_Kahp1_ChannelML:Z *green
 
-create xform /plots/GraphWin_3 [500,100,400,400]  -title "Values of Ca_buffer:CONC:ca (Ca) in /cells/CellGroup_2/CellGroup_2_0: Sim_197"
+create xform /plots/GraphWin_3 [500,100,400,400]  -title "Values of Ca_buffer:CONC:ca (Ca) in /cells/CellGroup_2/CellGroup_2_0: Sim_244"
 xshow /plots/GraphWin_3
-create xgraph /plots/GraphWin_3/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 1000.0
+create xgraph /plots/GraphWin_3/graph -xmin 0 -xmax {duration} -ymin 0.0 -ymax 0.1
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Ca_buffer /plots/GraphWin_3/graph PLOT Ca *...oup_2_0/Soma_Ca_buffer:Ca *black
 addmsg /cells/CellGroup_4/CellGroup_4_0/Soma/Ca_buffer_ChannelML /plots/GraphWin_3/graph PLOT Ca *...ma_Ca_buffer_ChannelML:Ca *red
 addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/KCa_2 /plots/GraphWin_1/graph PLOT Z *...ellGroup_2_0/Soma_KCa_2:Z *orange
@@ -308,7 +416,7 @@ addmsg /cells/CellGroup_2/CellGroup_2_0/Soma/Piriform_KA_original /plots/GraphWi
 if (!{exists /controls})
     create neutral /controls
 end
-create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_197"
+create xform /controls/runControl [700, 20, 200, 140] -title "Run Controls: Sim_244"
 xshow /controls/runControl
 
 create xbutton /controls/runControl/RESET -script reset
@@ -333,10 +441,10 @@ maxwarnings 400
 
 reset
 str simsDir
-simsDir = "/home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/"
+simsDir = "/home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/simulations/"
 
 str simReference
-simReference = "Sim_197"
+simReference = "Sim_244"
 
 str targetDir
 targetDir =  {strcat {simsDir} {simReference}}
@@ -1070,11 +1178,11 @@ startTimeFile = {strcat {targetDir} {"starttime"}}
 stopTimeFile = {strcat {targetDir} {"stoptime"}}
 sh {strcat {"date +%s.%N > "} {startTimeFile}}
 
-echo Starting sim: Sim_197 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
+echo Starting sim: Sim_244 on {genesisCore} with dur: {duration} dt: {dt} and steps: {steps} (Crank-Nicholson num integration method (11), using hsolve: true, chanmode: 0)
 date +%F__%T__%N
 step {steps}
 
-echo Finished simulation reference: Sim_197
+echo Finished simulation reference: Sim_244
 date +%F__%T__%N
 echo Data stored in directory: {targetDir}
 

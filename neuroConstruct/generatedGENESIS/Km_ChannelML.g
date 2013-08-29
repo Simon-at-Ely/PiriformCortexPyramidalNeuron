@@ -23,7 +23,7 @@
 // /channelml/channel_type/neuronDBref/modelName = K channels 
 // /channelml/channel_type/neuronDBref/uri = http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table3 
 // /channelml/channel_type/current_voltage_relation/@cond_law = ohmic 
-// /channelml/channel_type/current_voltage_relation/@ion = k 
+// /channelml/channel_type/current_voltage_relation/@ion = km 
 // /channelml/channel_type/current_voltage_relation/@default_gmax = 100.0 
 // /channelml/channel_type/current_voltage_relation/@default_erev = -0.096 
 // /channelml/channel_type/current_voltage_relation/gate/@name = m 
@@ -44,9 +44,9 @@
 // /channelml/channel_type/impl_prefs/table_settings/@min_v = -0.1 
 // /channelml/channel_type/impl_prefs/table_settings/@table_divisions = 3000 
 
-// File from which this was generated: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Km_ChannelML/KA_Channel.xml
+// File from which this was generated: /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Km_ChannelML/KA_Channel.xml
 
-// XSL file with mapping to simulator: /home/Simon/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Km_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
+// XSL file with mapping to simulator: /home/padraig/git/PiriformCortexPyramidalNeuron/neuroConstruct/cellMechanisms/Km_ChannelML/ChannelML_v1.8.1_GENESIStab.xsl
 
 
 

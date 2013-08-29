@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<channelml xmlns="http://morphml.org/channelml/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:meta="http://morphml.org/metadata/schema" xsi:schemaLocation="http://morphml.org/channelml/schema   http://www.neuroml.org/NeuroMLValidator/NeuroMLFiles/Schemata/v1.7.2/Level2/ChannelML_v1.7.2.xsd" units="SI Units">
+<channelml xmlns="http://morphml.org/channelml/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+           xmlns:meta="http://morphml.org/metadata/schema" 
+           xsi:schemaLocation="http://morphml.org/channelml/schema   http://www.neuroml.org/NeuroMLValidator/NeuroMLFiles/Schemata/v1.7.2/Level2/ChannelML_v1.7.2.xsd" 
+           units="SI Units">
 
 	<meta:notes>A channel from  M. C. Vanier and J. M. Bower (1999) A Comparative Survey of Automated Parameter-Searching Methods for Compartmental Neural Models</meta:notes>
     
@@ -39,7 +42,7 @@
         
         <decaying_pool_model resting_conc="50e-09" decay_constant="0.025">
             
-            <pool_volume_info shell_thickness="1.0e-5"/>
+            <pool_volume_info shell_thickness="1.0e-7"/>
             
         </decaying_pool_model>
         

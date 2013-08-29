@@ -5,6 +5,15 @@
 // 
 //  ******************************************************
 
+
+//////////////////////////////////////////////////////////////////////
+//             ****  NOTE  ****
+//   Some of the channel mechanisms in this cell have some of their internal
+//   parameters changed after initialisation. This is not possible to specify
+//   in a *.p file, and so this file should not be used on its own for this cell,
+//   but in conjunction with the parameter changes in the main file after the readcell command.
+//////////////////////////////////////////////////////////////////////
+
 *absolute
 *cartesian
 *asymmetric
@@ -25,8 +34,8 @@
 // in micrometers. If we use physiological units above, the lengths below will appear quite high
 
 
-// Cell mechanism: LeakConductance (density: 1.98807E-8 mS um^-2)
-// Cell mechanism: Ca_buffer_ChannelML (density: 1.0E-9 mS um^-2)
+// Cell mechanism: Ca_buffer_ChannelML (density: 0.0 mS um^-2)
+// Cell mechanism: LeakConductance (density: 1.98807E-8 mS um^-2, e = -74.3)
 // Cell mechanism: Kahp1_ChannelML (density: 4.0E-9 mS um^-2)
 // Cell mechanism: Kahp2_ChannelML (density: 2.0E-8 mS um^-2)
 // Cell mechanism: KDR_Hippo_ChannelML (density: 2.7E-7 mS um^-2)
@@ -40,6 +49,6 @@
 
 
 *double_endpoint
-Soma none 0 0 0 0 21.3 0 10.4 Ca_buffer_ChannelML 1 Kahp1_ChannelML 4 Kahp2_ChannelML 20 KDR_Hippo_ChannelML 270 Km_ChannelML 100 Na_Hippo_ChannelML 2800 Olfactory_Ca_ChannelML 10 Persistent_Na_ChannelML 65 Piriform_KA_ChannelML 200 
+Soma none 0 0 0 0 21.3 0 10.4 Ca_buffer_ChannelML -7.5186864E10 Kahp1_ChannelML 4 Kahp2_ChannelML 20 KDR_Hippo_ChannelML 270 Km_ChannelML 100 Na_Hippo_ChannelML 2800 Olfactory_Ca_ChannelML 10 Persistent_Na_ChannelML 65 Piriform_KA_ChannelML 200 
 *double_endpoint_off
 
