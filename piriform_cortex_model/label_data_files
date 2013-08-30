@@ -1,0 +1,109 @@
+#! /usr/bin/env python
+
+#
+# label_data_files: appends a text tag to the name of
+#                   a group of data files.
+#
+
+#
+# FIXME: set it up so you can get the file descriptors from another
+#        file (files_to_label)
+#
+
+
+import sys, string, re, commands, os
+
+#
+# Globals.
+#
+
+d       = sys.argv[1]   # directory
+tag     = sys.argv[2]   # tag to add
+nottags = sys.argv[3:]  # avoid files ending in these tags
+
+# This file contains the names of all files to label, in shell-globbable
+# format.
+label_filename = "files_to_label"
+
+
+#
+# Functions.
+#
+
+def get_filenames():
+    """Get the name of all files to label.  Read the names as
+    shell-globbable names from a label file.  Ignore lines that
+    start with a pound sign."""
+    lfile = open(label_filename, 'r')
+    tagfilenames = []
+
+    while 1:
+        line = lfile.readline()
+        if not line:
+            break
+
+        if line[0] == "#":
+            #print "rejecting commented-out line: %s" % line
+            continue
+
+        newfilenames = string.split(line)
+        for filename in newfilenames:
+            #print "accepting file: %s" % filename
+            tagfilenames.append(filename)
+
+    return tagfilenames
+    
+
+def tag_filename(dirname, name, t, nts):
+    """Append tag 't' to file 'name' unless the file already
+    has the suffix 't' or 'nt'"""
+    
+    # Check to see if the file has one of the suffixes already.
+    # If so, just return.  This is really inefficient, but it
+    # doesn't matter much.
+    
+    for nt in nts:
+        if re.search("\_(%s|%s)$" % (t, nt), name):
+            #print "rejecting %s..." % name
+            return
+    
+    newname = name + "_" + t
+    os.system("cd %s; mv %s %s" % (dirname, name, newname))
+    #sys.stdout.write("cd %s; mv %s %s\n" % (dirname, name, newname))
+
+
+#
+# Main body of program.
+#
+
+    
+#files = """
+#ob.out pyramidal_Ia_1 pyramidal_basal_3 pyramidal_deepIb_2
+#pyramidal_soma pyramidal_supIb_2 ff ff_fb fb avg_field
+#pyramidal_soma_inh_ch1_Gk pyramidal_soma_inh_ch2_Gk
+#fb_inhib_spikes ff_fb_inhib_spikes ff_inhib_spikes pyramidal_spikes
+#xview_*_field* xplot_field* matlab_*_field*
+#"""
+
+print "labeling data files..."
+
+
+filenames = get_filenames()
+
+for file in filenames:
+    # Look for wildcard symbol.
+    if (string.count(file, "*") == 0):
+        tag_filename(d, file, tag, nottags)
+    else:
+        # Get all the filenames matching the wildcard.
+        cmd = "cd %s; ls -1 %s 2> /dev/null"
+        status, wildcardfiles = \
+                commands.getstatusoutput(cmd % (d, file))
+        
+        if not status:  # Zero exit code; all is well.
+            wildcardfiles = string.split(wildcardfiles)
+            for wfile in wildcardfiles:
+                tag_filename(d, wfile, tag, nottags)
+        else:  # Nonzero exit code; usually means no file found.
+            pass  # Do nothing.
+            

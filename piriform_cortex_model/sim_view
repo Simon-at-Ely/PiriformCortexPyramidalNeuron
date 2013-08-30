@@ -1,0 +1,17 @@
+#! /bin/sh
+
+# sim_view: view output files
+
+xview -init_time 0.075 -speed 1 \
+  -prefix_file $HOME/gen/tools/xplot_defs ff_fb_weak&
+
+sleep 1
+
+xview -init_time 0.075 -speed 1 \
+  -prefix_file $HOME/gen/tools/xplot_defs pyramidal_soma_weak&
+
+sleep 1
+
+xview -init_time 0.075 -speed 1 \
+  -prefix_file $HOME/gen/tools/xplot_defs fb_weak&
+

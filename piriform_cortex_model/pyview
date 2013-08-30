@@ -1,0 +1,96 @@
+#! /usr/bin/env pythoni
+
+#
+# pyview: a script to control multiple xview processes.
+#
+
+import os, sys, string, signal
+
+
+def step():
+    for pid in xview_pids:
+        os.kill(pid, signal.SIGUSR1)
+
+def run():
+    for pid in xview_pids:
+        os.kill(pid, signal.SIGUSR2)
+
+def run2(time=0.250):
+    # This is a hack to get around synchronization problems.
+    # It's extremely slow but fairly well synchronized, so it's
+    # good for making movies.
+    nsteps = int(time / 0.0001)
+    npause = 100000
+
+    try:
+        for i in range(nsteps):
+            step()
+            for i in range(npause):
+                pass
+    except:
+        pass
+    
+
+def bye():
+    for pid in xview_pids:
+        os.kill(pid, signal.SIGKILL)
+    sys.exit(0)
+
+
+#
+# Main body of program.
+#
+
+# Globals.
+
+home              = os.getenv("HOME")
+xview_path        = "%s/local/Linux/bin/xview" % home
+filedir           = "%s/gen/tools"  % home
+xview_cmd_file    = "./xview_cmds"
+xplot_prefix_file = "%s/xplot_defs" % filedir
+pyview_files      = "./pyview_files"
+
+# Command-line arguments.
+
+if len(sys.argv) > 1:
+    pyview_files = sys.argv[1]
+
+# Load in the datafile names.
+
+metadatafile = open(pyview_files, "r")
+datafiles = metadatafile.readlines()
+
+for i in range(len(datafiles)):
+    datafiles[i] = datafiles[i][:-1]  # Strip newline from end.
+    datafiles[i] = string.split(datafiles[i])
+
+xview_pids  = []
+
+# Arg list.  `None's are placeholders.
+xview_args  = ["",
+               "-signal",
+               "-geometry", None,
+               "-command_file", xview_cmd_file,
+               "-xplot_prefix_file", xplot_prefix_file,
+               None]
+
+for (file, geom) in datafiles:
+    # Substitute args.
+    my_args = xview_args
+    my_args[3] = geom
+    my_args[8] = file
+    #print my_args
+
+    # Start the process.
+    pid = os.fork()
+    
+    if pid == 0:
+        # This replaces the interpreter.
+        os.execv(xview_path, my_args)
+    else:
+        # I'm the parent, manage the pid.
+        xview_pids.append(pid)
+
+os.system("sleep 2")
+step()
+

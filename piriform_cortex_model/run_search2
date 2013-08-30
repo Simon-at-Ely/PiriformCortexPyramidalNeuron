@@ -1,0 +1,133 @@
+#! /usr/bin/env python
+
+#
+# run_search2: run a series of simulations with parameter variations
+#     taken from a file.
+#
+# This differs from `run_search' in that it specifies all parameter values
+# exactly; there is no random selection of parameter values.
+#
+
+import sys, os, string, re
+
+#
+# Parameter file names.
+# NOTE: we name sim_param_file "piriform_free_params2.g" so we know that
+#       it's a computed file, as opposed to "piriform_free_params.g".
+#
+
+meta_param_filename             = "run_search2_param_file"
+sim_param_filename              = "piriform_free_params2.g"
+sim_param_file_template_name    = "piriform_free_params.g.template"
+sim_master_file_template_name   = "piriform2.g.template"
+sim_master_filename             = "piriform2.g"
+
+# Get template file data.
+sim_param_file = open(sim_param_file_template_name, "r")
+sim_param_file_data = sim_param_file.readlines()
+sim_param_file.close()
+
+sim_master_file = open(sim_master_file_template_name, "r")
+sim_master_file_data = sim_master_file.readlines()
+sim_master_file.close()
+
+
+#
+# Read in the parameter file and turn into a list of dictionaries.
+#
+# Parameter file format:
+#
+# `#' comments are ignored.
+# The first non-comment line gives the field names in order.
+# All subsequent lines give the field values in order.
+#
+
+def load_param_file(filename):
+    params = []
+
+    file = open(filename, "r")
+    lines = file.readlines()
+
+    # Strip comments.  Note that the `#' character must be in the
+    # first column.
+    newlines = []
+    for line in lines:
+        if len(line) > 0 and line[0] != "#":
+            newlines.append(line)
+    lines = newlines
+
+    param_names = string.split(lines[0])
+    
+    for line in lines[1:]:
+        param_vals = string.split(line)
+        if len(param_vals) == 0:  # Nothing on the line
+            continue
+
+        assert len(param_vals) == len(param_names)
+        dict = {}
+
+        for i in range(len(param_names)):
+            dict[param_names[i]] = param_vals[i]
+
+        params.append(dict)
+
+    file.close()
+    return params
+
+
+#
+# Substitute parameter values in the parameter files using dictionary `d'.
+#
+
+def substitute_param_values(d):
+    # Uses globals: sim_param_file_data, sim_master_file_data
+
+    # Substitute parameters in piriform_free_params2.g file.
+    out_param_file_data = []
+    for line in sim_param_file_data:
+        out_param_file_data.append(line % d)
+
+    out_param_file = open(sim_param_filename, "w")
+    for line in out_param_file_data:
+        out_param_file.write(line)
+    out_param_file.close()
+
+    # Substitute parameters in piriform2.g file.
+    out_master_file_data = []
+    for line in sim_master_file_data:
+        out_master_file_data.append(line % d)
+
+    out_master_file = open(sim_master_filename, "w")
+    for line in out_master_file_data:
+        out_master_file.write(line)
+    out_master_file.close()
+    
+
+
+#
+# Main body of program.
+#
+
+params = load_param_file(meta_param_filename)
+
+for param_set in params:
+    #print param_set
+    substitute_param_values(param_set)
+    dir = param_set["DIR"]
+    os.system("rm -rf results/%s" % dir)
+    os.mkdir("results/%s" % dir)
+
+    # Record the parameter values in a file in the results directory.
+    paramfile = open("SIMULATION_PARAMETER_VALUES", "w")
+    paramfile.write("Parameter values for directory: %s\n" % param_set["DIR"])
+    paramfile.write("----------------------------------\n\n")
+    keys = param_set.keys()
+    keys.sort()
+    for key in keys:
+        if key == "DIR":
+            continue
+        paramfile.write("%20s %20s\n" % (key, param_set[key]))
+    paramfile.close()
+    os.system("mv SIMULATION_PARAMETER_VALUES results/%s" % dir)
+
+    os.system("nxgenesis_2.1 piriform2.g")

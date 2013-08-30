@@ -1,0 +1,110 @@
+Things in the model which should be fixed
+=========================================
+
+NOTE: none of these changes should be made prior to my graduation.
+
+Genesis code shit
+=================
+
+Make it so that if a connection command doesn't set up any connections
+(or a weight command doesn't set up any weights etc.) that a warning is
+issued.
+
+
+Trivial shit
+============
+
+The Ek's for pyramidal cell voltage-dependent channels should all be
+the same.  This will require re-running parameter searches, and should
+be avoided as long as possible.
+
+The potassium Ek for the synaptic channels (-90 mV) is larger than for
+the ionic channels (-75 mV)!  The easiest way to fix this is to change
+it in the synaptic channels, since it only affects the GABA-B response.
+I think Haberly uses -90, though.  Alternatively, we might try rerunning
+the parameter search.
+
+The CM value in the inhibitory cells is too high and the RM is too low.
+They seem to cancel each other out phenomenologically, but it would 
+probably cause a lot of grief if you submitted a paper with these values.
+
+The B value in the Ca_conc object is incorrectly set because of a bug
+in the cellreader.  The final value is OK but the value in the .p file
+has to be changed when the bug gets fixed.
+
+
+Background response
+===================
+
+The model is too excitable; even a slight change in the state of the random
+number generator can make the difference between firing and not firing.  This
+mainly affects the background response.
+
+
+Strong shock response
+=====================
+
+Latency to spiking is a bit high; Haberly has 6 msec in one paper and about 8
+in another.  I have 9-10 msec.  Maybe the neuron simplification process has
+caused problems; the membrane capacitance is high (0.043 vs 0.008) and the RM
+is correspondingly low (0.5 vs. 3.0).  Since the time constants more or less
+balance out, this (hopefully) isn't too big a problem.  In general, I'm
+pretty happy with the strong shock response.
+
+Note that the time between the 1a and 1b peaks is roughly the time to spike,
+for this reason: the afferent collaterals have about the same conduction
+velocity as the association fibers.  Therefore, the time it takes for the 1a
+peak to reach posterior piriform cortex is about the same as the time it
+takes for the 1b peak to reach the same area.  Thus, the difference between
+the peak locations is the time it took the cells in vAPC to spike.
+
+
+Weak shock response
+===================
+
+The biggest problem with this seems to be that the very large spiking
+currents seriously screw up the CSDs and the surface field potentials.  I can
+fake my way around this with the CSDs by only recording the synaptic
+currents, but that's basically bogus (and unpublishable) and the same
+strategy doesn't work for the surface field potentials.
+
+What are the possibilities?
+
+1) The spiking currents are just too large.  This implies that maybe
+
+   a) I need a spike-initiating zone in my model.  I tried this and it didn't
+      help. 
+
+   b) the input resistance of the neurons is much higher (e.g. 5x higher)
+      than I'm using.  This seems doubtful, but whole-cell recordings might
+      shed some light on this.
+
+2) The spiking currents are OK, but the _synaptic_ currents are much larger!
+   How is this possible?  Wouldn't much larger synaptic currents give rise to
+   much larger current being input at the soma?  Maybe not.  If you have
+   dendritic spines, then it's possible that a large proportion of the
+   current through the synapses never makes it into the apical dendrite due
+   to the large spine resistance.  OTOH, I would guess that in that case, the
+   current that flows out through the spine neck would cancel out most of the
+   current that flows in, so you'd only see the net current in the FP.
+   Another possibility is that there may be GABA-A conductances clustered on
+   the base of the apical dendrite that shunt out most of the input current.
+   Yet another possibility is that there are much higher numbers of synapses
+   but also much leakier apical dendrites.
+
+3) The spiking currents are OK, but there is some weird scaling or averaging
+   effect that minimizes their contribution to the CSDs and FPs.  Note that
+   in the Haberly weak-shock CSD you can't see ANY spiking currents (!).  If
+   this is the case it will be very hard to fix in the model, since we can't
+   run thousands of simulations and average the results.
+
+We really need better neuron models to help resolve this issue.  It's
+critical, because it's screwing up everything else in the model.
+
+
+Another problem with the current model is what to do about the feedback
+connections, as well as the associational connections from the dAPC.  The
+problem there is that they synapse in the deep part of layer 1b, and
+Haberly's CSDs don't show much in that region.  Possibly this has something
+to do with branching patterns; I don't really know.
+

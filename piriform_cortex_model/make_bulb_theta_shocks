@@ -1,0 +1,90 @@
+#! /usr/bin/env python
+
+#
+# make_bulb_theta_shocks:
+#     Make the input files for a stimulus paradigm that represents
+#     a series of weak shocks from the bulb.  It's supposed to 
+#     represent what would happen during a bulbar EEG.
+#
+
+import sys, string, re
+
+myname = re.sub(".*/", "", sys.argv[0])
+
+usagestr = \
+"usage: %s outfilename frequency amplitude decay nshocks ngaps maxtime"
+
+if len(sys.argv) != 8:
+    print usagestr % myname
+    raise SystemExit
+
+outfilename = sys.argv[1]
+outfile = open(outfilename, "w")
+outfile.write("""# format: event [event ...] [pProb]
+# (nsequences events per line; nsequences is usually 1)
+# Probability of responding to an event is shown by the last
+# number which must have a trailing `p' e.g. p0.5
+""")
+
+frequency = string.atof(sys.argv[2])
+amplitude = string.atof(sys.argv[3])
+decay     = string.atof(sys.argv[4])
+nshocks   = string.atoi(sys.argv[5])
+ngaps     = string.atoi(sys.argv[6])
+maxtime   = string.atof(sys.argv[7])
+
+period  = 1.0 / frequency
+nperiod = nshocks + ngaps
+
+# Function to scale the probability by the decay factor.  This takes into
+# account the fact that the bulbar EEG tends to decay during the theta cycle.
+# Use a linear decay, and make sure that the overall stimulus averages out to
+# the same amount.
+
+def calc_decay(prob, decay, i, nshocks):
+    assert decay >= 0.0
+    assert decay <= 1.0
+    if decay == 0.0:
+        return prob
+    
+    # Calculate a scaling factor.
+    # N.B. This is appallingly inefficient!
+    sum = 0.0
+    for j in range(nshocks):
+        sum = sum + (decay ** j)
+    scale = nshocks / sum
+    
+    prob = prob * (decay ** i) * scale
+    return prob
+
+
+
+#
+# Calculate the probability of firing for each shock.
+# Assume that the average firing rate for a mitral cell
+# is 7 Hz.  Scale by the amplitude up to a maximum of 1.0 probability
+# per shock.
+#
+
+natural_frequency = 7.0
+shocks_per_second = frequency * (float(nshocks) / float(nperiod))
+prob = natural_frequency / shocks_per_second
+prob = prob * amplitude
+
+if prob < 0.0:
+    prob = 0.0
+elif prob > 1.0:
+    prob = 1.0
+
+time = 0.0
+
+while time < maxtime:
+    for i in range(nshocks):
+        scaled_prob = calc_decay(prob, decay, i, nshocks)
+        outfile.write("%g\tp%g\n" % (time, scaled_prob))
+        time = time + period
+
+    time = time + ngaps * period
+
+outfile.close()
+

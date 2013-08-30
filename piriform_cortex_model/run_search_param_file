@@ -1,0 +1,44 @@
+#
+# Parameter ranges for the piriform cortex simulation.
+# 
+PYR_PYR_LOCAL_CONNECTION_PROB   fixed         0.2
+PYR_PYR_LR_CONNECTION_PROB      fixed         0.2
+LOT_TRANSITION_FACTOR           fixed         1.0
+NAFF_PYR_SYNAPSES               fixed       150.0
+NAFF_FF_SYNAPSES                fixed        50.0
+NAFF_FF_FB_SYNAPSES             fixed        25.0
+NPYR_PYR_LOCAL_VAPC_SYNAPSES    fixed       100.0
+NPYR_PYR_LOCAL_DAPC_SYNAPSES    uniform     200.0   400.0
+NPYR_PYR_LOCAL_PPC_SYNAPSES     uniform     400.0   800.0
+NPYR_PYR_VAPC_SYNAPSES          uniform     600.0  1200.0
+NPYR_PYR_DAPC_SYNAPSES          fixed       300.0
+NPYR_PYR_PPC_SYNAPSES           fixed       300.0
+NPYR_FB_SYNAPSES                fixed        50.0
+NFB_PYR_SYNAPSES                uniform     400.0   800.0
+NFB_FB_SYNAPSES                 gaussian    100.0    50.0    50.0    200.0
+NPYR_FF_FB_SYNAPSES             gaussian     25.0    10.0    15.0     40.0
+NFF_FB_PYR_SYNAPSES             uniform      50.0   500.0
+NFF_PYR_SYNAPSES                gaussian    150.0    50.0    50.0    250.0
+PYR_PYR_LR_VAPC_CONNECTION_HOLE fixed         1.5e-3  
+PYR_PYR_LR_DAPC_CONNECTION_HOLE fixed         1.5e-3  
+PYR_PYR_LR_PPC_CONNECTION_HOLE  fixed         3.5e-3 
+PYR_FB_SCALE1                   fixed         1.0
+PYR_FB_SCALE2                   fixed         1.0
+PYR_FB_SCALE3                   fixed         1.0
+PYR_FB_SCALE4                   fixed         1.0
+PYR_PYR_LOCAL_PA_SCALE          fixed         0.1
+PYR_PYR_VAPC_PA_SCALE           fixed         1.0
+PYR_PYR_DAPC_PA_SCALE           fixed         1.0
+PYR_PYR_PPC_AP_SCALE            fixed         1.0
+PYR_LAMBDA3                     fixed        16.0e-3
+WEAK_SHOCK                      fixed         0.3
+#
+# Parameter constraints.  Each number represents the index of the
+# constraint set.  Each constraint variable should belong to one and only
+# one set.
+#
+C 1 PYR_FB_SCALE1 <= PYR_FB_SCALE3
+C 1 PYR_FB_SCALE2 <= PYR_FB_SCALE3
+C 1 PYR_FB_SCALE3 <= PYR_FB_SCALE4
+C 2 NPYR_PYR_LOCAL_VAPC_SYNAPSES <= NPYR_PYR_LOCAL_DAPC_SYNAPSES
+C 2 NPYR_PYR_LOCAL_DAPC_SYNAPSES <= NPYR_PYR_LOCAL_PPC_SYNAPSES

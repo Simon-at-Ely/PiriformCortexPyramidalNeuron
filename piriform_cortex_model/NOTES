@@ -1,0 +1,552 @@
+Notes on the piriform cortex network model:
+==========================================
+
+
+What the model contains
+-----------------------
+
+The model consists of four cell types:
+
+1) layer 2 pyramidal cells
+2) layer 1a feedforward inhibitory cells
+3) layer 1b feedforward/feedback inhibitory cells
+4) layer 2/3 feedback inhibitory cells
+
+The model also contains a spike-generating model of the olfactory bulb,
+parameterized on real data.
+
+The model contains fast/slow GABA-A currents, GABA-B currents, NMDA
+channels, synaptic facilitation, depression, and neuromodulation of various
+parameters.
+
+
+What the model doesn't contain
+------------------------------
+
+-- This model does not have inputs based on multi-unit recordings which
+   incorporates inter-neuron relationships.
+
+-- The cells do not have complex dendritic structure.
+
+-- The model has no deep pyramidal cells, spiny multipolar cells, semilunar
+   cells, and other even rarer cell types.
+
+-- There are no active dendrites or dendritic spines on any of the cells.
+
+-- There's no differentiation between horizontal cells and small
+   globular-soma cells for inhibition.
+
+-- There's no endopiriform nucleus.
+
+-- There are no inputs to the piriform cortex from other than the olfactory
+   bulb and there's no back-projection to the bulb.  The model isn't
+   connected to a true bulb model either.  Notably absent are projections
+   from the anterior olfactory nucleus and to/from the endopiriform nucleus.
+
+-- There's no LTP or LTD.
+
+-- There are inhibitory connections between feedback inhibitory cells but
+   not between feedforward/feedback inhibitory cells or between different
+   classes of inhibitory cells.
+
+-- There are no "patchy" connections from the mitral cells to the piriform
+   cortex (e.g. Buonviso et. al. Eur. J. Neurosci. 3:493-500 (1991)).
+   I could argue that due to scaling, the target of a single connection
+   could be thought of as a "patch".
+
+
+Differences between my model and Matt's
+---------------------------------------
+
+-- The olfactory bulb inputs are based on real data (Upi's recordings).
+
+-- The pyramidal cell and deep inhibitory cell models have been matched
+   to real data using parameter-searching methods.  The pyramidal cell
+   model contains multiple types of ionic channels and shows typical
+   spike frequency adaptation behavior.  Also, I use the Hines integration
+   method to solve for the cell's state variables, and the pyramidal cell
+   has 15 compartments rather than 5 to give a reasonably electrotonically
+   correct simulation.
+
+-- Matt has a smaller diameter for ff interneurons than I do.  Matt is 
+   probably closer to the mark than I am, so I might consider reducing
+   the diameter.  However, that would alter the excitability, and we know
+   very little about that in these cells, so I probably will leave it as
+   is.
+
+-- My model includes neuromodulation (of synapses, cell resting potentials,
+   and ionic conductances) as well as synaptic facilitation and depression
+   (which is also neuromodulatable).
+
+-- Matt divided the piriform cortex into rostral and caudal segments.
+   Following Haberly, I divide the piriform cortex into three regions:
+   the ventral anterior piriform cortex (vAPC), the dorsal anterior piriform
+   cortex (dAPC), and the posterior piriform cortex (PPC).
+
+-- Many of the connection-related parameters that Matt used have been changed
+   to reflect more recent data.  For example, projections from the PPC are
+   predominantly to other cells in the PPC.  Also, the distributions of
+   conduction velocities are now lognormal instead of gaussian, following
+   Ketchum and Haberly '93.  The conduction velocities are much slower in the
+   dorsal anterior piriform cortex, also following Ketchum/Haberly '93.
+
+-- Matt uses rectangular regions for setting up connections, while I use
+   ellipsoidal almost exclusively.  Matt's method was just more convenient
+   to program and can't have any biological justification.
+
+-- Matt set up the rostral/caudal associational projections so that a given
+   cell would project to superior layer 1b for all of its caudal projections
+   but would project to deep layer 1b for all of its rostral projections.  He
+   doesn't give a reference for this, and in fact Haberly's work suggests
+   that this is wrong.  Instead, I've set the connection targets based on the
+   pyramidal cell location, as Haberly suggests (SOB 4th ed).  Note that the
+   rostro-caudal axis of Matt's model corresponds more to the ventro-dorsal
+   axis of my model.  Matt also uses a different rostro-caudal and
+   caudo-rostral conduction velocity, while I use different velocities based
+   on the location of origin of the fibers, following recent work by 
+   Haberly.
+
+-- Matt also has different connection strengths for caudally-directed and
+   rostrally-directed connections.  He has parameters that allow different
+   connection probabilities and strengths in the rostral->caudal
+   vs. caudal->rostral directions, but only uses them for long-range
+   connections (not local).  I may or may not use this in my model.
+
+-- I have much stronger local connections than Matt did, especially in the
+   posterior piriform cortex.  This is based on work by Haberly.
+
+-- Many of the other connection strengths are different for my model wrt
+   Matt's, for instance those dealing with inhibition.  These may not be
+   directly comparable since my inhibitory cells are different from his
+   (e.g. they may be more excitable).
+
+-- Matt also uses a lame method for specifying connection delays which only
+   uses the xy components of the source and destination.  I use the xyz
+   components.
+
+-- I divide up the synaptic connections differentially between compartments
+   in a given dendritic region, roughly following Ketchum/Haberly '93.
+
+
+
+Interesting biological questions/issues
+---------------------------------------
+
+Should neuromodulation of afferent and associational fibers apply also to
+inputs to inhibitory cells (feedforward and/or feedback)?  For now I'm
+going to say no, in the absence of any data, but it may happen that it's
+better to have modulation.  However, looking at feedback interneurons only,
+the decrease in association fiber strength might undercut the increase in
+excitability, which seems pointless.
+
+It's also not certain that local connections between pyramidal cells onto
+basal dendrites are neuromodulatable in the same way that they are in layer
+Ib.  It's possible that there would be computational advantages in having
+no neuromodulation on these synapses or even a different kind of
+neuromodulation (e.g. NE strengthens the synapses).  There is an analogy
+here with Kohonen networks.  If the inhibitory radius of connections was
+greater than the excitatory one, it would lend support to this idea; Matt
+gives them the same radius, though.  Also, for the "Kohonen network" idea
+to work you'd need LTP on the afferent fiber synapses, which seems to go
+against the evidence.  However, Roman, Staubli and Lynch '87 proposed that
+NE might make the afferents more susceptible to LTP, which fits in well
+with this hypothesis.  Also, it's not clear what a Kohonen-type network
+accomplishes in terms of map formation; if you're trying to map a
+1000-dimensional space onto the 2-D sheet of neurons it's hard to imagine
+doing so in a meaningful way.  However, it's quite possible (probable?)
+that one of the roles of the olfactory bulb is dimensionality reduction.
+Freeman believes that the dimensionality is more in the range of 6 (for
+recognized odors) to 30 (for background odors), which is more like it.  It
+still seems like the Kohonen-network idea is simplistic.
+
+One of the curious features of the Ketchum/Haberly model is that fibers from
+the dAPC have a much slower conduction velocity than fibers originating
+elsewhere (e.g. in the PPC).  One explanation might go as follows.
+Associational projections from both PPC and dAPC project to proximal apical
+dendrites on pyramidal cells in the vAPC.  However, the PPC cells are, in
+general, much further away from the vAPC than are the cells in the dAPC.
+Thus, having a slower conduction velocity in fibers from the dAPC might be a
+way to ensure that the synaptic inputs from the two regions hit the vAPC
+dendrites at roughly the same time, leading to more effective reafference.
+Q: do fibers from the PPC project all the way back to the vAPC at all?
+
+I wish I could address this: if LTP/LTD does in fact depend on the relative
+timing of synaptic inputs vs. spike timing, then this could be a major
+determining factor in why the olfactory cortex is wired the way it is.
+
+It would be interesting to do a sensitivity analysis of the various
+connection parameters affecting the simulation.
+
+
+
+Simulation development issues
+-----------------------------
+
+Every so often, grep for CHECKMEs, FIXMEs, Qs, TODOs, MAYBE-TODOs and
+WARNINGs in the simulation scripts so you are aware of the problems that
+haven't been dealt with yet.
+
+I've tried running the small model on the local disk but it took about
+the same time.  I should try this again on the medium and large models.
+
+
+Code issues
+-----------
+
+Make -debug and -verbose options for ALL connection commands.  Have "extended
+debug" available if the -debug option is selected and the -DDEBUG flag is
+also selected.  Also, always set it up so the -verbose and -debug flags
+accept numeric arguments; this is more tedious to type but gives much more
+control (e.g. the verbosity/debug level can be globally controlled by a
+single flag).
+
+I'm replacing all "reset"s by double resets.  I've been bitten too many times
+by resets that happen in the wrong order.  Ideally, there should be a
+separate reset schedule, but there isn't, so things get reset in a random
+order, which makes many things fail.
+
+Try to get rid of all global variables.  Adhere to the convention of using
+all caps for globals.  Also, all functions that use globals should have a 
+// globals used: ...
+line after the function definition line.
+Also: files that have had all globals identified should have a 
+// GLOBALS LISTED
+line near the top of the file.  Add
+// No functions here use global variables directly.
+If this is the case.
+
+
+Hsolver issues
+--------------
+
+I run a test cell for both the pyramidal cell and a generic inhibitory cell
+for a long time with no input to calculate a true baseline state of the
+cells.  Then I restore the state in all cells before starting the network
+simulation.  If I didn't do this, I'd have to run each network simulation
+with no input for a long time (> 1 second) before starting the real
+simulation in order to get accurate results.  This is a waste of computer
+time.  Restoring state to the inhibitory cells is trivial because they aren't
+hsolved.  However, restoring state to an hsolved cell is extremely
+non-trivial, and it's clear the hsolver was never designed with this in
+mind.  The method I use probably only works with chan_mode 0, but here it is:
+
+1) In the test cell:
+   -- define the cell
+   -- add an hsolver, using chan_mode 10 (backward Euler)
+   -- reset
+   -- run for a very long time u(60 sec) sing a very large time step (1 msec)
+   -- delete the hsolver
+   -- save the cell's state
+
+2) In the cell in the network:
+   -- define the cell
+   -- add an hsolver, using chan_mode 11 (Crank-Nicolson)
+   -- reset
+   -- load the previously-saved cell's state
+   -- run the simulation
+
+
+Model parameterization issues
+-----------------------------
+
+The correctly parameterized model should be able to replicate:
+
+1) weak and strong shock-evoked field potentials (EEG, CSD);
+2) reasonable average firing rates given background synaptic input
+   (cf. Shoenbaum and Eichenbaum);
+3) reasonable intracellular responses to shock stimuli
+   (e.g. Haberly, SOB p. 393)
+
+N.B. Matt's values for pyr->fb connections give very high weights;
+     I probably want to reduce the number of synapses since my
+     fb cells are only one compartment.
+
+Now, I'm not saying that this model is a good candidate for a parameter
+search, because it isn't.  But if you *absolutely* wanted to run a parameter
+search, one way would be to use the output of the averaged field potential
+as the measure of the network activity that you were trying to match.
+
+
+Scaling issues
+--------------
+
+Representing a large network of interconnected cells by a smaller network
+gives rise to scaling problems.  One serious problem is that the reduced
+number of real synaptic connections (probably by at least a factor of 10)
+gives rise to an artificial synchrony.  In other words, instead of receiving
+10 small synaptic inputs at varying times from a group of cells projecting to
+a given cell, you get one large synaptic input at one time.  This is not such
+a problem for slow synapses, where the membrane capacitance averages out the
+effect of the synaptic current over time to a considerable extent.  However,
+for fast synapses it can give rise to a much larger conductance change than
+the real system which is, however, much shorter-lived.  For fast excitatory
+synapses with NMDA components it's even more of a problem because the large
+conductance change will give rise to a large change in membrane potential,
+which will activate the NMDA component of the channels.  This can happen in
+cases where in the real system the NMDA channels would be completely
+inactive.  One way to compensate for this is to raise the voltage threshold
+of the NMDA channels.
+
+
+Synaptic connection issues
+--------------------------
+
+It seems best to make a connection "hole" so that pyramidal cells don't
+connect to themselves, so that's what I do.
+
+Matt divided the local pyramidal->pyramidal connections into two groups,
+those that projected rostrally (anteriorly) and those that projected caudally
+(posteriorly).  He actually set the connection probabilities to be equal for
+these two groups.  However, the delays were set very differently: rostrally
+(anteriorly) directed axons had about double the conduction velocity of
+caudally (posteriorly) directed axons (this was true for both local and
+long-range connections).  This was based on a Haberly Soc. Neurosci. abstract
+(the reference was incomplete) but it conflicts with the Ketchum/Haberly
+modeling paper, which assumes a constant velocity for fibers originating from
+different regions.
+
+Matt had a weird arrangement so that if "LOCAL_FF" was defined, the pyramidal
+cells would only connect to local ff cells, whereas otherwise they would
+connect to ff cells located everywhere *except* in the local region.  The
+latter arrangement makes no sense to me.
+
+
+Synaptic weight issues
+----------------------
+
+Following the lead of Matt Wilson, I'm using unitary synaptic conductances
+for this model as follows:
+
+1) The gmax (aka Gbar) of any synchan-type object should roughly correspond
+   to the maximum conductance of a single synapse (the unitary
+   conductance).  In order for the synchan-type object to represent
+   multiple synapses, the weight of the connection is scaled appropriately.
+   Note that I only need unitary conductances for these synaptic channel
+   types:
+
+   a) AMPA excitatory glutamate channel;
+   b) GABA-A channel (just fast; not slow)
+   c) GABA-B channels
+
+   We don't need to have NMDA unitary conductances or fast vs. slow GABA-A
+   conductances specified explicitly, because they are expressed instead as
+   a proportion of the other unitary conductances in the various multiple
+   synchan objects.  In order for this to be true, the pGbar parameters
+   must be set correctly (which they are, given the limits of our
+   knowledge). 
+
+
+2) We also have to specify the total number of synaptic connections of a
+   particular type (e.g. LOT afferents) impinging on a particular cell.
+
+
+3) The model we use for determining the weights is that the weights are an
+   exponentially decaying function of distance.  This is because each cell
+   in our model is intended to be an "average" of a large number of cells
+   in that vicinity, since we are only simulating a small percentage of the
+   cells.  In a full-scale model, where every synaptic connection in the
+   real system corresponds to one in the model, the synaptic weights would
+   all be 1.0 (e.g. one "synaptic unit"), and the _probability_ of a given
+   cell making a synaptic contact with another cell would be (roughly) an
+   exponentially decaying function of distance.  The reason for this is
+   that we are assuming a probabilistic model wherein a particular axon
+   from the source cell travels along until it hits a target cell, at which
+   point it stops and makes a synaptic contact.  If we assume that the
+   density of targets is constant, then the probability of making a
+   synaptic contact is constant for a given area.  This leads to an
+   exponential probability distribution for synaptic contacts as a function
+   of distance (you do the math).  In our case, we simply use weights to
+   model probabilities.  We also have connection probabilities, but they
+   mainly serve to introduce variability into the model and (in my opinion)
+   have no deep significance.  Having low connection probabilities does,
+   however, reduce the total number of synaptic contacts to a reasonable
+   level.
+
+   It is of interest (at least to me) that the exponential distribution is
+   also the maximum-entropy distribution for parameters of this type.
+
+   There are subtle weight-normalization issues for the associational
+   weights when using this probabilistic model (see below).
+
+
+4) Setting the afferent weights.
+
+   The equation we need for the AFFERENT weights is this:
+
+       weight = ((total number of synapses) 
+                / ((total number of inputs) 
+                   * (connection probability along path)))
+                * (compartment scaling factor) * (unitary conductance)
+
+   with
+
+       sum(compartment scaling factors) = 1
+
+   The compartment scaling factor is a way of distributing the total weight
+   unevenly among compartments receiving the inputs.
+
+   An example: let's say that there should be 1000 mitral cell inputs from
+   the LOT onto the most superficial end of the apical dendrite on a
+   pyramidal cell.  Let's say that there are 100 mitral cells, with a
+   connection probability of 0.2.  Let's also say that the unitary
+   excitatory conductance is 1.0 pS, and that the weight is divided up
+   between superficial 1a, distal 1a, and superficial 1b compartments as
+   follows:
+
+       sup 1a:  0.4
+       dist 1a: 0.4
+       sup 1b:  0.2
+
+   We call these numbers the "distribution factors".  
+   Then the weights become:
+
+       sup 1a:  (1000 / (100 * 0.2)) * 0.4 * 1.0e-12 = 20.0e-12 S
+       dist 1a: (1000 / (100 * 0.2)) * 0.4 * 1.0e-12 = 20.0e-12 S
+       sup 1b:  (1000 / (100 * 0.2)) * 0.2 * 1.0e-12 = 10.0e-12 S
+   
+   If we set the Gbar to be 1.0 pS, we can just use these numbers:
+
+       sup 1a:  (1000 / (100 * 0.2)) * 0.4 = 20.0
+       dist 1a: (1000 / (100 * 0.2)) * 0.4 = 20.0
+       sup 1b:  (1000 / (100 * 0.2)) * 0.2 = 10.0
+
+   These will be the scale arguments to the piriform_set_afferent_weights
+   function for the different compartments.  Note also that the connections
+   of a given type are typically divided up equally between several
+   compartments; the connection probabilities are adjusted to reflect this.
+
+   We can implement the distribution factors in the X_connect.g files,
+   so what we really need is simply
+
+       AFF_PYR_WT_SCALE = (1000 / (100 * 0.2))
+           = ({NPIRIFORM_AFF_PYR_SYNAPSES} 
+             / ({BULB_N} * {BULB_PYR_CONNECTION_PROB})
+
+
+   Note that while the total amount of afferent excitatory input decays as
+   you go from anterior to posterior, the total amount of afferent
+   inhibitory feedforward input decays at the same rate.  Thus, the hope is
+   that cells at the posterior end are not getting significantly less
+   excitatory input than those at the anterior end.
+
+
+5) Setting the associational weights.
+
+   We want to set the associational weights so that a fixed number of
+   synapses of a particular type impinge on the target compartment(s) for
+   each target cell.  We use weight-setting functions that give weights
+   that decay with distance.  This is because each connection between cells
+   actually models an ensemble of connections, and the exponentially
+   decaying weights correspond to a probabilistic model wherein a given
+   fiber has a fixed probability per unit distance of making a synaptic
+   contact with a target synapse.  To make sure that the total number of
+   synapses synapsing onto the cell from a given pathway is correct, we use
+   the function `piriform_calc_exp_max_weight'.  This function takes as
+   arguments the location of a typical target compartment (generally in the
+   middle of the piriform cortex, so there are no edge effects), the array
+   of source elements, the extent of connections, the desired number of
+   synapses, the connection probability, and the weight decay value (decay
+   per unit distance).  From this it calculates what the weight would be 
+   at zero distance.  We can then use this weight value as one of the
+   arguments to the function `piriform_set_associational_weights'.  The
+   result is that the total weight value corresponds to the correct number
+   of synapses.  This was adapted from Matt's model; the nice thing about
+   it is that if you change the scale of the model the weights will be
+   automatically adjusted accordingly.
+ 
+
+Synaptic weight normalization
+-----------------------------
+
+Let's say that all pyramidal cells have roughly the same amount of
+associational excitatory input but that the posterior part of cortex has
+much less afferent input.  In this case, the total excitatory input to
+these cells will be less, and thus (assuming that inhibition is constant)
+these cells will be less excitable and will spike less often.  This is
+probably not realistic, since in some sense it wastes the cell's
+"bandwidth".  One way to compensate for this is to normalize the weights on
+a given cell.  Several observations about this process:
+
+1) It should be done separately for excitation and inhibition.  It isn't
+   really feasible to separate out the different components of excitation
+   and inhibition, so I won't try.
+
+2) It has to be done largely at the script level.  It's impractical to do
+   this entirely at the C level, so it will be slow.
+
+3) You can do some of the work at the C level by adding the following
+   actions to all synchan-type objects:
+
+   WEIGHT_SUM: returns a sum of all the weights on the synapse, multiplied
+               by the Gbar.
+
+   WEIGHT_SCALE: multiplies all the weights on the synapse by a number.
+
+   One issue: what is the effect of the dendritic structure?  If you ignore
+   it it's like you're normalizing weights onto a point neuron.  How can
+   you take it into account?  Perhaps you can take the total weight onto a
+   compartment and scale it down exponentially with distance from the soma
+   (with a scaling factor equal to the space constant, which we assume IS
+   constant).
+
+4) It's probably good to have some noise so that the normalization isn't
+   exact.  Matt uses a gaussian distribution for this.
+
+Note that Matt uses normalization for a different reason; it's mainly to
+compensate for edge imbalances in synaptic innervation generated as a
+result of a synaptic distribution based on the numbers of divergent
+synapses per source.  However the effect is probably the same.  He also
+does it all in C; is this still feasible?  I have to think about this some
+more.
+
+
+Shock stimuli
+-------------
+
+When implementing shock stimuli, the obvious way is to have the shock on a
+background of no activity; i.e. there are no spikes except when the shock
+hits.  An alternative is to have a normal background activity superimposed
+on a shock.  I can model this in my olfactory_bulb object by a very
+short-duration shock surrounded on both sides by background firing.
+
+
+Data analysis notes
+-------------------
+
+The *_spikes files can be run through my "hist" program to see how often a
+given cell fires in a simulation e.g.
+
+    cat pyramidal_spikes | column 2 | hist 100 0 100 -
+
+Similarly, you can use simple awk scripts along with the xyz data output in
+the spikes files to see how often cells in a given region of cortex fire.
+
+
+Output notes
+------------
+
+In the one-D xview depth plots, the *right* side of the display represents
+the *surface* of the piriform cortex.
+
+
+
+Miscellaneous stuff
+-------------------
+
+Matt uses "rostral" and "caudal" piriform cortex in his model.  The new,
+hip, politically-correct way to say this is "anterior" and "posterior".
+
+NOTE: I should look at an anatomy textbook to know exactly which structures
+are deep to, anterior to, posterior to, dorsal to, and ventral to the
+piriform cortex.
+
+Lew Haberly doesn't bother with absolute resistivity values for calculating
+CSDs, so I won't either.
+
+In Lew's modeling paper with Kevin Ketchum (1993), their space constant for
+the pyramidal cell dendrite is about half of mine, measured at DC.  My space
+constant is about 640 um and theirs is about 320 um.  However, the space
+constant for short transient inputs (e.g. afferent inputs) is much shorter.
+Also, their capacitance value is smaller than mine by about 1.5x, so this
+brings the values closer together.
+

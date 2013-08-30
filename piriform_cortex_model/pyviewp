@@ -1,0 +1,294 @@
+#! /usr/bin/env pythoni
+
+#
+# pyview: a script to control multiple xview processes.
+#
+
+import os, sys, string, signal, thread
+from Tkinter import *
+
+
+#
+# Utility functions.
+#
+
+def ack(send, recv, pid):
+    """Check acknowledgement for command sent."""
+    if len(send) != 1 or len(recv) != 2 \
+       or recv[1] != send[0]:
+        print "ERROR: programs are out of synchrony!"
+        print "send: %s recv: %s" % (send, recv)
+        print "killing xview process..."
+        os.kill(pid, signal.SIGKILL)
+        return 0
+    else:
+        return 1
+
+
+def pipe_close(pipes):
+    """Close a tuple full of pipes which may have already
+    been closed."""
+    for pipe in pipes:
+        try:
+            os.close(pipe)
+        except OSError:  # The pipe may already be closed.
+            pass
+
+
+def close_all(info):
+    """Close all open pipes and processes."""
+    for (pid, xin, xout, pin, pout) in info:
+        pipe_close((xin, xout, pin, pout))
+        try:
+            os.kill(pid, signal.SIGKILL)
+        except OSError:  # The pid may be dead already.
+            pass
+
+
+def bye():
+    """Close all open pipes and processes and exit."""
+    close_all(xview_info)
+    sys.exit(0)
+
+
+def reset():
+    for (pid, xin, xout, pin, pout) in xview_info:
+        os.write(pout, "R")
+        s = os.read(pin, 2)
+        ack("R", s, pid)
+
+
+def disconnect_all():
+    """Disconnect all the processes from pipe input."""
+    for (pid, xin, xout, pin, pout) in xview_info:
+        os.write(pout, "D")
+        s = os.read(pin, 2)
+        ack("D", s, pid)
+
+
+def reconnect_all():
+    """Reconnect all the processes to pipe input."""
+    for (pid, xin, xout, pin, pout) in xview_info:
+        os.kill(pid, signal.SIGUSR1)
+
+
+def step(numstr):
+    """Run one step of the simulation;
+    return a flag that tells us if we're at the end."""
+    done = 0
+    
+    for (pid, xin, xout, pin, pout) in xview_info:
+        os.write(pout, numstr)
+        s = os.read(pin, 2)
+
+        # Check for end of xview file.
+        if s[1] == "X":
+            done = 1
+            continue
+        
+        ack(numstr, s, pid)
+
+    return done
+
+
+def step1():
+    # A silly little utility function.
+    step("0")
+
+
+def run():
+    """Run the entire data file."""
+    i = 0
+
+    while 1:
+        numstr = str(i % 10)
+        done = step(numstr)
+        if done or stop_flag[0]:
+            break
+        i = i + 1
+
+
+def send_command(cmdstr):
+    """Send a command string to each process.
+    String s should not have any newlines."""
+
+    if cmdstr[0] != '/':
+        return
+    else:
+        cmdstr = cmdstr[1:]
+        
+    for (pid, xin, xout, pin, pout) in xview_info:
+        os.write(pout, "/")
+        s = os.read(pin, 2)
+        ack("/", s, pid)
+
+        # Send newline to end the command.
+        for c in (cmdstr + "\n"):
+            os.write(pout, c)
+            s = os.read(pin, 2)
+            ack(c, s, pid)
+
+
+#
+# Main body of program.
+#
+
+# Globals.
+
+home              = os.getenv("HOME")
+xview_path        = "%s/local/Linux/bin/xview" % home
+filedir           = "%s/gen/tools"  % home
+xview_cmd_file    = "./xview_cmds"
+xplot_prefix_file = "%s/xplot_defs" % filedir
+pyview_files      = "./pyview_files"
+tkgeometry        = "200x200+0+0"      # Default; can be overridden.
+start_time        = 0.000
+
+
+# Command-line arguments.
+
+if len(sys.argv) > 1:
+    pyview_files = sys.argv[1]
+
+
+# Load in the file names to view.  The file format is:
+#     <filename> <geometry spec>
+# for each line.
+
+metadatafile = open(pyview_files, "r")
+datafiles = metadatafile.readlines()
+
+file_info_list = []
+
+for i in range(len(datafiles)):
+    # Strip comments.
+    if datafiles[i][0] == "#":
+        continue
+        
+    datafiles[i] = datafiles[i][:-1]  # Strip newline from end.
+    file_info = string.split(datafiles[i])
+
+    if file_info[0] == "tkgeometry":
+        #
+        # Check to see if there's a Tk geometry specification in the list
+        # of datafiles.  This is a bit of a kludge.
+        #
+        tkgeometry = file_info[1]
+        # Don't append to file_info_list.
+        continue
+
+    file_info_list.append(file_info)
+
+
+
+#
+# Store info for each process as tuples:
+# (xpid, xin, xout, pin, pout)
+# where
+# xpid = xview pid
+# xin  = input pipe to xview process
+# xout = output pipe to xview process
+# pin  = input pipe to pyview (this program)
+# pout = output pipe to pyview (this program)
+#
+# Note that this means that this program will have a LOT of pipes
+# talking/listening to it.
+#
+
+xview_info  = []
+debug = 0
+
+#
+# Arg list.  `None's are placeholders.
+#
+
+if debug:
+    xview_args  = ["",
+                   "-pipe", None, None,
+                   "-geometry", None,
+                   "-command_file", xview_cmd_file,
+                   "-xplot_prefix_file", xplot_prefix_file,
+                   "-debug",
+                   None]
+else:
+    xview_args  = ["",
+                   "-pipe", None, None,
+                   "-geometry", None,
+                   "-command_file", xview_cmd_file,
+                   "-xplot_prefix_file", xplot_prefix_file,
+                   None]
+
+for (file, geom) in file_info_list:
+    # Create pipes.
+    (xin, pout) = os.pipe()  # xview read, pyview writes
+    (pin, xout) = os.pipe()  # xview writes, pyview reads
+
+    # Substitute args.
+    my_args     = xview_args
+    my_args[2]  = str(xin)
+    my_args[3]  = str(xout)
+    my_args[5]  = geom
+
+    if debug:
+        my_args[11] = file
+    else:
+        my_args[10] = file
+        
+    # Start the process.
+    pid = os.fork()
+    
+    if pid == 0:
+        # This replaces the interpreter.
+        os.execv(xview_path, my_args)
+    else:
+        # I'm the parent, manage the pid and pipes.
+        xview_info.append((pid, xin, xout, pin, pout))
+
+#
+# Start Tk interface.
+#
+
+root = Tk()
+root.geometry(tkgeometry)
+stop_flag = [0]
+thread_on = 0
+
+def callback(event):
+    global thread_on
+    key = event.char
+
+    if key == "r":
+        reset()
+    elif key == "f":
+        step1()
+    elif key == "s":
+        if not thread_on:
+            stop_flag[0] = 0
+            thread_on = 1
+            thread.start_new_thread(run, ())
+        else:
+            stop_flag[0] = 1
+            thread_on = 0
+    elif key == " ":  # Space bar.
+        disconnect_all()
+    elif key == "R":  
+        reconnect_all()
+    elif key == "q":
+        bye()
+    elif key == "g":  # Go to a specified "start" time.
+        send_command("/go %g" % start_time)
+
+    
+frame = Frame(root, width=200, height=200)
+frame.bind_all("<Key>", callback)
+frame.pack()
+os.system("sleep 2")
+reset()
+send_command("/go %g" % start_time)
+root.mainloop()
+
+
+
+
+
+

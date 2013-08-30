@@ -1,0 +1,98 @@
+Nasty hacks file
+----------------
+
+This file includes a description of all nasty hacks that I had to do
+to make the model behave correctly.  Not all of these hacks will necessarily
+be in the current version of the model.
+
+1) "dendritic delays" onto inhibitory cells
+
+In this model, pyramidal cells are represented as 15-compartment cells while
+inhibitory cells have only one compartment.  One effect of this is that
+inhibitory cells fire with a much smaller latency for a given amount of
+excitatory afferent input than do pyramidal cells.  To compensate for this,
+I've included a "dendritic delay" into the axonal delays between the mitral
+cells and the feedforward inhibitory cells.  This represents the approximate
+delay that would have occurred between input and firing if we had modeled the
+entire dendritic tree of the inhibitory cells (e.g. horizontal cells).
+
+NOTE:   the exact amount of delay can be adjusted.
+NOTE2:  there is no dendritic delay for projections to feedback inhibitory
+	    cells or for feedback projections to ff_fb inhibitory cells (yet).
+STATUS: Currently in the model.
+
+
+2) Background excitation onto pyramidal cells.
+
+The membrane potential of pyramidal cells in slice is about -74 mV, whereas
+most in vivo papers (there aren't many) give much higher membrane potentials
+(e.g. 55 mV).  Some of this is due to the use of sharp-electrode recordings
+in vivo as opposed to whole-cell recordings in vitro, but still, it appears
+that somehow the pyramidal cells in vivo are being kept at an elevated
+membrane potential relative to the true (deafferented) resting potential.
+Two possible causes of this are background input from the olfactory bulb and
+afferent input from areas outside of the olfactory system (e.g. amygdala,
+endopiriform nucleus, etc.).  I've added a random background synaptic input
+uniformly distributed on the dendritic tree.  Its main effect is to raise the
+membrane potential from 10-15 mV.  Presumably, background input from the
+olfactory bulb would raise this still more.  Without this input, you need
+*extremely* high afferent inputs to get the cells to spike at all.  In
+addition, with very high afferent inputs the synapses are driven very close
+to saturation, which causes all kinds of problems (notably timing problems).
+An alternative approach would be to have active currents in the dendrites,
+but there is as yet no evidence for this and it would invalidate the
+parameterization of the cell model.
+
+Note that this will work MUCH better if the background excitation is only to
+the vAPC cells.  This gives you the best of both worlds: fast (short-latency)
+spiking in vAPC, with no spiking in the other areas.
+
+STATUS: Currently not in the model.  Instead, there is background input from
+the olfactory bulb mitral cells.
+
+
+3) Weight changes at the transition from the LOT to the LOT collaterals.
+ 
+The standard way of assigning weights assumes that weights decay
+exponentially with distance, and the only thing that changes at the LOT
+boundary is the space constant of decay.  What if this isn't the case?  You
+can easily imagine that afferent connections in the region receiving direct
+LOT input (vAPC) are substantially more dense than in regions with LOT
+collaterals only.
+
+STATUS: varies
+
+
+4) Raising the membrane potential of the vAPC pyramidal cells.
+
+There is no question that in order to reproduce the strong shock stimulus the
+vAPC pyramidal cells must be much closer to threshold than the rest of the
+pyramidal cells.  One way to do this is by raising their membrane potentials.
+
+STATUS: Currently not in the model.
+
+
+5) Dendritic calcium currents in vAPC pyramidal cells.
+
+See last comment.
+
+STATUS: Currently not in the model.
+
+
+6) Directional local weights.
+
+In order to stabilize the weak shock oscillatory response, it can be useful
+to make the local weights stronger in the anterior->posterior direction than
+vice-versa.
+
+STATUS: Currently not in the model.
+
+
+7) Making the vAPC cells insensitive to neuromodulators.
+
+If this isn't done, the cells spike spontaneously in response to background
+inputs.  This has been replaced by a different mechanism involving reduction
+in the background activity of mitral cells with NE application.
+
+STATUS: Currently not in the model.
+

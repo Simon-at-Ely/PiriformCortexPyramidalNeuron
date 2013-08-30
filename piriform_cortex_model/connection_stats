@@ -1,0 +1,9 @@
+#! /bin/sh
+
+echo Number of connections set up:
+grep Number make.out | grep connections | sed -e 's/^Number.*up: //' | py_sum
+echo Number of weights set up:
+grep Number make.out | grep weights | sed -e 's/^Number.*up: //' | py_sum
+echo Number of delays set up:
+grep Number make.out | grep delays | sed -e 's/^Number.*up: //' | py_sum
+

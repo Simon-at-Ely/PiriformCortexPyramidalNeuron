@@ -1,0 +1,26 @@
+#! /bin/sh
+
+delay=0.1
+outfile=test_pyramidal_results.all
+noNMfile=test_pyramidal_Vm_noNE
+NMfile=test_pyramidal_Vm_NE
+
+if [ -f $outfile ]
+then
+    rm $outfile
+fi
+
+touch $outfile
+
+./test_getIR $delay < $noNMfile >> $outfile
+echo /newplot >> $outfile
+echo /plotname $noNMfile >> $outfile
+echo % f/I curve: >> $outfile
+./test_getfI < $noNMfile.spk.sim >> $outfile
+
+./test_getIR $delay < $NMfile >> $outfile
+echo /newplot >> $outfile
+echo /plotname $NMfile >> $outfile
+echo % f/I curve: >> $outfile
+./test_getfI < $NMfile.spk.sim >> $outfile
+

@@ -1,0 +1,34 @@
+#! /usr/bin/env python
+
+#
+# make_odor_theta_rate_modulation: make odor response file for
+#     theta-modulation of background input.
+#
+
+import sys, string
+from math import pi, sin, ceil
+
+assert len(sys.argv) == 5
+
+rate     = string.atof(sys.argv[1])
+amp      = string.atof(sys.argv[2])  # Amplitude.
+maxtime  = string.atof(sys.argv[3])
+filename = sys.argv[4]
+
+file = open(filename, "w")
+
+ntypes  = 1    # Types of odor responses.
+ntimes  = ceil(1000 * maxtime)
+dt      = maxtime / ntimes
+
+t = 0.0
+
+file.write("%8d\t%8d\t%8.6f\n" % (ntypes, ntimes, maxtime))
+
+while t < maxtime:
+    val1 = amp ** (sin(rate * 2.0 * pi * t)) 
+    file.write("%8.6f\n" % val1)
+    t = t + dt
+
+file.close()
+

@@ -1,0 +1,5 @@
+# format: event [event ...] [pProb]
+# (nsequences events per line; nsequences is usually 1)
+# Probability of responding to an event is shown by the last
+# number which must have a trailing `p' e.g. p0.5
+0.000

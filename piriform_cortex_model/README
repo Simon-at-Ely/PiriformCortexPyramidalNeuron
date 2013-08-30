@@ -1,0 +1,72 @@
+This directory contains the GENESIS piriform cortex simulation.
+
+It is organized to allow the user to investigate a variety of phenomena:
+
+1) Various kinds of stimuli:
+
+   a) random background inputs
+   b) strong shock stimuli
+   c) weak shock stimuli
+   d) "eeg-like" input stimuli
+
+   Within each category there are a number of variations on the basic themes.
+
+2) The effects of norepinephrine (NE) on the network's behaviors.
+
+3) The effect of subdividing the inputs and/or the network connections
+   themselves into non-overlapping neuronal groups.
+
+There is a fair amount of redundancy at the top level of the simulation
+files.  The file "piriform.g" includes just about everything, but doesn't
+necessarily use it (the commented-out sections reflect this).  Therefore,
+there are a lot of versions of this file:
+
+-- piriform_ss.g         (steady-state values of neurons)
+-- piriform_bg.g         (response to background inputs)
+-- piriform_bgNE.g       (response to background inputs with NE)
+-- piriform_strong.g     (response to strong shock inputs)
+-- piriform_strongNE.g   (response to strong shock inputs with NE)
+-- piriform_weak.g       (response to weak shock inputs)
+-- piriform_weakNE.g     (response to weak shock inputs with NE)
+-- piriform_eeg.g        (response to EEG-like inputs)
+-- piriform_eegNE.g      (response to EEG-like inputs with NE)
+
+The EEG-like inputs were basically an experiment, and they didn't yield much
+in the way of good results.  Similarly, the neuromodulated versions of the
+simulation (the xxxNE.g files) didn't yield much of interest.
+
+Most inputs can be run using the Makefile.  For instance, to compute
+steady-state values for the neurons, you can either do:
+
+    % nxgenesis piriform_ss.g
+
+or just
+
+    % make ss
+
+(where % is the unix prompt, of course).  Note that you *must* compute
+steady-state values before running any of the other kinds of simulations.
+
+Output files are stored in the "results" directory, typically in a numbered
+subdirectory e.g. "results/1".  If you look at the file "piriform.g" you will
+see where the output files are specified.  Many of the output files are in
+the xview format; you need a working version of Matt Wilson's "xview" program
+to view them.  I have a modified version of xview that actually works (!)
+which I will make available to anyone who wants it.  Since it is very common
+to alter various .g files from simulation to simulation, all the simulation
+files are copied to the results directory every time a simulation is run.  It
+will also be useful to have a copy of Matt Wilson's "xplot" program, which is
+distributed with the main genesis distribution.
+
+In order to run any of this, you will need a copy of my genesis source tree,
+and you will need to compile it on a Linux machine.  Standard genesis WILL
+NOT WORK with this simulation, now or in the foreseeable future.
+
+DO NOT remove the files starting with "data" e.g. "data_Vm_noNE.full".  These
+are files of intracellular data that were used to parameterize the neuron
+models.
+
+Enjoy!
+
+Mike Vanier (mvanier@cs.caltech.edu)
+

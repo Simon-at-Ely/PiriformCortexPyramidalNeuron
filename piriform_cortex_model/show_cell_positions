@@ -1,0 +1,24 @@
+#! /bin/sh
+
+if [ -f all_positions ]
+then
+    rm all_positions
+fi
+
+touch all_positions
+
+point=0
+
+for file in pyramidal_positions fb_inhib_positions \
+            ff_inhib_positions ff_fb_inhib_positions mitral_positions
+do
+	echo /newplot >> all_positions
+	echo /plotname $file >> all_positions
+	echo /pointstyle $point >> all_positions
+	point=`expr $point + 1` 
+    echo /scatter >> all_positions
+    column 3 4 < $file >> all_positions
+done
+
+xplot all_positions
+

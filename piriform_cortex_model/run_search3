@@ -1,0 +1,169 @@
+#! /usr/bin/env python
+
+#
+# run_search3: run a series of simulations with parameter variations
+#     taken from a file.
+#
+# This differs from `run_search' in that it specifies all parameter values
+# exactly; there is no random selection of parameter values.  It differs
+# from "run_search2" in that it can substitute into any group of files.
+#
+
+import sys, os, string, re
+
+#
+# Parameter file names.
+# NOTE: The convention is that simulation file "foo" must be turned
+#       into "foo.template", and the computed file is "foo2".
+#       If "foo" is "foo.<n>" where <n> = g, p, etc., then
+#       "foo.<n>" becomes "foo2.<n>".
+#
+#       Be VERY CAREFUL when writing "include" statements in genesis;
+#       they have to refer to the computed files if there are any.
+#
+
+meta_param_filename     = "run_search3_param_file"
+meta_template_filename  = "run_search3_template_files"
+
+
+def load_param_file(filename):
+    """
+    Read in the parameter file and turn into a list of dictionaries.
+
+    Parameter file format:
+    
+    `#' comments are ignored.
+    The first non-comment line gives the field names in order.
+    All subsequent lines give the field values in order.
+    """
+    
+    params = []
+
+    file  = open(filename, "r")
+    lines = file.readlines()
+
+    # Strip comments.  Note that the `#' character must be in the
+    # first column.
+    newlines = []
+    for line in lines:
+        if len(line) > 0 and line[0] != "#":
+            newlines.append(line)
+    lines = newlines
+
+    param_names = string.split(lines[0])
+    
+    for line in lines[1:]:
+        param_vals = string.split(line)
+        if len(param_vals) == 0:  # Nothing on the line
+            continue
+
+        assert len(param_vals) == len(param_names)
+        dict = {}
+
+        for i in range(len(param_names)):
+            dict[param_names[i]] = param_vals[i]
+
+        params.append(dict)
+
+    file.close()
+    return params
+
+
+def substitute_param_values(d, infilename, outfilename):
+    """Substitute parameter values in a parameter file
+    using dictionary `d'."""
+
+    infile  = open(infilename, "r")
+    outfile = open(outfilename, "w")
+
+    for line in infile.readlines():
+        outfile.write(line % d)
+
+    infile.close()
+    outfile.close()
+
+
+def get_template_filenames(metafilename):
+    """Read in the template filenames and convert into
+    a list of (infilename, outfilename) tuples."""
+    template_files = []
+    metafile = open(metafilename, "r")
+    prefix_pattern = re.compile("(.*)\.([a-z])$")
+
+    for line in metafile.readlines():
+        # Remove leading and trailing whitespace if any.
+        line = line.strip()
+
+        # Skip blank lines.
+        if line == "":
+            continue
+        
+        # Skip comments (lines starting with '#')
+        if line[0] == "#":
+            continue
+
+        # Convert the line into the infilename and outfilename.
+        # First, find if it has a one-letter suffix.
+        result = prefix_pattern.match(line)
+
+        if result:
+            # A suffix was found.
+            root   = result.group(1)
+            suffix = result.group(2)
+            infilename  = line + ".template"
+            outfilename = root + "2." + suffix
+            template_files.append((infilename, outfilename))
+        else:
+            # No suffix.
+            infilename  = line + ".template"
+            outfilename = line + "2"
+            template_files.append((infilename, outfilename))
+
+    metafile.close()
+    return template_files
+
+
+
+#
+# Main body of program.
+#
+
+# Get the parameter values.
+params = load_param_file(meta_param_filename)
+
+# Get the names of the template files.
+template_filenames = get_template_filenames(meta_template_filename)
+
+
+for param_set in params:
+    #print param_set
+
+    # Substitute the parameter values into the template files.
+    for (infilename, outfilename) in template_filenames:
+        substitute_param_values(param_set, infilename, outfilename)
+
+    # Make the results directory.
+    dir = param_set["DIR"]
+    os.system("rm -rf results/%s" % dir)
+    os.mkdir("results/%s" % dir)
+
+    # Record the parameter values in a file in the results directory.
+    paramfile = open("SIMULATION_PARAMETER_VALUES", "w")
+    paramfile.write("Parameter values for directory: %s\n" % param_set["DIR"])
+    paramfile.write("----------------------------------\n\n")
+    keys = param_set.keys()
+    keys.sort()
+    for key in keys:
+        if key == "DIR":
+            continue
+        paramfile.write("%20s %20s\n" % (key, param_set[key]))
+    paramfile.close()
+    os.system("mv SIMULATION_PARAMETER_VALUES results/%s" % dir)
+
+    # Copy the entire simulation into the target directory.
+    os.system("rm -rf results/%s/genesis" % dir)
+    os.mkdir("results/%s/genesis" % dir)
+    os.system("cp *.[gp] results/%s/genesis" % dir)
+    
+    # Run the simulation.
+    os.system("nxgenesis_2.1 piriform2.g")

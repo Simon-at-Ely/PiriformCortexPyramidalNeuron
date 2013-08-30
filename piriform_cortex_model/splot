@@ -1,0 +1,18 @@
+#! /bin/sh
+
+#
+# splot -- scatter plot using xplot
+#
+
+#
+# Prepend some commands to the xplot input:
+#
+
+xplot <<EOF
+/scatter
+/pointstyle 8
+/xtickinc 0.1
+/ytickinc 100
+`cat $1`
+EOF
+

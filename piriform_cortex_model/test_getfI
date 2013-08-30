@@ -1,0 +1,34 @@
+#! /usr/bin/env python
+
+#
+# Extract the average f/I data from a .spk.sim file and printit.
+#
+
+import sys, re, string
+
+
+lines = sys.stdin.readlines()
+
+count = 0  # Count of spikes for a given current.
+
+print "\n% current   spikes\n% -------   ------"
+
+
+for line in lines:
+    if re.match('----', line):
+        if curr[0] != '-':
+            print "%s    %s" % (curr, count)
+        else:
+            print "%s    %s" % (curr, count)
+
+        count = 0
+
+    elif re.match('CURR', line):
+        words = string.split(line)
+        curr = words[1]
+
+    elif re.match('SPK', line):
+        count = count + 1
+
+print
+

@@ -1,0 +1,21 @@
+#! /bin/sh
+
+#
+# pplot -- scatter plot using xplot on piriform cortex xy position data.
+#
+
+#
+# Prepend these commands to the xplot input.
+#
+
+xplot <<EOF
+/geometry 750x375
+/scatter
+%/pointstyle 8
+/xrange -1.0e-3 9.0e-3
+/yrange -1.0e-3 4.0e-3
+/xtickinc 2.0e-3
+/ytickinc 1.0e-3
+`cat $1`
+EOF
+

@@ -1,0 +1,41 @@
+Notes on synaptic connections
+-----------------------------
+
+Inhibitory connections are probably distributed all over the dendritic tree,
+although the ff connections in layer 1a and the fb connections near the soma
+are the densest.  I should add connections to reflect this.
+
+"Local" connections between pyramidal cells onto the basal dendrites are
+pretty much radially symmetrical about the cell.  They are stronger near the
+cell and weak further away, so some kind of exponential weight decrease seems
+reasonable.
+
+There is also a projection from pyramidal cells to the ff interneurons which I
+haven't incorporated yet.
+
+You could imagine having "more" connections between the bulb and 1a dendrites
+of pyramidal cells the more anterior you are.  We're basically faking this
+with weights, but maybe we don't want to.
+
+
+The main difficulty in setting up the associational connections is that the
+strength of the connections varies depending on where you are.  The more
+anterior you are, the more superficial are your synaptic targets in layer 1b.
+How do we deal with this?  I would say we need a function that takes the
+relative distance in the anterior-posterior direction as a parameter and sets
+up synapses accordingly.  There are six 1b compartments.  Thus let's divide up
+the piriform cortex into 6 anterior/posterior zones.  You could imagine this
+kind of algorithm:
+
+For each a/p distance:
+    Select a target compartment
+    Get the cells at that distance (use "box" option of volumeconnect)
+    Connect the cells and set the weights.
+
+    option: also add connections to the adjacent compartments to give
+    some overlap
+
+
+
+
+

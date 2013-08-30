@@ -1,0 +1,258 @@
+#! /usr/bin/env python
+
+#
+# run_search: run a series of simulations with parameter variations
+#     taken from a file.
+#
+
+import sys, os, string, re
+from whrandom import uniform
+from random import gauss
+
+#
+# Parameter file names.
+# NOTE: we name sim_param_file "piriform_free_params2.g" so we know that
+#       it's a computed file, as opposed to "piriform_free_params.g".
+#
+
+meta_param_filename             = "run_search_param_file"
+sim_param_filename              = "piriform_free_params2.g"
+sim_param_file_template_name    = "piriform_free_params.g.template"
+
+# Other globals.
+
+sim_master_file_template_name   = "piriform2.g.template"
+sim_master_filename             = "piriform2.g"
+TINY = 0.05  # Nominal small value.
+constraint_pattern = re.compile("\s*(\d+)\s+(.*)")
+
+
+#
+# Functions.
+#
+
+def list_remove_duplicates(l):
+    """Remove duplicated elements from the list 'l'."""
+    d = {}
+    for item in l:
+        d[item] = 1
+    return d.keys()
+
+
+def get_param_info():
+    param_info = {}
+    constraints = []
+    file = open(meta_param_filename, 'r')
+    
+    while 1:
+        line = file.readline()
+        if not line:
+            break
+
+        # Get rid of comments.
+        if line[0] == "#":
+            continue
+
+        #
+        # Process constraints separately.  Each constraint is an executable
+        # line of code which evaluates to a boolean.
+        #
+        if line[0] == "C":
+            constraints.append(line[2:])
+            continue
+        
+        #
+        # Process ordinary parameter specifications.
+        #
+        vals = string.split(line)
+
+        name      = vals[0]
+        rand_type = vals[1]
+
+        if rand_type == "uniform":
+            val1 = string.atof(vals[2])
+            val2 = string.atof(vals[3])
+            all_vals = [rand_type, val1, val2]
+        elif rand_type == "gaussian":
+            val1 = string.atof(vals[2])
+            val2 = string.atof(vals[3])
+            val3 = string.atof(vals[4])
+            val4 = string.atof(vals[5])
+            all_vals = [rand_type, val1, val2, val3, val4]
+        elif rand_type == "fixed":
+            val = string.atof(vals[2])
+            all_vals = [rand_type, val]
+        else:
+            print "ERROR! invalid rand_type %s" % rand_type
+            sys.exit(1)
+
+        param_info[name] = all_vals
+
+    return param_info, constraints
+
+
+def get_param_value(all_vals):
+    rand_type = all_vals[0]
+    
+    if rand_type == "uniform":
+        val1 = all_vals[1]
+        val2 = all_vals[2]
+        val = uniform(val1, val2)
+    elif rand_type == "gaussian":
+        val1 = all_vals[1]
+        val2 = all_vals[2]
+        val3 = all_vals[3]
+        val4 = all_vals[4]
+        val = gauss(val1, val2)
+        
+        if val < val3:
+            val = val3
+        elif val > val4:
+            val = val4
+    elif rand_type == "fixed":
+        val = all_vals[1]
+    else:
+        print "ERROR! Invalid rand_type %s" % rand_type
+        sys.exit(1)
+
+    if val < 0.0:
+        val = TINY
+        
+    return val
+
+
+
+def parse_constraints(constraints):
+    """Parse a series of constraint lines into a more structured form."""
+    parsed_constraints = {}
+
+    #
+    # First, collect all constraints in a set.
+    #
+
+    for constraint in constraints:
+        match = constraint_pattern.match(constraint)
+        constraint_group = match.group(1)
+        constraint_body = match.group(2)
+
+        # Remove '<=' sign from constraint.
+        # There must be exactly one such sign per constraint.
+
+        constraint_item = string.split(constraint_body, "<=")
+        assert constraint_item[0] != constraint_body
+        
+        for i in range(len(constraint_item)):
+            constraint_item[i] = string.strip(constraint_item[i])
+        
+        if not parsed_constraints.has_key(constraint_group):
+            parsed_constraints[constraint_group] = {}
+            parsed_constraints[constraint_group]["vars"] = []
+            parsed_constraints[constraint_group]["constraints"] = []
+
+        for item in constraint_item:
+            parsed_constraints[constraint_group]["vars"].append(item)
+                
+        parsed_constraints[constraint_group]["constraints"].append(constraint_item)
+        parsed_constraints[constraint_group]["vars"] = \
+            list_remove_duplicates(\
+            parsed_constraints[constraint_group]["vars"])
+
+    #
+    # Change parsed_constraints from a dictionary at the top-level to a list;
+    # the tokens that identified a particular constraint set are of no
+    # consequence.
+    #
+
+    parsed_constraints_list = []
+    for identifier in parsed_constraints.keys():
+        parsed_constraints_list.append(parsed_constraints[identifier])
+
+    return parsed_constraints_list
+
+
+def make_new_param_file(param_info, parsed_constraints, output_lines):
+    param_vals = {}
+
+    #
+    # Select parameters without constraints first. 
+    #
+    for name in param_info.keys():
+        param = param_info[name]
+        #print name, param
+        param_vals[name] = get_param_value(param)
+
+    #
+    # Then apply constraints, generating new parameter values if necessary.
+    #
+    for constraint_set in parsed_constraints:
+        vars = constraint_set["vars"]
+        #print vars
+        constraints = constraint_set["constraints"]
+
+        while 1:
+            constraints_violated = 0
+            
+            for constraint in constraints:
+                assert len(constraint) == 2
+                name1 = constraint[0]
+                name2 = constraint[1]
+                val1 = param_vals[name1]
+                val2 = param_vals[name2]
+                if val1 > val2:
+                    # A constraint has been violated, so reset the
+                    # parameters for all the constraints and re-check.
+                    constraints_violated = 1
+
+                    for var in vars:
+                        #print var, constraints_violated
+                        param_vals[var] = get_param_value(param_info[var])
+
+            if not constraints_violated:
+                break
+
+    #keys = param_vals.keys()
+    #keys.sort()
+    #for param in keys:
+    #    print param, param_vals[param]
+            
+    #
+    # Finally, generate the genesis parameter file.
+    #
+    new_output_lines = output_lines % param_vals
+        
+    sim_param_file = open(sim_param_filename, 'w')
+    sim_param_file.write(new_output_lines)
+    sim_param_file.close()
+
+
+def make_new_master_file(n):
+    """Make new master genesis file (piriform.g)."""
+    sim_master_file_template = open(sim_master_file_template_name, 'r')
+    sim_master_file_output_lines = \
+        string.join(sim_master_file_template.readlines(), "")
+    new_master_file_output_lines = sim_master_file_output_lines % n
+    sim_master_file = open(sim_master_filename, 'w')
+    sim_master_file.write(new_master_file_output_lines)
+    sim_master_file.close()
+
+
+def run_sims(n, param_info, parsed_constraints, output_lines):
+    """Run n simulations."""
+
+    for i in range(1, n+1):
+        os.system("rm -rf results/%d" % i)
+        os.mkdir("results/%d" % i)
+        make_new_master_file(i)
+        make_new_param_file(param_info, parsed_constraints, output_lines)
+        os.system("nxgenesis_2.1 piriform2.g")
+
+
+#
+# Main body of program.
+#
+
+param_info, constraints = get_param_info()
+parsed_constraints = parse_constraints(constraints)
+sim_param_file_template = open(sim_param_file_template_name, "r")
+output_lines = string.join(sim_param_file_template.readlines(), "")
+run_sims(50, param_info, parsed_constraints, output_lines)
