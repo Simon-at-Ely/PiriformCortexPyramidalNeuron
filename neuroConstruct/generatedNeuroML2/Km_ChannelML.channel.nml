@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" id="Km_ChannelML">
+
+    <notes>ChannelML file containing a single Channel description</notes>
+
+    <ionChannel id="Km_ChannelML" conductance="10pS" type="ionChannelHH" species="km">
+
+        <notes>Non inactivating Muscarinic type K channel, with rate equations expressed in tau and inf form</notes>
+                
+        <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description rdf:about="Km_ChannelML">
+                    
+                    <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+                        <rdf:Bag>
+                            <rdf:li>M. C. Vanier and J. M. Bower, A Comparative Survey of Automated Parameter-Searching Methods for Compartmental Neural Models, .</rdf:li>
+                            <rdf:li rdf:resource="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&amp;db=pubmed&amp;dopt=Abstract&amp;list_uids=12991237"/>
+                        </rdf:Bag>
+                    </bqmodel:isDescribedBy>
+
+                
+                    <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Bag>
+                            <rdf:li>K channels</rdf:li>
+                            <rdf:li rdf:resource="http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table3"/>
+                        </rdf:Bag>
+                    </bqbiol:isVersionOf>
+
+                </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+
+        <gate id="m" type="gateHHtauInf" instances="1">
+            <timeCourse type="Km_ChannelML_m_tau_tau"/>
+            <steadyState type="Km_ChannelML_m_inf_inf"/>
+        </gate>
+                            
+    </ionChannel>
+
+    <ComponentType name="Km_ChannelML_m_tau_tau" extends="baseVoltageDepTime">
+        <Constant name="TIME_SCALE" dimension="time" value="1 s"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 V"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="t" exposure="t" dimension="time" value="(0.33 * (0.033 + 1.0 / (11.3 * ((exp ((V + 0.035) /0.02))) + (exp (-1.0 * (V + 0.035)/ 0.01))))) * TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Km_ChannelML_m_inf_inf" extends="baseVoltageDepVariable">
+        <Constant name="TIME_SCALE" dimension="time" value="1 s"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 V"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="x" exposure="x" dimension="none" value="1.0 / (1.0 + (exp (-1.0 * (V + 0.035)/ 0.01)))"/>
+        </Dynamics>
+
+    </ComponentType>
+
+</neuroml>

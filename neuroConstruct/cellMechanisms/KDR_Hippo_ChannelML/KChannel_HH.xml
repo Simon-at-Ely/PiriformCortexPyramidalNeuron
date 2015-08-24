@@ -65,7 +65,7 @@ float ECA       =  0.080
                 <closed_state id="n0"/>
                 <open_state id="n"/>
                      
-               <transition name="alpha" from="n0" to="n" expr_form="generic" expr="(v + 0.0392) &lt; 1e-6 &amp;&amp; (-v-0.0392) &lt; 1e-6? 79.4679 : ((-1.0 * 627.2) + (-1.0 * 16000 * v))/(-1.0 + (exp (-1.0 * (v + 0.0392)/ 0.005)))"/>
+               <transition name="alpha" from="n0" to="n" expr_form="generic" expr="v == -0.0392 ? 79.4679 : ((-1.0 * 627.2) + (-1.0 * 16000 * v))/(-1.0 + (exp (-1.0 * (v + 0.0392)/ 0.005)))"/>
                 <transition name="beta" from="n" to="n0" expr_form="generic" expr="250.0 /(exp ((v + 0.0543)/ 0.04))"/>
                     
             </gate>

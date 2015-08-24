@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2  https://raw.githubusercontent.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" id="Pyramidal_Neuron_ChannelML_soma">
+
+    <include href="Ca_buffer_ChannelML.nml"/>
+
+    <include href="Kahp1_ChannelML.channel.nml"/>
+
+    <include href="Kahp2_ChannelML.channel.nml"/>
+
+    <include href="KDR_Hippo_ChannelML.channel.nml"/>
+
+    <include href="Km_ChannelML.channel.nml"/>
+
+    <include href="LeakConductance.channel.nml"/>
+
+    <include href="Na_Hippo_ChannelML.channel.nml"/>
+
+    <include href="Olfactory_Ca_ChannelML.channel.nml"/>
+
+    <include href="Persistent_Na_ChannelML.channel.nml"/>
+
+    <include href="Piriform_KA_ChannelML.channel.nml"/>
+
+    <cell id="Pyramidal_Neuron_ChannelML_soma">
+
+        <notes>Soma of Vanier 15 compartment pyramidal neuron modal</notes>
+
+        <morphology id="morphology_Pyramidal_Neuron_ChannelML_soma">
+
+            <segment id="0" name="Soma">
+                <proximal x="0.0" y="0.0" z="0.0" diameter="10.4"/>
+                <distal x="0.0" y="21.3" z="0.0" diameter="10.4"/>
+            </segment>
+
+            <segmentGroup id="Soma" neuroLexId="sao864921383">    <!--
+                This group contains an unbranched set of segments, and all of the segmentGroups marked with
+                neuroLexId = sao864921383 form a non-overlapping set of all of the segments. 
+                These segmentGroups correspond to the 'cables' of NeuroML v1.8.1. -->
+
+                <member segment="0"/>
+            </segmentGroup>
+
+            <segmentGroup id="all">
+                <include segmentGroup="Soma"/>
+            </segmentGroup>
+
+            <segmentGroup id="soma_group" neuroLexId="GO:0043025">    <!--Soma group-->
+
+                <include segmentGroup="Soma"/>
+            </segmentGroup>
+
+            
+        </morphology>
+
+            <!--Adding the biophysical parameters-->
+
+        <biophysicalProperties id="biophys">
+
+            <membraneProperties>
+                
+                <channelDensity condDensity="0.4 mS_per_cm2" id="Kahp1_ChannelML_all" ionChannel="Kahp1_ChannelML" ion="kahp" erev="-96.0 mV"/>
+                
+                <channelDensity condDensity="2.0 mS_per_cm2" id="Kahp2_ChannelML_all" ionChannel="Kahp2_ChannelML" ion="kahp" erev="-96.0 mV"/>
+                
+                <channelDensity condDensity="27.0 mS_per_cm2" id="KDR_Hippo_ChannelML_all" ionChannel="KDR_Hippo_ChannelML" ion="k" erev="-75.0 mV"/>
+                
+                <channelDensity condDensity="10.0 mS_per_cm2" id="Km_ChannelML_all" ionChannel="Km_ChannelML" ion="km" erev="-96.0 mV"/>
+                
+                <channelDensity condDensity="1.98807 mS_per_cm2" id="LeakConductance_all" ionChannel="LeakConductance" erev="-74.3 mV" ion="non_specific"/>
+                
+                <channelDensity condDensity="280.0 mS_per_cm2" id="Na_Hippo_ChannelML_all" ionChannel="Na_Hippo_ChannelML" ion="na" erev="55.0 mV"/>
+                
+                <channelDensity condDensity="1.0 mS_per_cm2" id="Olfactory_Ca_ChannelML_all" ionChannel="Olfactory_Ca_ChannelML" ion="ca" erev="113.0 mV"/>
+                
+                <channelDensity condDensity="6.5 mS_per_cm2" id="Persistent_Na_ChannelML_all" ionChannel="Persistent_Na_ChannelML" ion="na" erev="55.0 mV"/>
+                
+                <channelDensity condDensity="20.0 mS_per_cm2" id="Piriform_KA_ChannelML_all" ionChannel="Piriform_KA_ChannelML" ion="k" erev="-75.0 mV"/>
+                
+
+                <spikeThresh value="0 mV"/>
+
+                <specificCapacitance value="4.36 uF_per_cm2"/>
+
+                <initMembPotential value="-74.3 mV"/>
+
+            </membraneProperties>
+
+            <intracellularProperties>
+
+                <species id="ca" ion="ca" concentrationModel="Ca_buffer_ChannelML" initialConcentration="5.0E-14 mol_per_cm3" initialExtConcentration="2.0E-6 mol_per_cm3"/>
+
+                <resistivity value="0.0583 kohm_cm"/>
+
+            </intracellularProperties>
+
+        </biophysicalProperties>
+
+    </cell>
+    
+</neuroml>

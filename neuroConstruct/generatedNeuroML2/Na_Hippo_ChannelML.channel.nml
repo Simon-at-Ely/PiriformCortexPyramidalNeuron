@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" id="Na_Hippo_ChannelML">
+
+    <notes>ChannelML file containing a single Channel description</notes>
+
+    <ionChannel id="Na_Hippo_ChannelML" conductance="10pS" type="ionChannelHH" species="na">
+
+        <notes>Hippocampal Na channel in Vanier and Bower (1999)</notes>
+                
+        <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description rdf:about="Na_Hippo_ChannelML">
+                    
+                    <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+                        <rdf:Bag>
+                            <rdf:li>M.C. Vanier and J.M. Bower A comparative survey of automated parameter-search methods for compartmental neural models. Journal of Computational Neuroscience 7, 149-171. 1999</rdf:li>
+                            <rdf:li rdf:resource="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&amp;db=pubmed&amp;dopt=Abstract&amp;list_uids=10515252"/>
+                        </rdf:Bag>
+                    </bqmodel:isDescribedBy>
+
+                
+                    <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Bag>
+                            <rdf:li>Na channels</rdf:li>
+                            <rdf:li rdf:resource="http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table2"/>
+                        </rdf:Bag>
+                    </bqbiol:isVersionOf>
+
+                </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+
+        <gate id="m" type="gateHHrates" instances="2">
+            <forwardRate type="Na_Hippo_ChannelML_m_alpha_rate"/>
+            <reverseRate type="Na_Hippo_ChannelML_m_beta_rate"/>
+        </gate>
+
+        <gate id="h" type="gateHHrates" instances="1">
+            <forwardRate type="Na_Hippo_ChannelML_h_alpha_rate"/>
+            <reverseRate type="Na_Hippo_ChannelML_h_beta_rate"/>
+        </gate>
+                            
+    </ionChannel>
+
+    <ComponentType name="Na_Hippo_ChannelML_m_alpha_rate" extends="baseVoltageDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 s"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 V"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <ConditionalDerivedVariable name="r" exposure="r" dimension="per_time">
+                <Case condition="V  .eq. ( -0.0362 )" value="( 1269.36 ) / TIME_SCALE"/>
+                <Case value="( ((-1.0 * 11584) + (-1.0 * 320000 * V)) / (-1.0 + (exp (-1.0 * (V + 0.0362)/ 0.004 )))) / TIME_SCALE"/>
+            </ConditionalDerivedVariable>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Na_Hippo_ChannelML_m_beta_rate" extends="baseVoltageDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 s"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 V"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <ConditionalDerivedVariable name="r" exposure="r" dimension="per_time">
+                <Case condition="V  .eq. ( -0.0092 )" value="( 18688.4 ) / TIME_SCALE"/>
+                <Case value="((2576 + (280000 * V)) / (-1.0 + (exp ((V + 0.0092)/ 0.005)))) / TIME_SCALE"/>
+            </ConditionalDerivedVariable>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Na_Hippo_ChannelML_h_alpha_rate" extends="baseVoltageDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 s"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 V"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="(128.0 /(exp ((V + 0.0323)/0.018))) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+    <ComponentType name="Na_Hippo_ChannelML_h_beta_rate" extends="baseVoltageDepRate">
+        <Constant name="TIME_SCALE" dimension="time" value="1 s"/>
+        <Constant name="VOLT_SCALE" dimension="voltage" value="1 V"/>
+
+        <Dynamics>
+            <DerivedVariable name="V" dimension="none" value="v / VOLT_SCALE"/>
+            <DerivedVariable name="r" exposure="r" dimension="per_time" value="(4000/(1.0 + (exp (-1.0 * (V + 0.0093)/ 0.005)))) / TIME_SCALE"/>
+        </Dynamics>
+
+    </ComponentType>
+
+</neuroml>
