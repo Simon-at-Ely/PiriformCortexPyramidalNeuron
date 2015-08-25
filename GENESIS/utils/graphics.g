@@ -3,7 +3,7 @@
   ====================================================================*/
 
                
-include xtools.g    // functions to make "scale" buttons, etc.
+include ../utils/xtools.g    // functions to make "scale" buttons, etc.
 
                
 //===============================

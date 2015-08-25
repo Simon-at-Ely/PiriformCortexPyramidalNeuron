@@ -23,7 +23,7 @@ str Kahp_curr = "Kahp_current.soma" // filename prefix for membrane potential da
 str Ca_curr = "Ca_current.soma" // filename prefix for membrane potential data
 str Ca_conc = "Ca_concentration.soma" // filename prefix for membrane potential data
 // include the graphics functions
-include graphics
+include ../utils/graphics
 
 // include the output functions
 include output

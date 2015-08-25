@@ -26,7 +26,7 @@ str Kahp_curr = "Kahp_current" // filename prefix for membrane potential data
 str Ca_curr = "Ca_current" // filename prefix for membrane potential data
 str Ca_conc = "Ca_concentration" // filename prefix for membrane potential data
 // include the graphics functions
-include graphics
+include ../utils/graphics
 
 // include the output functions
 include output
