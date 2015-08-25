@@ -86,5 +86,8 @@ reset
 step_tmax
         
 include ../utils/nCtools.g
+       
+// Print info on channels present
+allchans
 
-//exit
+exit

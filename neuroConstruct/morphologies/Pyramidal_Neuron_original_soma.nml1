@@ -63,7 +63,7 @@
                 </bio:mechanism>
 
                 <bio:mechanism name="Na_Hipo_original" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="280.0">
+                    <bio:parameter name="gmax" value="200.663">
                         <bio:group>soma_group</bio:group>
                     </bio:parameter>
                 </bio:mechanism>

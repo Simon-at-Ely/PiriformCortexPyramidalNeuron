@@ -39,7 +39,7 @@
                 </bio:mechanism>
 
                 <bio:mechanism name="Na_Hippo_ChannelML" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="280.0">
+                    <bio:parameter name="gmax" value="200.663">
                         <bio:group>all</bio:group>
                     </bio:parameter>
                 </bio:mechanism>
