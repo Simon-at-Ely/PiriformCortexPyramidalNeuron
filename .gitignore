@@ -13,3 +13,5 @@ neuroConstruct/simulations
 neuroConstruct/backup*
 neuroConstruct/generatedNeuroML2/*.dat
 neuroConstruct/generatedNeuroML2/LEMS_Test*
+
+/GENESIS/*/*.txt
