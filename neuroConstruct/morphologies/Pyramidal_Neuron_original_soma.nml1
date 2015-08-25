@@ -35,20 +35,14 @@
                     </bio:parameter>
                 </bio:mechanism>
 
-                <bio:mechanism name="KCa_1" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="0.4">
-                        <bio:group>soma_group</bio:group>
-                    </bio:parameter>
-                </bio:mechanism>
-
                 <bio:mechanism name="KCa_2" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="2.0">
+                    <bio:parameter name="gmax" value="1.53955">
                         <bio:group>soma_group</bio:group>
                     </bio:parameter>
                 </bio:mechanism>
 
                 <bio:mechanism name="KDR_Hipo_original" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="27.0">
+                    <bio:parameter name="gmax" value="24.1793">
                         <bio:group>soma_group</bio:group>
                     </bio:parameter>
                 </bio:mechanism>
@@ -69,25 +63,25 @@
                 </bio:mechanism>
 
                 <bio:mechanism name="Noninactivating_Muscarinic_K" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="10.0">
+                    <bio:parameter name="gmax" value="5.71509">
                         <bio:group>soma_group</bio:group>
                     </bio:parameter>
                 </bio:mechanism>
 
                 <bio:mechanism name="Olfactory_Ca" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="1.0">
+                    <bio:parameter name="gmax" value="1.11791">
                         <bio:group>soma_group</bio:group>
                     </bio:parameter>
                 </bio:mechanism>
 
                 <bio:mechanism name="Persistent_Na_original" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="6.5">
+                    <bio:parameter name="gmax" value="6.48558">
                         <bio:group>soma_group</bio:group>
                     </bio:parameter>
                 </bio:mechanism>
 
                 <bio:mechanism name="Piriform_KA_original" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="20.0">
+                    <bio:parameter name="gmax" value="44.0684">
                         <bio:group>soma_group</bio:group>
                     </bio:parameter>
                 </bio:mechanism>

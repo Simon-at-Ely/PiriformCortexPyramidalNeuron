@@ -3,8 +3,6 @@
 
     <include href="Ca_buffer_ChannelML.nml"/>
 
-    <include href="Kahp1_ChannelML.channel.nml"/>
-
     <include href="Kahp2_ChannelML.channel.nml"/>
 
     <include href="KDR_Hippo_ChannelML.channel.nml"/>
@@ -58,23 +56,21 @@
 
             <membraneProperties>
                 
-                <channelDensity condDensity="0.4 mS_per_cm2" id="Kahp1_ChannelML_all" ionChannel="Kahp1_ChannelML" ion="kahp" erev="-96.0 mV"/>
+                <channelDensity condDensity="1.53955 mS_per_cm2" id="Kahp2_ChannelML_all" ionChannel="Kahp2_ChannelML" ion="kahp" erev="-96.0 mV"/>
                 
-                <channelDensity condDensity="2.0 mS_per_cm2" id="Kahp2_ChannelML_all" ionChannel="Kahp2_ChannelML" ion="kahp" erev="-96.0 mV"/>
+                <channelDensity condDensity="24.1793 mS_per_cm2" id="KDR_Hippo_ChannelML_all" ionChannel="KDR_Hippo_ChannelML" ion="k" erev="-75.0 mV"/>
                 
-                <channelDensity condDensity="27.0 mS_per_cm2" id="KDR_Hippo_ChannelML_all" ionChannel="KDR_Hippo_ChannelML" ion="k" erev="-75.0 mV"/>
-                
-                <channelDensity condDensity="10.0 mS_per_cm2" id="Km_ChannelML_all" ionChannel="Km_ChannelML" ion="km" erev="-96.0 mV"/>
+                <channelDensity condDensity="5.71509 mS_per_cm2" id="Km_ChannelML_all" ionChannel="Km_ChannelML" ion="km" erev="-96.0 mV"/>
                 
                 <channelDensity condDensity="1.98807 mS_per_cm2" id="LeakConductance_all" ionChannel="LeakConductance" erev="-74.3 mV" ion="non_specific"/>
                 
-                <channelDensity condDensity="280.0 mS_per_cm2" id="Na_Hippo_ChannelML_all" ionChannel="Na_Hippo_ChannelML" ion="na" erev="55.0 mV"/>
+                <channelDensity condDensity="200.663 mS_per_cm2" id="Na_Hippo_ChannelML_all" ionChannel="Na_Hippo_ChannelML" ion="na" erev="55.0 mV"/>
                 
-                <channelDensity condDensity="1.0 mS_per_cm2" id="Olfactory_Ca_ChannelML_all" ionChannel="Olfactory_Ca_ChannelML" ion="ca" erev="113.0 mV"/>
+                <channelDensity condDensity="1.11791 mS_per_cm2" id="Olfactory_Ca_ChannelML_all" ionChannel="Olfactory_Ca_ChannelML" ion="ca" erev="113.0 mV"/>
                 
-                <channelDensity condDensity="6.5 mS_per_cm2" id="Persistent_Na_ChannelML_all" ionChannel="Persistent_Na_ChannelML" ion="na" erev="55.0 mV"/>
+                <channelDensity condDensity="6.48558 mS_per_cm2" id="Persistent_Na_ChannelML_all" ionChannel="Persistent_Na_ChannelML" ion="na" erev="55.0 mV"/>
                 
-                <channelDensity condDensity="20.0 mS_per_cm2" id="Piriform_KA_ChannelML_all" ionChannel="Piriform_KA_ChannelML" ion="k" erev="-75.0 mV"/>
+                <channelDensity condDensity="44.0684 mS_per_cm2" id="Piriform_KA_ChannelML_all" ionChannel="Piriform_KA_ChannelML" ion="k" erev="-75.0 mV"/>
                 
 
                 <spikeThresh value="0 mV"/>

@@ -81,21 +81,6 @@ Channel information
 </tr>
     <tr>
 <td width="120px">
-            <p style="font-size:70%;font-family:arial"><b>Kahp1_ChannelML</b><br/>
-            <a href="../Kahp1_ChannelML.channel.nml">Kahp1_ChannelML.channel.nml</a><br/><br/>
-            Ion: kahp<br/><br/>
-            g = gmax * m <br/><br/>
-            Calcium concentration dependent K+ channel<br/></p>
-</td>
-<td>
-<a href="Kahp1_ChannelML.inf.png"><img alt="Kahp1_ChannelML steady state" src="Kahp1_ChannelML.inf.png" height="220"/></a>
-</td>
-<td>
-<a href="Kahp1_ChannelML.tau.png"><img alt="Kahp1_ChannelML time course" src="Kahp1_ChannelML.tau.png" height="220"/></a>
-</td>
-</tr>
-    <tr>
-<td width="120px">
             <p style="font-size:70%;font-family:arial"><b>Kahp2_ChannelML</b><br/>
             <a href="../Kahp2_ChannelML.channel.nml">Kahp2_ChannelML.channel.nml</a><br/><br/>
             Ion: kahp<br/><br/>

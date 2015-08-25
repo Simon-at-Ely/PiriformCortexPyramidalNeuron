@@ -39,25 +39,19 @@ The scaling factor for converting current into change in ion concentration shoul
                 </bio:mechanism>
 
                 <bio:mechanism name="KDR_Hippo_ChannelML" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="27.0">
-                        <bio:group>all</bio:group>
-                    </bio:parameter>
-                </bio:mechanism>
-
-                <bio:mechanism name="Kahp1_ChannelML" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="0.4">
+                    <bio:parameter name="gmax" value="24.1793">
                         <bio:group>all</bio:group>
                     </bio:parameter>
                 </bio:mechanism>
 
                 <bio:mechanism name="Kahp2_ChannelML" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="2.0">
+                    <bio:parameter name="gmax" value="1.53955">
                         <bio:group>all</bio:group>
                     </bio:parameter>
                 </bio:mechanism>
 
                 <bio:mechanism name="Km_ChannelML" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="10.0">
+                    <bio:parameter name="gmax" value="5.71509">
                         <bio:group>all</bio:group>
                     </bio:parameter>
                 </bio:mechanism>
@@ -78,19 +72,19 @@ The scaling factor for converting current into change in ion concentration shoul
                 </bio:mechanism>
 
                 <bio:mechanism name="Olfactory_Ca_ChannelML" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="1.0">
+                    <bio:parameter name="gmax" value="1.11791">
                         <bio:group>all</bio:group>
                     </bio:parameter>
                 </bio:mechanism>
 
                 <bio:mechanism name="Persistent_Na_ChannelML" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="6.5">
+                    <bio:parameter name="gmax" value="6.48558">
                         <bio:group>all</bio:group>
                     </bio:parameter>
                 </bio:mechanism>
 
                 <bio:mechanism name="Piriform_KA_ChannelML" type="Channel Mechanism">
-                    <bio:parameter name="gmax" value="20.0">
+                    <bio:parameter name="gmax" value="44.0684">
                         <bio:group>all</bio:group>
                     </bio:parameter>
                 </bio:mechanism>

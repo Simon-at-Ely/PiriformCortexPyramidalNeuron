@@ -1354,7 +1354,7 @@ part of NeuroML or any standardised XML specification. -->
    <float>-74.3</float>
   </void>
   <void property="reference">
-   <string>Sim_291</string>
+   <string>Sim_302</string>
   </void>
   <void property="saveCopyGenSimFiles">
    <boolean>true</boolean>
@@ -1705,7 +1705,7 @@ part of NeuroML or any standardised XML specification. -->
       </void>
      </void>
      <void property="name">
-      <string>AllWorkingChannels</string>
+      <string>GENESIS vs NeuroML: somas</string>
      </void>
      <void property="plots">
       <void method="add">
@@ -1745,13 +1745,7 @@ part of NeuroML or any standardised XML specification. -->
        <string>Var_18</string>
       </void>
       <void method="add">
-       <string>Var_19</string>
-      </void>
-      <void method="add">
        <string>Var_2</string>
-      </void>
-      <void method="add">
-       <string>Var_20</string>
       </void>
       <void method="add">
        <string>Var_21</string>
@@ -1808,7 +1802,7 @@ part of NeuroML or any standardised XML specification. -->
       </void>
      </void>
      <void property="name">
-      <string>TestBothSims</string>
+      <string>NeuroML: soma</string>
      </void>
      <void property="plots">
       <void method="add">
@@ -1911,7 +1905,7 @@ part of NeuroML or any standardised XML specification. -->
       </void>
      </void>
      <void property="name">
-      <string>TestChanelMLOneChan</string>
+      <string>GENESIS vs NeuroML: One channel</string>
      </void>
      <void property="plots">
       <void method="add">
@@ -1969,7 +1963,7 @@ part of NeuroML or any standardised XML specification. -->
       </void>
      </void>
      <void property="name">
-      <string>OneSecStim</string>
+      <string>One Sec Stimulation, NeuroML: soma</string>
      </void>
      <void property="plots">
       <void method="add">
@@ -1997,7 +1991,7 @@ part of NeuroML or any standardised XML specification. -->
       </void>
      </void>
      <void property="name">
-      <string>TestNeuroMLOneChannel</string>
+      <string>NeuroML: One channel</string>
      </void>
      <void property="plots">
       <void method="add">
